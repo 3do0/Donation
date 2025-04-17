@@ -29,14 +29,14 @@ class AuthenticatedSessionController extends Controller
             'password' => 'required',
         ]);
     
-        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
+        if (!Auth::guard('admin')->attempt($credentials, $request->boolean('remember'))) {
             return back()->withErrors([
                 'email' => 'بيانات الاعتماد غير متطابقة.',
             ]);
         }
     
-        if (!Auth::user()->is_active) {
-            Auth::logout();
+        if (!Auth::guard('admin')->user()->is_active) {
+            Auth::guard('admin')->logout();
             return back()->withErrors([
                 'email' => 'الحساب غير مفعّل. يرجى التواصل مع الدعم.',
             ]);
@@ -50,7 +50,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        Auth::guard('admin')->logout();
 
         $request->session()->invalidate();
 

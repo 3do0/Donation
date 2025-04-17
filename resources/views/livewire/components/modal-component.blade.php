@@ -1,5 +1,5 @@
 <div>
-    <script>
+    {{-- <script>
         window.addEventListener('confirmDeletion', event => {
             const data = event.detail[0];
             const { id, eventName, title, text ,  } = data;
@@ -35,5 +35,5 @@
 
             });
         });
-    </script>
+    </script> --}}
 </div>

@@ -3,12 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Spatie\Permission\Traits\HasRoles;
+
 
 return new class extends Migration
 {
-    use HasRoles;
-
+    
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -21,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('gender' , ['male' , 'female'])->nullable();
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_online')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -41,9 +41,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('users');

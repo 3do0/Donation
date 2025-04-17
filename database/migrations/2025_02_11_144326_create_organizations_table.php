@@ -23,7 +23,9 @@ return new class extends Migration
             $table->string('bank_account_number')->unique();
             $table->string('license');
             $table->string('web_url')->unique()->nullable();
-            $table->boolean('status')->default(false);
+            $table->enum('status', ['approved', 'pending', 'rejected'])->default('pending');
+            $table->boolean('approval_status')->default(false);
+            $table->string('rejection_reason')->nullable();
             $table->timestamps();
         });
     }

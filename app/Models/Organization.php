@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Log;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -29,6 +30,8 @@ class Organization extends Model
         'license',
         'web_url',
         'status',
+        'approval_status',
+        'rejection_reason',
     ];
 
 
@@ -54,6 +57,11 @@ class Organization extends Model
             ->logOnlyDirty() 
             ->dontSubmitEmptyLogs() 
             ->setDescriptionForEvent(fn(string $eventName) => "{$eventName}"); 
+    }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(OrganizationUser::class);
     }
     
 }

@@ -36,9 +36,19 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'admin' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+
+        'organization' => [
+            'driver' => 'session',
+            'provider' => 'organization_users',
+        ],
+
+        'donor' => [
+            'driver' => 'sanctum',
+            'provider' => 'donors',
         ],
     ],
 
@@ -63,6 +73,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'organization_users' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\OrganizationUser::class),
+        ],
+        'donors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Donor::class,
         ],
 
         // 'users' => [
@@ -97,6 +115,13 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+
+        'organizations' => [ 
+        'provider' => 'organization_users',
+        'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+        'expire' => 60,
+        'throttle' => 60,
+    ],
     ],
 
     /*

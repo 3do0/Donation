@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Services\CurrencyChanges;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(CurrencyChanges::class, function ($app) {
+            return new CurrencyChanges();
+        });
     }
 
     /**
@@ -22,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        // if (app()->environment('local')) {
+        //     URL::forceScheme('https');
+        // }
             // عند تسجيل الدخول
     Event::listen(Login::class, function ($event) {
         $event->user->is_online = true;

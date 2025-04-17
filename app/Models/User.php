@@ -3,25 +3,29 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPassword
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
     use LogsActivity;
-    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
+
+    protected $guard = 'admin';
     protected $fillable = [
         'name',
         'email',
@@ -30,6 +34,7 @@ class User extends Authenticatable
         'gender',
         'photo',
         'is_active',
+        'organization_id'
     ];
 
     /**
@@ -58,12 +63,17 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'email' ,'is_online' , 'is_active']) // الحقول التي تريد تسجيل التغييرات عليها
-            ->useLogName('user') // اسم السجل     
-            ->logOnlyDirty() // تسجيل الحركات عند تغييرات فقط
-            ->dontSubmitEmptyLogs() // تجاهل الحركات الفارغة
-            ->setDescriptionForEvent(fn(string $eventName) => "{$eventName}"); // وصف مخصص لكل حدث
+            ->logOnly(['name', 'email' ,'is_online' , 'is_active','organization_id']) 
+            ->useLogName('user')     
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs() 
+            ->setDescriptionForEvent(fn(string $eventName) => "{$eventName}"); 
     }
 
+
+    public function reports()
+        {
+            return $this->hasMany(CaseReport::class);
+        }
 
 }

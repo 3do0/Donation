@@ -1,52 +1,65 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripePaymentController;
 use App\Http\Middleware\EnsureUserIsActive;
-use App\Livewire\Logs;
-use App\Livewire\Main;
-use App\Livewire\Organizations\OrganizationsForm;
-use App\Livewire\Organizations\OrganizationsIndex;
-use App\Livewire\Permissions\PermissionsIndex;
-use App\Livewire\Roles\RolePermissions;
-use App\Livewire\Roles\RolesForm;
-use App\Livewire\Roles\RolesIndex;
-use App\Livewire\Tesst;
-use App\Livewire\Users\UsersForm;
-use App\Livewire\Users\UsersIndex;
+use App\Livewire\AdminDashboard\Cases\CaseDonations;
+use App\Livewire\AdminDashboard\Cases\Cases\CompletedCase;
+use App\Livewire\AdminDashboard\Cases\Requests\AcceptedRequests as CasesAccepted;
+use App\Livewire\AdminDashboard\Cases\Requests\AcceptedRequestsCards as CasesAcceptedCards;
+// use App\Livewire\AdminDashboard\Cases\All\AllCasesIndex;
+// use App\Livewire\AdminDashboard\Cases\OragnizationCases\OrganizationCasesIndex;
+use App\Livewire\AdminDashboard\Cases\Requests\AdditionalRequestsForm;
+use App\Livewire\AdminDashboard\Cases\Requests\RefinedRequests as CasesRefined;
+use App\Livewire\AdminDashboard\Cases\Requests\Requests as CasesRequests;
+// use App\Livewire\AdminDashboard\Cases\Requests\AdditionalRequestsIndex;
+// use App\Livewire\AdminDashboard\Cases\Responses\AdditionalResponses;
+use App\Livewire\AdminDashboard\Donations\DonationsList;
+use App\Livewire\AdminDashboard\Donations\DonationsReport;
+use App\Livewire\AdminDashboard\Logs;
+use App\Livewire\AdminDashboard\Main;
+use App\Livewire\AdminDashboard\Organizations\JoinRequests\JoinRequsts;
+use App\Livewire\AdminDashboard\Organizations\OrganizationsForm;
+use App\Livewire\AdminDashboard\Organizations\OrganizationsIndex;
+use App\Livewire\AdminDashboard\Partners\PartnersForm;
+use App\Livewire\AdminDashboard\Partners\PartnersIndex;
+use App\Livewire\AdminDashboard\Projects\Requests\AcceptedRequests;
+use App\Livewire\AdminDashboard\Projects\Requests\AcceptedRequestsCards;
+use App\Livewire\AdminDashboard\Projects\Requests\RefinedRequests;
+use App\Livewire\AdminDashboard\Projects\Requests\Requests;
+use App\Livewire\AdminDashboard\Cases\Requests\Request;
+use App\Livewire\AdminDashboard\Projects\Accepted\CompletedProject;
+use App\Livewire\AdminDashboard\Users\UsersForm;
+use App\Livewire\AdminDashboard\Users\UsersIndex;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('livewire.Main');
-// });
+Route::post('/stripe/webhook',[StripePaymentController::class , 'stripeWebhook'] );
 
-Route::middleware(['auth', EnsureUserIsActive::class])->group(function () {
-    Route::get('/main', Main::class)->name('Main');
-    Route::get('/users', UsersIndex::class)->name('users');
-    Route::get('/usersform', UsersForm::class)->name('users-form');
-    Route::get('/org', OrganizationsIndex::class)->name('org');
-    Route::get('/org-form', OrganizationsForm::class)->name('org-form');
-    Route::get('/logs', Logs::class)->name('logs');
-    Route::get('/permission', PermissionsIndex::class)->name('permission');
-    Route::get('/roles', RolesIndex::class)->name('role');
-    Route::get('/tesst', Tesst::class)->name('tesst');
-    Route::get('/perission', PermissionsIndex::class)->name('permission');
-    Route::get('/rolesform', RolesForm::class)->name('role-form');
-    Route::get('/roles/{roleId}/permissions', RolePermissions::class)->name('role-permissions');
-});
+
+Route::post('/theme/toggle', function () {
+    $currentTheme = session('theme', 'dark');
+    $newTheme = $currentTheme === 'dark' ? 'light' : 'dark';
+    session(['theme' => $newTheme]);
+    return back();
+})->name('theme.toggle');
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-Route::get('/dashboard', function () {
+Route::get('/admin/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth:admin', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:admin')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
+require __DIR__.'/orgnaization-auth.php';
+
+require __DIR__.'/organization-dashboard.php';
+require __DIR__.'/admin-dashboard.php';

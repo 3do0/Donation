@@ -1,65 +1,116 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ $PageTitle ?? 'الرئيسية' }}</title>
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
 
-        {{-- <link rel="icon" type="image/png" href="../assets/img/favicon.png" /> --}}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-        
-        <!-- CSS Files -->
-        <link id="pagestyle" href="{{ asset('assets/css/corporate-ui-dashboard.css?v=1.0.0') }}" rel="stylesheet" />
-        <link id="pagestyle" href="{{ asset('assets/css/components/profile-card.css') }}" rel="stylesheet" />
+    <title>@yield('title','Takaful')</title>
 
-        <style>
-          @font-face {
-              font-family: 'Tajawal';
-              src: url('assets/fonts/Tajawal-Regular.ttf') format('ttf');
-          }
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/components/profile-card.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/components/page-title.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/components/card.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/dropify/dropify.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/users/account-setting.css') }}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    @php
+        $theme = session('theme', 'dark');
+    @endphp
+    <link id="theme-css" rel="stylesheet" href="{{ asset('assets/css/' . $theme . '.css') }}">
     
-          body {
-              font-family: 'Tajawal', sans-serif; /* تطبيق الخط الجديد على كل الصفحة */
-          }
-          
-    
-    
-      </style>
+    <style>
+        @font-face {
+            font-family: 'Tajawal';
+            src: url('assets/fonts/Tajawal-Regular.ttf') format('ttf');
+        }
 
-    <script   script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    </head>
-    <body class="g-sidenav-show rtl bg-gray-100">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+    </style>
 
-            
-            <!-- Page Content -->
-            <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg overflow-x-hidden">
-                <!-- Page Heading -->
-                @include('layouts.header')
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
+    @yield('PageCss')
+    <!-- END PAGE LEVEL CUSTOM STYLES -->
+
+
+
+</head>
+
+<body class="alt-menu sidebar-noneoverflow">
+
+    <!--  BEGIN NAVBAR  -->
+    @include('layouts.navbar')
+    <!--  END NAVBAR  -->
+
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container sidebar-closed sbar-open" id="container">
+
+        <div class="overlay"></div>
+        <div class="cs-overlay"></div>
+        <div class="search-overlay"></div>
+
+        <!--  BEGIN SIDEBAR  -->
+        @include('layouts.sidebar')
+        <!--  END SIDEBAR  -->
+
+        <!--  BEGIN CONTENT AREA  -->
+        <div id="content" class="main-content">
+            <div class="layout-px-spacing">
+
+                <div class="page-header">
+                    <div class="page-title">
+                        <h3>الرئيسية</h3>
+                    </div>
+                </div>
+                <hr>
+
+                <!-- CONTENT AREA -->
+
                 {{ $slot }}
-            </main>
+
+                <!-- CONTENT AREA -->
+
+            </div>
         </div>
 
-            <!--   Core JS Files   -->
-    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('assets/js/corporate-ui-dashboard.min.js?v=1.0.0') }}"></script>
+        <!--  END CONTENT AREA  -->
 
+    </div>
+    <!-- END MAIN CONTAINER -->
 
-    @yield('js')
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="{{ asset('assets/js/users/account-settings.js') }}"></script>
+    <script src="{{ asset('assets/plugins/dropify/dropify.min.js') }}"></script>
+
     <script>
-      function toggleFullscreen() {
-            if (!document.fullscreenElement && // إذا لم تكن الصفحة في وضع ملء الشاشة
+        $(document).ready(function() {
+            App.init();
+        });
+    </script>
+
+    
+
+    <script>
+        function toggleFullscreen() {
+            if (!document.fullscreenElement && 
                 !document.mozFullScreenElement && // Firefox
                 !document.webkitFullscreenElement && // Safari و Chrome
                 !document.msFullscreenElement) { // IE/Edge
-                // فتح الصفحة في ملء الشاشة
                 if (document.documentElement.requestFullscreen) {
                     document.documentElement.requestFullscreen();
                 } else if (document.documentElement.mozRequestFullScreen) { // Firefox
@@ -69,34 +120,36 @@
                 } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
                     document.documentElement.msRequestFullscreen();
                 }
-                // تغيير الأيقونة إلى الخروج من ملء الشاشة
                 document.getElementById("fullscreen-icon").classList.remove("bi-arrows-fullscreen");
                 document.getElementById("fullscreen-icon").classList.add("bi-x-square");
             } else {
-                // الخروج من وضع ملء الشاشة
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                 } else if (document.mozCancelFullScreen) { // Firefox
                     document.mozCancelFullScreen();
                 } else if (document.webkitExitFullscreen) { // Safari و Chrome
                     document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) { // IE/Edge
+                } else if (document.msExitFullscreen) { 
                     document.msExitFullscreen();
                 }
-                // تغيير الأيقونة إلى ملء الشاشة مرة أخرى
                 document.getElementById("fullscreen-icon").classList.remove("bi-x-square");
                 document.getElementById("fullscreen-icon").classList.add("bi-arrows-fullscreen");
             }
         }
-      
-  </script>
+    </script>
 
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
 
-<script>
-  window.addEventListener('change-page-title', event => {
-      document.title = event.detail.title;
-  });
-</script>
+    {{-- ############################################ --}}
 
-    </body>
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
+    @stack('scripts')
+    @yield('PageJavaScribt')
+    @include('layouts.components.modalInfo')
+    @include('layouts.components.modalDeleteConfirm')
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+
+</body>
+
 </html>
