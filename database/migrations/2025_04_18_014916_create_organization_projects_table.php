@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Organization;
 use App\Models\OrganizationUser;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -33,6 +32,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */

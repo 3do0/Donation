@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Organization;
 use App\Models\OrganizationUser;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -33,6 +32,9 @@ return new class extends Migration
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('organization_case_requests');
