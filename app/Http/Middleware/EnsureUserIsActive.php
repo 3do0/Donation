@@ -9,7 +9,6 @@ class EnsureUserIsActive
 {
     public function handle($request, Closure $next)
     {
-        // التحقق من حالة المستخدم
         if (Auth::guard('admin')->check() && !Auth::guard('admin')->user()->is_active) {
             Auth::guard('admin')->logout();
             return redirect('/login')->withErrors([

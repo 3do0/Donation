@@ -27,20 +27,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-
-        // TemporaryUploadedFile::useDisk('public');
-
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
-            // عند تسجيل الدخول
+            
     Event::listen(Login::class, function ($event) {
         $event->user->is_online = true;
         $event->user->save();
     });
 
-    // عند تسجيل الخروج
     Event::listen(Logout::class, function ($event) {
         $event->user->is_online = false;
         $event->user->save();
