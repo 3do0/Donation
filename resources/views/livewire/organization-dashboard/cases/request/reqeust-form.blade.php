@@ -6,7 +6,6 @@
             </h6>
 
             <form wire:submit.prevent="AddRequest">
-
                 {{-- اسم الحالة --}}
                 <div class="mb-3">
                     <label class="form-label" for="inputCaseName">اسم الحالة</label>
@@ -25,10 +24,10 @@
                             <span class="input-group-text"><i class="bi bi-list-ul"></i></span>
                             <select class="form-select" id="inputCaseType" wire:model="case_type">
                                 <option value="">-- اختر نوع الحالة --</option>
-                                <option value="صحية">صحية</option>
-                                <option value="تعليمية">تعليمية</option>
-                                <option value="إغاثية">إغاثية</option>
-                                <option value="سكنية">سكنية</option>
+                                <option value="طبي">صحية</option>
+                                <option value="تعليمي">تعليمية</option>
+                                <option value="إجتماعي">إجتماعية</option>
+                                <option value="ديني">دينية</option>
                                 <option value="أخرى">أخرى</option>
                             </select>
                         </div>

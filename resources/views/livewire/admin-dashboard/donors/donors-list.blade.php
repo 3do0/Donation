@@ -39,7 +39,7 @@
                         <div class="col-12">
                             <div class="w-100 text-end">
                                 <p class="text-sm text-secondary mb-1">عدد المستخدمين</p>
-                                <h4 class="mb-2 font-weight-bold">{{ $usersCount }}</h4>
+                                <h4 class="mb-2 font-weight-bold">{{ $donorsCount }}</h4>
                                 <div class="d-flex align-items-center">
                                     <span class="text-sm text-success font-weight-bolder">
                                         <i class="fa fa-chevron-up text-xs ms-1"></i>10.5%
@@ -70,7 +70,7 @@
                         <div class="col-12">
                             <div class="w-100 text-end">
                                 <p class="text-sm text-secondary mb-1">النشطين</p>
-                                <h4 class="mb-2 font-weight-bold">{{ $onlineUserCount }}</h4>
+                                <h4 class="mb-2 font-weight-bold">00</h4>
                                 <div class="d-flex align-items-center">
                                     <span class="text-sm text-success font-weight-bolder">
                                         <i class="fa fa-chevron-up text-xs ms-1"></i>55%
@@ -177,24 +177,22 @@
                                     <th class="text-center checkbox-column"> Record no. </th>
                                     <th class="custom-btn-color">المستخدم</th>
                                     <th class="text-center custom-btn-color">الجنس</th>
-                                    <th class="text-center custom-btn-color">الحالــة</th>
                                     <th class="text-center custom-btn-color">تاريخ الانشاء</th>
                                     <th class="text-center custom-btn-color">التمكين</th>
-                                    <th class="custom-btn-color">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
-                                    <tr data-status="{{ $user->is_online ? 'online' : 'offline' }}">
-                                        <td class="checkbox-column"> {{ $user->id }} </td>
+                                @foreach ($donors as $donor)
+                                    <tr>
+                                        <td class="checkbox-column"> {{ $donor->id }} </td>
                                         <td class="user-name">
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex align-items-center">
-                                                    @if ($user->photo)
+                                                    @if ($donor->avatar)
                                                         <a class="profile-img"
-                                                            href="{{ asset('storage/' . $user->photo) }}"
+                                                            href="{{ asset('storage/' . $donor->avatar) }}"
                                                             target="_blank">
-                                                            <img src="{{ asset('storage/' . $user->photo) }}"
+                                                            <img src="{{ asset('storage/' . $donor->avatar) }}"
                                                                 alt="صورة المستخدم"
                                                                 class="rounded-circle profile-img">
                                                         </a>
@@ -207,63 +205,28 @@
                                                     @endif
                                                 </div>
                                                 <div class="d-flex flex-column justify-content-center ms-1">
-                                                    <h6 class="mb-0 text-sm font-weight-semibold">{{ $user->name }}
+                                                    <h6 class="mb-0 text-sm font-weight-semibold">{{ $donor->name }}
                                                     </h6>
-                                                    <p class="text-sm">{{ $user->email }}</p>
+                                                    <p class="text-sm">{{ $donor->email }}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="text-center">
-                                            <h6 class="text-sm font-weight-semibold">{{ $user->gender }}</h6>
-                                        </td>
-                                        <td class="text-center">
-                                            @if ($user->is_online)
-                                                <span class="badge outline-badge-success">Online</span>
-                                            @else
-                                                <span class="badge outline-badge-dark">Offline</span>
-                                            @endif
+                                            <h6 class="text-sm font-weight-semibold">{{ $donor->gender }}</h6>
                                         </td>
 
                                         <td class="align-middle text-center">
                                             <span
-                                                class="text-warning text-sm font-weight-normal">{{ $user->created_at->format('Y-m-d') }}</span>
+                                                class="text-warning text-sm font-weight-normal">{{ $donor->created_at->format('Y-m-d') }}</span>
                                         </td>
 
                                         <td class="align-middle text-center text-sm">
                                             <label class="switch s-icons s-outline s-outline-info mr-2">
-                                                <input type="checkbox" role="switch" id="{{ $user->id }}"
-                                                    wire:click="toggleStatus({{ $user->id }})"
-                                                    {{ $user->is_active ? 'checked' : '' }} />
+                                                <input type="checkbox" role="switch" id="{{ $donor->id }}"
+                                                    wire:click="toggleStatus({{ $donor->id }})"
+                                                    {{ $donor->is_active ? 'checked' : '' }} />
                                                 <span class="slider round"></span>
                                             </label>
-                                        </td>
-
-                                        <td class="text-center">
-                                            <a type="button" data-toggle="tooltip" data-placement="top"
-                                                title="" data-original-title="Edit"><svg
-                                                    xmlns="http://www.w3.user/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="feather feather-check-circle text-primary">
-                                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                                </svg></a>
-                                            </li>
-                                            <a type="button" wire:click="confirmDelete({{ $user->id }})"
-                                                data-toggle="tooltip" data-placement="top" title=""
-                                                data-original-title="Delete"><svg xmlns="http://www.w3.user/2000/svg"
-                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-x-circle text-danger">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                    <line x1="15" y1="9" x2="9"
-                                                        y2="15"></line>
-                                                    <line x1="9" y1="9" x2="15"
-                                                        y2="15"></line>
-                                                </svg>
-                                            </a>
-                                            </li>
                                         </td>
                                     </tr>
                                 @endforeach

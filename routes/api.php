@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthDonorController;
 use App\Http\Controllers\API\CaseController;
 use App\Http\Controllers\API\CurrencyConverterController;
 use App\Http\Controllers\API\DeviceTokenController;
+use App\Http\Controllers\API\DonorCommentsController;
 use App\Http\Controllers\API\DonorDonationsController;
 use App\Http\Controllers\API\DonorInformationController;
 use App\Http\Controllers\API\OrganizationRequestController;
@@ -47,9 +48,14 @@ Route::post('/donors/login', [AuthDonorController::class, 'login']);
 Route::post('donors/logout',[AuthDonorController::class,'logout'])->middleware('auth:sanctum');
 
 
-
-
 Route::post('/device-token', [DeviceTokenController::class, 'store']);
+
+
+
+Route::post('/case-comment', [DonorCommentsController::class, 'caseCommentsStore'])->middleware('auth:sanctum');
+Route::post('/project-comment', [DonorCommentsController::class, 'projectCommentsStore'])->middleware('auth:sanctum');
+
+
 
 
 Route::get('/user', function (Request $request) {

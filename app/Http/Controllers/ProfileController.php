@@ -51,7 +51,6 @@ class ProfileController extends Controller
                 'public'
             );
             $validated['photo'] = $photoPath;
-            // $user->photo = $photoPath;
         }
     
         $user->fill($validated);

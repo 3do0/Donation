@@ -13,7 +13,6 @@ class CaseDonations extends Component
     public function mount()
     {
         $this->cases = OrganizationCase::with('organization_user.organization' , 'donationItems')->get(); 
-        // dd($cases);
     }
 
     public function render()

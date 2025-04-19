@@ -22,7 +22,7 @@ class OrganizationRequestController extends Controller
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:100',
-            'activity_type' => 'required|array',
+            'activity_type' => 'required',
             'registration_number' => 'required|string',
             'bank_name' => 'required|string',
             'bank_account_number' => 'required|string',

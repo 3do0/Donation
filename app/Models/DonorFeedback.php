@@ -10,7 +10,8 @@ class DonorFeedback extends Model
     protected $table = 'donor_feedback';
     protected $fillable=[
         'donor_id',
-        'organization_case_id',
+        'feedbackable_id',
+        'feedbackable_type',
         'rating',
         'comment',
     ];

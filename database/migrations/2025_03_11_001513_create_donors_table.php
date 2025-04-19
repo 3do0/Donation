@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('gender' , ['male' , 'female']);
             $table->string('country');
-            $table->boolean('is_online')->default(false);
+            $table->boolean('is_active')->default(false);
             $table->string('otp')->nullable(); 
             $table->boolean('is_verified')->default(false);
             $table->timestamp('otp_expires_at')->nullable(); 

@@ -14,6 +14,7 @@ use App\Livewire\AdminDashboard\Cases\Requests\Requests as CasesRequests;
 // use App\Livewire\AdminDashboard\Cases\Responses\AdditionalResponses;
 use App\Livewire\AdminDashboard\Donations\DonationsList;
 use App\Livewire\AdminDashboard\Donations\DonationsReport;
+use App\Livewire\AdminDashboard\Donors\DonorsList;
 use App\Livewire\AdminDashboard\Logs;
 use App\Livewire\AdminDashboard\Main;
 use App\Livewire\AdminDashboard\Organizations\JoinRequests\JoinRequsts;
@@ -29,7 +30,6 @@ use App\Livewire\AdminDashboard\Projects\Accepted\CompletedProject;
 use App\Livewire\AdminDashboard\Users\UsersForm;
 use App\Livewire\AdminDashboard\Users\UsersIndex;
 use Illuminate\Support\Facades\Route;
-
 
 
 
@@ -62,6 +62,7 @@ Route::middleware(['auth:admin', EnsureUserIsActive::class])->group(function () 
 
 
 
+    Route::get('/donors', DonorsList::class)->name('donors');
 
     Route::get('/projects/request', Requests::class)->name('projects-request');
     Route::get('/projects/refined-request', RefinedRequests::class)->name('refined-project');

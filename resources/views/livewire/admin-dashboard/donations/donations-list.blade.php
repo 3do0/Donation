@@ -106,7 +106,7 @@
                                             @if ($donation->status === 'pending')
                                                 <span class="badge outline-badge-warning">قيد الانتظار</span>
                                             @elseif ($donation->status === 'paid')
-                                                <span class="badge outline-badge-success">مدفوع</span>
+                                                <span class="badge outline-badge-success">مدفوع ✔</span>
                                             @else
                                                 <span class="badge outline-badge-danger">فشل</span>
                                             @endif

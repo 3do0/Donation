@@ -125,6 +125,7 @@ class AuthDonorController extends Controller
         $donor->password = Hash::make($validated['password']);
         $donor->otp = null;
         $donor->is_verified = true;
+        $donor->is_active = true;
         $donor->save();
 
         return response()->json([
@@ -154,6 +155,13 @@ class AuthDonorController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'الحساب غير مفعل. يرجى التحقق من البريد الإلكتروني.',
+                ], 403);
+            }
+
+            if (!$donor->is_active) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'عذراً حسابك موقف من قبل النظام',
                 ], 403);
             }
 

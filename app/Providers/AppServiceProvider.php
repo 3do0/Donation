@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
 
+
+        TemporaryUploadedFile::useDisk('public');
+        
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
