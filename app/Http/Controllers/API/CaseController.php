@@ -66,4 +66,22 @@ class CaseController extends Controller
     ]);
 }
 
+
+    public function visitorsIncrease(Request $request)
+    {
+        $request->validate([
+            'caseId' => 'required|exists:organization_cases,id',
+        ]);
+
+        $case = OrganizationCase::find($request->caseId);
+        $case->increment('visitors_count'); 
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم تحديث عدد المشاهدات بنجاح',
+            'visitors_count' => $case->visitors_count,
+        ]);
+    }
+
+
 }

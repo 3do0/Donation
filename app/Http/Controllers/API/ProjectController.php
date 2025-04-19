@@ -64,5 +64,21 @@ class ProjectController extends Controller
             'data' => $projects
         ]);
     }
+
+    public function visitorsIncrease(Request $request)
+    {
+        $request->validate([
+            'projectId' => 'required|exists:organization_projects,id',
+        ]);
+
+        $project = OrganizationProject::find($request->projectId);
+        $project->increment('visitors_count'); 
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم تحديث عدد المشاهدات بنجاح',
+            'visitors_count' => $project->visitors_count,
+        ]);
+    }
     
 }

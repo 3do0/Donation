@@ -55,7 +55,8 @@ Route::post('/device-token', [DeviceTokenController::class, 'store']);
 Route::post('/case-comment', [DonorCommentsController::class, 'caseCommentsStore'])->middleware('auth:sanctum');
 Route::post('/project-comment', [DonorCommentsController::class, 'projectCommentsStore'])->middleware('auth:sanctum');
 
-
+Route::post('/cases/increase-visitors', [CaseController::class, 'visitorsIncrease']);
+Route::post('/projects/increase-visitors', [ProjectController::class, 'visitorsIncrease']);
 
 
 Route::get('/user', function (Request $request) {
