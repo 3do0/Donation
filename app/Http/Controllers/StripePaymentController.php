@@ -147,7 +147,6 @@ class StripePaymentController extends Controller
                 return response('Unhandled event type', 400);
         }
 
-        // تأكيد استلام الـ Webhook بنجاح
         return response('Webhook received', 200);
     }
 
