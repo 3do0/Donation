@@ -29,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
     {
 
 
-        TemporaryUploadedFile::useDisk('public');
-        
+        // TemporaryUploadedFile::useDisk('public');
+
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
