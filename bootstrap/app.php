@@ -13,14 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->trustProxies(
-            at: ['*'],
-            headers: 
-                Request::HEADER_X_FORWARDED_FOR   // X-Forwarded-For
-              | Request::HEADER_X_FORWARDED_HOST  // X-Forwarded-Host
-              | Request::HEADER_X_FORWARDED_PORT  // X-Forwarded-Port
-              | Request::HEADER_X_FORWARDED_PROTO // X-Forwarded-Proto
-        );
+        $middleware->validateCsrfTokens(except: [
+            'livewire/upload-file',
+            'livewire/*'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

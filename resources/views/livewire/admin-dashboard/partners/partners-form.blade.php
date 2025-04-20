@@ -3,7 +3,6 @@
 
     <form wire:submit.prevent="registerPartner">
         <!-- الاسم -->
-        @csrf
         <div class="mb-3">
             <label class="form-label" for="partnerName">الاسم</label>
             <input type="text" class="form-control" id="partnerName" wire:model="name" placeholder="اسم الشريك هنا" required>
