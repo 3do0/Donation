@@ -46,7 +46,7 @@ class ProfileController extends Controller
                 Storage::disk('public')->delete($user->photo);
             }
             $photoPath = $request->file('photo')->storeAs(
-                'Users/Avatar/images',
+                'images',
                 $request->file('photo')->hashName(),
                 'public'
             );
