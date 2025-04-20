@@ -30,6 +30,9 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
+
+        URL::forceRootUrl(config('app.url'));
+        URL::forceScheme('https');
             
     Event::listen(Login::class, function ($event) {
         $event->user->is_online = true;
