@@ -15,48 +15,47 @@ use App\Http\Controllers\StripePaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/cases-data', [CaseController::class, 'index']);
-Route::get('/projects-data', [ProjectController::class, 'index']);
+// Route::get('/cases-data', [CaseController::class, 'index']);
+// Route::get('/projects-data', [ProjectController::class, 'index']);
 
-Route::post('/org-req', [OrganizationRequestController::class, 'organizationRegister']);
+// Route::post('/org-req', [OrganizationRequestController::class, 'organizationRegister']);
 Route::post('/create-checkout-session', [StripePaymentController::class, 'CreateSession']);
 
-Route::get('currency-rates', [CurrencyController::class, 'getCurrencyRates']);
-Route::get('/convert-currency', [CurrencyConverterController::class, 'convertToYER']);
+// Route::get('currency-rates', [CurrencyController::class, 'getCurrencyRates']);
+// Route::get('/convert-currency', [CurrencyConverterController::class, 'convertToYER']);
 
-Route::get('/takaful-statistics', [TakafulPlatform::class, 'Statistics']);
-Route::get('/takaful-partners', [TakafulPlatform::class, 'TakafulPartners']);
+// Route::get('/takaful-statistics', [TakafulPlatform::class, 'Statistics']);
+// Route::get('/takaful-partners', [TakafulPlatform::class, 'TakafulPartners']);
 
+
+// Route::middleware(['auth:sanctum'])->group(function () {
+//     Route::get('/donor/donations', [DonorDonationsController::class, 'donorDonations']);
+// });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/donor/donations', [DonorDonationsController::class, 'donorDonations']);
+    // Route::get('/donor/donations-summary', [DonorDonationsController::class, 'donorSummary']);
+    // Route::patch('donors/update-profile',[DonorInformationController::class,'updateProfile']);
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/donor/donations-summary', [DonorDonationsController::class, 'donorSummary']);
-    Route::patch('donors/update-profile',[DonorInformationController::class,'updateProfile']);
-});
+// Route::post('/donors/register', [AuthDonorController::class, 'store']);
 
-Route::post('/donors/register', [AuthDonorController::class, 'store']);
+// Route::post('/donors/verify-otp', [AuthDonorController::class, 'verifyOtp']);
+// Route::post('/donors/forgot-password', [AuthDonorController::class, 'sendOtpToResetPassword']);
 
-Route::post('/donors/verify-otp', [AuthDonorController::class, 'verifyOtp']);
-Route::post('/donors/forgot-password', [AuthDonorController::class, 'sendOtpToResetPassword']);
+// Route::post('/donors/reset-password', [AuthDonorController::class, 'resetPasswordWithOtp']);
 
-Route::post('/donors/reset-password', [AuthDonorController::class, 'resetPasswordWithOtp']);
-
-Route::post('/donors/login', [AuthDonorController::class, 'login']);
-Route::post('donors/logout',[AuthDonorController::class,'logout'])->middleware('auth:sanctum');
+// Route::post('/donors/login', [AuthDonorController::class, 'login']);
+// Route::post('donors/logout',[AuthDonorController::class,'logout'])->middleware('auth:sanctum');
 
 
-Route::post('/device-token', [DeviceTokenController::class, 'store']);
+// Route::post('/device-token', [DeviceTokenController::class, 'store']);
 
 
+// Route::post('/case-comment', [DonorCommentsController::class, 'caseCommentsStore'])->middleware('auth:sanctum');
+// Route::post('/project-comment', [DonorCommentsController::class, 'projectCommentsStore'])->middleware('auth:sanctum');
 
-Route::post('/case-comment', [DonorCommentsController::class, 'caseCommentsStore'])->middleware('auth:sanctum');
-Route::post('/project-comment', [DonorCommentsController::class, 'projectCommentsStore'])->middleware('auth:sanctum');
-
-Route::post('/cases/increase-visitors', [CaseController::class, 'visitorsIncrease']);
-Route::post('/projects/increase-visitors', [ProjectController::class, 'visitorsIncrease']);
+// Route::post('/cases/increase-visitors', [CaseController::class, 'visitorsIncrease']);
+// Route::post('/projects/increase-visitors', [ProjectController::class, 'visitorsIncrease']);
 
 
 Route::get('/user', function (Request $request) {

@@ -14,16 +14,16 @@ class DeviceTokenController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'token' => 'required|string',
+            'device_token' => 'required|string',
         ]);
     
        
         DeviceToken::updateOrCreate(
-            ['token' => $request->token],
-            ['donor_id' => auth()->id()] // أو null إذا ما فيه تسجيل دخول
+            ['device_token' => $request->device_token],
+            ['donor_id' => auth()->id()] 
         );
     
-        return response()->json(['status' => 'Token stored successfully']);
+        return response()->json(['status' => 'تم تسجيل الجهاز بنجاح'], 200);
     }
     
     
