@@ -139,7 +139,7 @@ try {
           }
         },
         series: [{
-          data: [22, 19, 30, 47, 32, 44, 34, 55, 41, 69].reverse()
+          data: [20, 19, 30, 1, 5, 44, 3, 55, 1, 69].reverse()
         }],
         stroke: {
           curve: 'smooth',
@@ -272,10 +272,10 @@ try {
           colors: ['transparent']
       },
       series: [{
-          name: 'Direct',
+          name: 'المستخدمين',
           data: [58, 44, 55, 57, 56, 61, 58, 63, 60, 66, 56, 63].reverse()
       }, {
-          name: 'Organic',
+          name: 'الزوار',
           data: [91, 76, 85, 101, 98, 87, 105, 91, 114, 94, 66, 70].reverse()
       }],
       xaxis: {

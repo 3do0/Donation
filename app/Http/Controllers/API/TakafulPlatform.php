@@ -60,7 +60,7 @@ class TakafulPlatform extends Controller
                 ];
             });
 
-        $organizations = Organization::select('name', 'logo', 'web_url')->get()
+        $organizations = Organization::where('status', 'approved')->select('name', 'logo', 'web_url')->get()
             ->map(function ($organization) {
                 return [
                     'name' => $organization->name,

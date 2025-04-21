@@ -31,7 +31,7 @@
                       <p class="w-stats">{{$DonationsCount}}</p>
                   </div>
                   <div class="w-chart-render-one">
-                      <div id="paid-visits"></div>
+                      <div id="paid-visits" data-donors="{{ $DonationsCount }}"></div>
                   </div>
               </div>
           </div>

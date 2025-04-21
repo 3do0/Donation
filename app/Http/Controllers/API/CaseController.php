@@ -30,6 +30,7 @@ class CaseController extends Controller
         ])->map(function ($case) {
             $ratings = $case->comments->pluck('rating')->filter();
             $averageRating = $ratings->count() > 0 ? round($ratings->avg(), 2) : 0;
+            $totalDonations = $case->donationItems()->count();
 
             return [
                 'id' => $case->id,
@@ -40,6 +41,7 @@ class CaseController extends Controller
                 'beneficiaries_count' => $case->beneficiaries_count,
                 'description' => $case->description,
                 'visitors_count' => $case->visitors_count,
+                'total_donations' => $totalDonations,
                 'currency' => $case->currency,
                 'target_amount' => (double) $case->target_amount,
                 'raised_amount' => (double) $case->raised_amount,

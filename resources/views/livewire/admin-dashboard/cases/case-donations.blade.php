@@ -109,7 +109,7 @@
                                         </div>
                                         <div class="col-sm-5 align-self-center text-sm-right order-2">
                                             <p class="inv-list-number"><span class="inv-title">المنظمة المسؤولة :</span>
-                                                <span class="inv-number">{{ $case->organization?->name ?? 'غير متاحة' }}</span>
+                                                <span class="inv-number">{{ $case->organization->name ?? 'غير متاحة' }}</span>
                                             </p>
                                             <p class="inv-created-date"><span class="inv-title">تاريخ الإصدار :</span>
                                                 <span class="inv-date">{{ now() }}</span>
@@ -124,16 +124,23 @@
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">I.No</th>
-                                                            <th scope="col">نوع التبرع</th>
-                                                            <th class="text-right" scope="col">رقم الحالة</th>
-                                                            <th class="text-right" scope="col">اسم الحالة</th>
+                                                            <th scope="col" class="text-center">المتبرع</th>
                                                             <th class="text-right" scope="col">المبلغ</th>
+                                                            <th class="text-right" scope="col">طريقة الدفع</th>
+                                                            <th class="text-right" scope="col">تاريخ التبرع</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         @forelse ($case->donationItems ?? [] as $item)
                                                             <tr>
                                                                 <td>{{ $item->id }}</td>
+                                                                <td class="text-center">
+                                                                        <div class="d-flex flex-column justify-content-center">
+                                                                            <p class="mb-0 text-sm font-weight-semibold">{{ $case->donationItems->first()?->donation?->donor?->name ?? 'غير معروف' }}
+                                                                            </p>
+                                                                            <p class="text-sm">{{ $case->donationItems->first()?->donation?->donor?->email ?? 'غير معروف' }}</p>
+                                                                        </div>  
+                                                                </td>
                                                                 <td class="text-right">
                                                                     {{ number_format($item->amount) }}
                                                                     @php
@@ -147,9 +154,8 @@
                                                                         ر.ي
                                                                     @endif
                                                                 </td>
-                                                                <td class="text-right">{{ $case->id }}</td>
-                                                                <td class="text-right">{{ $case->case_name }}</td>
-                                                                <td class="text-right">{{ number_format($item->amount) }}</td>
+                                                                <td class="text-right">{{ $case->donationItems->first()?->donation?->payment_method ?? 'غير معروف' }}</td>
+                                                                <td class="text-right">{{ $item->created_at->format('Y-m-d / H-i') }} </td>
                                                             </tr>
                                                         @empty
                                                             <tr>

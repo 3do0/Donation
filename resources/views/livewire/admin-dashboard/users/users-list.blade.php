@@ -226,7 +226,7 @@
 
                                         <td class="align-middle text-center">
                                             <span
-                                                class="text-warning text-sm font-weight-normal">{{ $user->created_at->format('Y-m-d') }}</span>
+                                                class="text-warning text-sm font-weight-normal">{{ $user->created_at->format('Y-m-d') ?? '-' }}</span>
                                         </td>
 
                                         <td class="align-middle text-center text-sm">
