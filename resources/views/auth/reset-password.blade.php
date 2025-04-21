@@ -22,7 +22,7 @@
                                         <circle cx="12" cy="7" r="4"></circle>
                                     </svg>
                                     <x-text-input id="email" class="form-control" type="email" name="email" :value="old('email', $request->email)"
-                                        required autofocus autocomplete="username" />
+                                        required  readonly autocomplete="username" />
                                     <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                 </div>
 
@@ -39,7 +39,7 @@
                                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                     </svg>
                                     <input id="password" class="form-control" type="password" name="password" required
-                                        autocomplete="new-password">
+                                        autocomplete="new-password" autofocus>
                                     <x-input-error :messages="$errors->get('password')" class="mt-2 text-danger" />
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

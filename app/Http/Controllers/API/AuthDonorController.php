@@ -68,8 +68,6 @@ class AuthDonorController extends Controller
                     'phone' => $donor->phone,
                     'gender' => $donor->gender,
                     'country' => $donor->country,
-                    'created_at' => $donor->created_at,
-                    'updated_at' => $donor->updated_at,
                 ]
             ], 201);
         } catch (ValidationException $e) {
@@ -99,7 +97,6 @@ class AuthDonorController extends Controller
             $validated = $request->validate([
                 'email' => 'required|email',
                 'otp' => 'required|numeric',
-                'password' => 'required|min:6',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
@@ -108,7 +105,6 @@ class AuthDonorController extends Controller
                 'errors' => $e->errors()
             ], 422);
         }
-
 
         $donor = Donor::where('email', $validated['email'])
             ->where('otp', $validated['otp'])
@@ -121,8 +117,6 @@ class AuthDonorController extends Controller
             ], 400);
         }
 
-
-        $donor->password = Hash::make($validated['password']);
         $donor->otp = null;
         $donor->is_verified = true;
         $donor->is_active = true;
@@ -130,7 +124,7 @@ class AuthDonorController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'تم تأكيد الحساب وتعيين كلمة المرور بنجاح.'
+            'message' => 'تم التحقق بنجاح.'
         ], 200);
     }
 
@@ -173,7 +167,7 @@ class AuthDonorController extends Controller
                 'message' => 'تم تسجيل الدخول بنجاح.',
                 'token' => $token,
                 'donor' => $donor
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
@@ -220,7 +214,7 @@ class AuthDonorController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'تم إعادة تعيين كلمة المرور بنجاح.'
-            ]);
+            ], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'status' => false,
@@ -237,6 +231,43 @@ class AuthDonorController extends Controller
     }
 
 
+
+    public function resendOtp(Request $request)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email'
+            ]);
+
+            $donor = Donor::where('email', $request->email)->first();
+
+            if (!$donor) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'لا يوجد مستخدم مسجل بهذا البريد الإلكتروني.'
+                ], 404);
+            }
+
+            $otp = rand(1000, 9999);
+
+            $donor->otp = $otp;
+            $donor->otp_expires_at = now()->addMinutes(10);
+            $donor->save();
+
+            Mail::to($request->email)->send(new OTPMail($otp));
+
+            return response()->json([
+                'status' => true,
+                'message' => 'تم إرسال رمز التحقق بنجاح.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'حدث خطأ أثناء إرسال رمز التحقق.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 
 
@@ -266,7 +297,7 @@ class AuthDonorController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'تم إرسال رمز التحقق لإعادة تعيين كلمة المرور.'
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
@@ -277,9 +308,17 @@ class AuthDonorController extends Controller
     }
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $user = auth('donor')->user();
+
+        if ($user) {
+            $request->user->currentAccessToken()?->delete();
+            return response()->json([
+                'message' => 'تم تسجيل الخروج بنجاح',
+            ], 200);
+        }
+
         return response()->json([
-            'message' => 'logout successful'
-        ]);
+            'message' => 'حدث خطأ في تسجيل الخروج',
+        ], 401);
     }
 }

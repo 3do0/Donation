@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::post('/donors/register', [AuthDonorController::class, 'store']);
 
 Route::post('/donors/verify-otp', [AuthDonorController::class, 'verifyOtp']);
+Route::post('/donors/resend-otp', [AuthDonorController::class, 'resendOtp']);
 Route::post('/donors/forgot-password', [AuthDonorController::class, 'sendOtpToResetPassword']);
 
 Route::post('/donors/reset-password', [AuthDonorController::class, 'resetPasswordWithOtp']);
