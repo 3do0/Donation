@@ -199,13 +199,6 @@ class AuthDonorController extends Controller
                 ], 400);
             }
 
-            if (now()->gt($donor->otp_expires_at)) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'انتهت صلاحية رمز التحقق.'
-                ], 400);
-            }
-
             $donor->password = Hash::make($request->password);
             $donor->otp = null;
             $donor->otp_expires_at = null;
