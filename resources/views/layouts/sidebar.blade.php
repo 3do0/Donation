@@ -282,9 +282,9 @@
                     <span>إضافي</span>
                 </div>
             </li>
-            <li class="menu {{ request()->routeIs('donors') ? 'active' : '' }}">
-                <a href="{{ route('donors') }}" wire:navigate
-                    {{ request()->routeIs('donors') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
+            <li class="menu ">
+                <a href="#" 
+                    
                     class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
