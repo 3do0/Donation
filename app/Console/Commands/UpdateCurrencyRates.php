@@ -12,7 +12,6 @@ class UpdateCurrencyRates extends Command
 
     protected $currencyService;
 
-    // استخدام الـ CurrencyService في الـ Command
     public function __construct(CurrencyService $currencyService)
     {
         parent::__construct();
@@ -21,6 +20,7 @@ class UpdateCurrencyRates extends Command
 
     public function handle()
     {
+        info('جلب أسعار العملات وتحديثها من ibyemen.com');
         $result = $this->currencyService->fetchAndStoreRates();
 
         if ($result) {

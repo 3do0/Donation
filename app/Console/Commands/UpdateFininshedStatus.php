@@ -29,6 +29,7 @@ class UpdateFininshedStatus extends Command
      */
     public function handle()
     {
+        info('جلب جميع الحالات والمشاريع المنتهية');
         $now = now();
         $this->updateModel(OrganizationCase::class, $now);
         $this->updateModel(OrganizationProject::class, $now);

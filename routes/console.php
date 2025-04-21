@@ -8,4 +8,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Schedule::command('currency:update-rates')->hourly();
+// Schedule::command('currency:update-rates')->everyTenSeconds();
+Schedule::command('entities:update-finished')->everyFifteenSeconds();

@@ -131,14 +131,12 @@
             <li class="menu">
                 <a href="#submenu" data-toggle="collapse" class="dropdown-toggle">
                     <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-user-plus">
-                            <path d="M16 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M7 21v-2a4 4 0 0 1 3-3.87"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <line x1="19" y1="8" x2="19" y2="14"></line>
-                            <line x1="16" y1="11" x2="22" y2="11"></line>
+                            stroke-linejoin="round" class="feather feather-heart me-2">
+                            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1
+                                    a5.5 5.5 0 0 0-7.8 7.8l1 1 7.8 7.8 
+                                    7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"></path>
                         </svg>
                         <span>الحالات الخيرية</span>
                     </div>
@@ -211,6 +209,53 @@
                 </ul>
             </li>
 
+            <li class="menu menu-heading">
+                <div class="heading">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                        class="feather feather-circle">
+                        <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                    <span>تقارير عامة</span>
+                </div>
+            </li>
+
+            <li class="menu {{ request()->routeIs('donations-report') ? 'active' : '' }}">
+                <a href="{{ route('donations-report') }}" wire:navigate
+                    {{ request()->routeIs('donations-report') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
+                    class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" 
+                            width="24" height="24" viewBox="0 0 24 24" 
+                            fill="none" stroke="currentColor" stroke-width="2" 
+                            stroke-linecap="round" stroke-linejoin="round" 
+                            class="feather feather-file-text me-2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <line x1="10" y1="9" x2="8" y2="9"/>
+                        </svg>
+                        <span>تقارير التبرعات</span>
+                    </div>
+                </a>
+            </li>
+            <li class="menu {{ request()->routeIs('case-donations') ? 'active' : '' }}">
+                <a href="{{ route('case-donations') }}" wire:navigate
+                    {{ request()->routeIs('case-donations') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
+                    class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-layers me-2" width="20" height="20" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        <span>تقارير الحالات</span>
+                    </div>
+                </a>
+            </li>
             <li class="menu {{ request()->routeIs('donors') ? 'active' : '' }}">
                 <a href="{{ route('donors') }}" wire:navigate
                     {{ request()->routeIs('donors') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
@@ -224,54 +269,70 @@
                         </svg>
                         <span>الإشعارات</span>
                     </div>
-                    
                 </a>
             </li>
 
-            <li class="menu">
-                <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            <li class="menu menu-heading">
+                <div class="heading">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                        class="feather feather-circle">
+                        <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                    <span>إضافي</span>
+                </div>
+            </li>
+            <li class="menu {{ request()->routeIs('donors') ? 'active' : '' }}">
+                <a href="{{ route('donors') }}" wire:navigate
+                    {{ request()->routeIs('donors') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
+                    class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-file">
-                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                            <polyline points="13 2 13 9 20 9"></polyline>
+                            stroke-linejoin="round" class="feather feather-bell">
+                            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                         </svg>
-                        <span> Menu 3</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-chevron-right">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
+                        <span>الإشعارات</span>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled" id="submenu2" data-parent="#accordionExample">
-                    <li>
-                        <a href="javascript:void(0);"> Submenu 1 </a>
-                    </li>
-                    <li>
-                        <a href="#sm2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            Submenu 2 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg> </a>
-                        <ul class="collapse list-unstyled sub-submenu" id="sm2" data-parent="#submenu2">
-                            <li>
-                                <a href="javascript:void(0);"> Sub-Submenu 1 </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"> Sub-Submenu 2 </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"> Sub-Submenu 3 </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
             </li>
+
+            <li class="menu {{ request()->routeIs('partners') ? 'active' : '' }}">
+                <a href="{{ route('partners') }}" wire:navigate
+                    {{ request()->routeIs('partners') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
+                    class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-briefcase me-2" width="20" height="20" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 3h-8v4h8V3z"></path>
+                        </svg>
+                        <span>الشركاء</span>
+                    </div>
+                </a>
+            </li>
+
+            <li class="menu {{ request()->routeIs('logs') ? 'active' : '' }}">
+                <a href="{{ route('logs') }}" wire:navigate
+                    {{ request()->routeIs('logs') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
+                    class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" 
+                            width="24" height="24" viewBox="0 0 24 24" 
+                            fill="none" stroke="currentColor" stroke-width="2" 
+                            stroke-linecap="round" stroke-linejoin="round" 
+                            class="feather feather-monitor">
+                            <rect x="3" y="4" width="18" height="12" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                        <span>احداث النظام</span>
+                    </div>
+                </a>
+            </li>
+
         </ul>
     </nav>
 
