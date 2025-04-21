@@ -32,7 +32,7 @@ class AuthDonorController extends Controller
             ]);
 
 
-            $otp = rand(100000, 999999);
+            $otp = rand(1000, 9999);
             $expiresAt = now()->addMinutes(10);
 
 
@@ -256,7 +256,7 @@ class AuthDonorController extends Controller
                 ], 404);
             }
 
-            $otp = rand(100000, 999999);
+            $otp = rand(1000, 9999);
             $donor->otp = $otp;
             $donor->otp_expires_at = now()->addMinutes(10);
             $donor->save();
