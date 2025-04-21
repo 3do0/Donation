@@ -188,9 +188,7 @@ class AuthDonorController extends Controller
                 'password' => 'required|string|min:6|confirmed',
             ]);
 
-            $donor = Donor::where('email', $request->email)
-                ->where('otp', $request->otp)
-                ->first();
+            $donor = Donor::where('email', $request->email)->first();
 
             if (!$donor) {
                 return response()->json([
