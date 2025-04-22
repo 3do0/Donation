@@ -86,7 +86,6 @@
                                     <th class="custom-btn-color">رقم حساب البنك</th>
                                     <th class="custom-btn-color">ملف التصاريح</th>
                                     <th class="text-center custom-btn-color">رابط المؤسسـة</th>
-                                    <th class="custom-btn-color">الحالــة</th>
                                     <th class="custom-btn-color">تاريخ الانشاء</th>
                                     <th class="custom-btn-color">Action</th>
                                 </tr>
@@ -166,16 +165,6 @@
                                                 <h6 class="text-decoration-underline">{{ $request->web_url }}</h6>
                                             </a>
                                         </td>
-                                        {{-- <td class="text-center"><span class="shadow-none badge badge-warning">Suspended</span></td> --}}
-                                        <td class="align-middle text-center text-sm">
-                                            <label class="switch s-icons s-outline s-outline-info mr-2">
-                                                <input type="checkbox" role="switch" id="{{ $request->id }}"
-                                                    wire:click="toggleStatus({{ $request->id }})"
-                                                    {{ $request->status ? 'checked' : '' }} />
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </td>
-
                                         <td class="align-middle text-center">
                                             <span
                                                 class="text-warning text-sm font-weight-normal">{{ $request->created_at->format('Y-m-d') }}</span>

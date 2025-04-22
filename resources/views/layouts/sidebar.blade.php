@@ -65,10 +65,9 @@
                     </div>
                 </a>
             </li>
-            <li class="menu {{ request()->routeIs('org') ? 'active' : '' }}">
-                <a href="{{ route('org') }}" wire:navigate 
-                    {{ request()->routeIs('org') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
-                    class="dropdown-toggle">
+
+            <li class="menu">
+                <a href="#submenu" data-toggle="collapse" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -78,7 +77,23 @@
                         </svg>
                         <span>المؤسسات الخيرية</span>
                     </div>
+                    
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-chevron-right">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </div>
                 </a>
+                <ul class="collapse submenu list-unstyled" id="submenu" data-parent="#accordionExample">
+                    <li>
+                        <a href="{{route('org')}}" wire:navigate> المؤسسات الفعالة </a>
+                    </li>
+                    <li>
+                        <a href="{{route('join-requests')}}" wire:navigate>طلبات الانضمام</a>
+                    </li>
+                </ul>
             </li>
 
             <li class="menu {{ request()->routeIs('donors') ? 'active' : '' }}">

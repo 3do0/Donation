@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="utf-8">
@@ -10,11 +10,8 @@
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link id="theme-css" rel="stylesheet" href="{{ asset('assets/css/dark.css') }}">
     <link href="{{ asset('assets/css/auth.css') }}" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forms/switches.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <style>
         @font-face {
@@ -28,13 +25,28 @@
     </style>
 </head>
 
-<body class="form">
-    <div class="form-container">
-        {{ $slot }}
+<body>
+    <div class="floating-shapes">
+        <div class="shape heart"><i class="bi bi-heart-fill"></i></div>
+        <div class="shape hand"><i class="bi bi-hand-heart"></i></div>
+        <div class="shape gift"><i class="bi bi-gift"></i></div>
+        <div class="shape house"><i class="bi bi-house-heart"></i></div>
+        <div class="shape star"><i class="bi bi-star-fill"></i></div>
     </div>
 
-<script src="{{ asset('assets/js/auth.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <div class="gradient-bg">
+        <div class="noise-overlay"></div>
+        <div class="glow-effect"></div>
+        <main class="content-wrapper">
+            <div class="container">
+                {{ $slot }}
+
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ asset('assets/js/auth.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

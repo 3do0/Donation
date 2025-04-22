@@ -17,46 +17,38 @@
     </script>
 @endif
 
-    <div class="form-container outer">
-        <div class="form-form">
-            <div class="form-form-wrap">
-                <div class="form-container">
-                    <div class="form-content">
+<div class="welcome-content text-center">
+    <div class="logo-wrapper mb-4">
+        <div class="platform-icon">
+            <i class="bi bi-people-fill"></i>
+        </div>
+        <h2 class="platform-name">تكافل</h2>
+    </div>
 
-                        <h1 class="">استعادة كلمة المرور</h1>
-                        <p class="signup-link recovery">أدخل بريدك الإلكتروني، وستصلك التعليمات!</p>
-                        <form method="POST" action="{{ route('password.email') }}">
-                            @csrf
-                            <div class="form">
-                                <div id="email-field" class="field-wrapper input">
-                                    <div class="d-flex justify-content-between">
-                                        <label for="email">بريدك الألكتروني</label>
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign">
-                                        <circle cx="12" cy="12" r="4"></circle>
-                                        <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
-                                    </svg>
-                                    <input id="email" class="form-control" type="email" name="email"
-                                        :value="old('email')" required autofocus placeholder="Email">
-                                    <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger"  />
-                                </div>
+    <h1 class="welcome-text">استعادة كلمة المرور</h1>
+    <p class="welcome-description">أدخل بريدك الإلكتروني، وستصلك التعليمات!</p>
 
-                                <div class="d-sm-flex justify-content-between mt-2">
-                                    <div class="field-wrapper">
-                                        <button type="submit" class="btn btn-warning" value="">إعادة
-                                            تعيين</button>
-                                    </div>
-                                </div>
+    <div class="login-box">
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
 
-                            </div>
-                        </form>
+            <!-- Email Field -->
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input id="email" type="email" name="email" class="form-control"
+                    placeholder="البريد الإلكتروني" :value="old('email')" required autofocus>
+            </div>
+            <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger text-start" />
 
-                    </div>
+            <!-- Reset Button -->
+            <div class="mt-2">
+                <div class="field-wrapper">
+                    <button type="submit" class="btn btn-glow w-100 btn-small mb-3">إعادة تعيين</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
+</div>
+
 
 </x-guest-layout>
