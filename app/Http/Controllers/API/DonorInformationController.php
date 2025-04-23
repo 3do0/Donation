@@ -55,7 +55,7 @@ class DonorInformationController extends Controller
                 'status' => true,
                 'message' => 'تم التحديث بنجاح',
                 'donor' => $donor->refresh()
-            ]);
+            ], 200);
 
         } catch (ValidationException $e) {
             return response()->json([

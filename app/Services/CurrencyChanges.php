@@ -19,7 +19,7 @@ class CurrencyChanges
     public function convert($amount)
     {
         if ($this->currency === 'YER') {
-            return number_format($amount) . ' ﷼';
+            return number_format($amount) . ' ' . '﷼ يمني';
         }
 
         $converted = $amount / $this->rates[$this->currency];
@@ -30,7 +30,7 @@ class CurrencyChanges
     {
         $symbols = [
             'USD' => '$',
-            'SAR' => '﷼',
+            'SAR' => '﷼ سعودي',
             'YER' => '﷼ يمني'
         ];
 

@@ -144,6 +144,7 @@
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
+    {{-- <script src="{{ asset('assets/plugins/table/datatable/custom-datatable1.js') }}"></script> --}}
     @stack('scripts')
     @yield('PageJavaScribt')
     @include('layouts.components.modalInfo')

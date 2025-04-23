@@ -307,7 +307,7 @@ class AuthDonorController extends Controller
                 'message' => 'تم تسجيل الخروج بنجاح',
             ], 200);
         }
-
+        
         return response()->json([
             'message' => 'حدث خطأ في تسجيل الخروج',
         ], 401);

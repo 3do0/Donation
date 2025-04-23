@@ -17,20 +17,26 @@ class ReqeustForm extends Component
     public $case_type;
     public $beneficiaries_count;
     public $description;
-    public $currency='ريال يمني';
+    public $currency = 'ريال يمني';
     public $target_amount;
+    public function restForm()
+    {
+        $this->reset();
+        $this->resetErrorBag();
+        $this->resetValidation();
+    }
 
     protected $rules = [
         'case_name' => 'required|string|max:100',
-        'case_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:16000', 
-        'case_file' => 'required|mimes:pdf|max:10000', 
+        'case_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:16000',
+        'case_file' => 'required|mimes:pdf|max:10000',
         'case_type' => 'required|string|max:50',
         'beneficiaries_count' => 'required|integer|min:1',
-        'description' => 'nullable|string',
+        'description' => 'required|string',
         'currency' => 'required|string|max:30',
         'target_amount' => 'required|numeric|min:5000',
     ];
-    
+
 
     public function AddRequest()
     {
@@ -64,15 +70,17 @@ class ReqeustForm extends Component
             $this->SetOrganizationUserId();
             $this->reset();
 
+            $this->dispatch('pg:eventRefresh-case-requests-foovyd-table');
+            $this->dispatch('CaseCreated');
             $this->dispatch('swal:toast', [
                 'icon' => 'success',
                 'title' => 'تمت إضافة الطلب بنجاح',
             ]);
         } catch (\Exception $e) {
             $this->dispatch('swal:toast', [
-            'icon' => 'error',
-            'title' => 'حدث خطأ ما',
-        ]);
+                'icon' => 'error',
+                'title' => 'حدث خطأ ما' . $e->getMessage(),
+            ]);
         }
     }
 

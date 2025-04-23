@@ -12,9 +12,11 @@ use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
+use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
 final class OrganizationUsersTable extends PowerGridComponent
 {
+    use WithExport;
     public string $tableName = 'organization-table-biyc3g-table';
 
     public function setUp(): array

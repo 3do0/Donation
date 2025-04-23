@@ -17,6 +17,7 @@ use App\Livewire\OrganizationDashboard\Projects\Request\RequestIndex;
 
 use App\Livewire\OrganizationDashboard\Cases\Request\ReqeustForm as ReqeustFormCases;
 use App\Livewire\OrganizationDashboard\Cases\Request\ReqeustsList as RequestListCases;
+use App\Livewire\OrganizationDashboard\Donations\DonationsList;
 use App\Livewire\OrganizationDashboard\Projects\Projects\CompletedProject;
 use App\Livewire\OrganizationDashboard\Projects\Projects\CompletedProjectTable;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,9 @@ Route::prefix('organization')->name('organization.')->middleware(['auth:organiza
     Route::get('/cases/completed/case-table', CompletedCaseTable::class)->name('completed-case-table');      
     Route::get('/cases/completed/case-card', CompletedCase::class)->name('completed-case-card');
     Route::get('/projects/completed/project-card', CompletedProject::class)->name('completed-project-card');
+
+
+    Route::get('/donations', DonationsList::class)->name('donations');
     
 });
 

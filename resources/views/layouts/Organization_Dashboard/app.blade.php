@@ -29,7 +29,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @vite(['resources/js/app.js'])
-    
+    @livewireStyles
     </head>
     <body class="g-sidenav-show rtl bg-gray-100">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -59,6 +59,7 @@
 
     @include('layouts.components.modalInfo')
     @include('layouts.components.modalDeleteConfirm')
+    @livewireScripts
 <script>
   window.addEventListener('change-page-title', event => {
       document.title = event.detail.title;

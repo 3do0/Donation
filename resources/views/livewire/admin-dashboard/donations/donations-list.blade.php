@@ -152,7 +152,14 @@
                                                                     </div>
                                                                     <div class="mx-3">
                                                                         <div>
-                                                                            <strong>المبلغ:</strong> {{ number_format($item->amount) }} ريال
+                                                                            <strong>المبلغ:</strong> {{ number_format($item->amount) }} 
+                                                                            @if ($donation->currency == 'usd')
+                                                                                $
+                                                                            @elseif($donation->currency == 'sar')
+                                                                                ر.س
+                                                                            @else
+                                                                                ر.ي
+                                                                            @endif
                                                                         </div>
                                                                         @if ($item->donatable_type === \App\Models\OrganizationCase::class)
                                                                             <div class="mt-1 text-muted">

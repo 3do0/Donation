@@ -33,8 +33,7 @@ use App\Livewire\AdminDashboard\Users\UsersForm;
 use App\Livewire\AdminDashboard\Users\UsersIndex;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/stripe/webhook',[StripePaymentController::class , 'stripeWebhook'] );
-
+// Route::post('/stripe/webhook',[StripePaymentController::class , 'stripeWebhook'] );
 
 Route::post('/theme/toggle', function () {
     $currentTheme = session('theme', 'dark');

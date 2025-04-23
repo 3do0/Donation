@@ -10,7 +10,7 @@
                     <div class=" d-flex gap-2">
                         <a type="button"
                             class="btn btn-sm btn-dark btn-icon d-flex align-items-center  border border-white"
-                            href="{{ route('organization.projects-requests-form') }}" wire:navigate>
+                            href="" data-bs-toggle="modal" data-bs-target="#createProjectModal">
                             <span class="btn-inner--icon">
                                 <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24" fill="currentColor" class="d-block me-2">
@@ -32,4 +32,6 @@
         </div>
     </div>
     <livewire:components.modal-component />
+    <livewire:organization-dashboard.projects.request.request-edit />
+    <livewire:organization-dashboard.projects.request.request-form />
 </div>

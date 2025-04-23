@@ -25,11 +25,16 @@ class RequestForm extends Component
         'project_photo'        => 'required|image|mimes:jpeg,png,jpg,gif|max:16000',
         'project_file'         => 'required|mimes:pdf|max:10000',
         'beneficiaries_count'  => 'required|integer|min:1',
-        'description'          => 'nullable|string|max:1000',
+        'description'          => 'required|string|max:1000',
         'location'             => 'required|string|max:255',
         'contact_number'       => ['required', 'regex:/^7[0-9]{8}$/'],
         'whatsapp_number'      => ['required', 'regex:/^7[0-9]{8}$/'],
     ];
+    public function restForm(){
+        $this->reset();
+        $this->resetErrorBag(); 
+        $this->resetValidation(); 
+     }
     
 
     public function AddRequest()
@@ -63,11 +68,12 @@ class RequestForm extends Component
 
             $this->reset();
             $this->SetOrganizationUserId();
-
+            $this->dispatch('pg:eventRefresh-project-requests-table-p3fpi4-table');
             $this->dispatch('swal:toast', [
                 'icon' => 'success',
                 'title' => 'تمت إضافة الطلب بنجاح',
             ]);
+            $this->dispatch('ProjectCreated');
         } catch (\Exception $e) {
             $this->dispatch('swal:toast', [
             'icon' => 'error',

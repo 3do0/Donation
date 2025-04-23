@@ -136,7 +136,8 @@ final class ProjectRequestsTable extends PowerGridComponent
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
     {
-        $this->js('alert(' . $rowId . ')');
+        $this->dispatch('editproject', $rowId);
+        $this->dispatch('pg:eventRefresh-default'); 
     }
 
     public function actions(OrganizationProjectRequest $row): array
@@ -174,9 +175,16 @@ final class ProjectRequestsTable extends PowerGridComponent
                 ')
                 ->class('border-0 bg-transparent')
                 ->attributes([
-                    'x-on:click' => "confirmDelete({$row->id}, 'deleteUser')",
+                    'x-on:click' => "confirmDelete({$row->id}, 'deleteRequest')",
                 ])
         ];
+    }
+
+    protected $listeners = ['deleteRequest'];
+    public function deleteRequest($id)
+    {
+        OrganizationProjectRequest::findOrFail($id)->delete();
+        $this->dispatch('pg:eventRefresh-default'); 
     }
 
     /*
