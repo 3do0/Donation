@@ -15,7 +15,6 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
-        "openspout/openspout": "4.0",
         "paytabscom/laravel_paytabs": "^1.9",
         "power-components/livewire-powergrid": "^6.1",
         "pusher/pusher-php-server": "^7.2",
