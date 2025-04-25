@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationDashboard\Cases\Request;
 
+use App\Events\TestNotification;
 use App\Models\OrganizationCaseRequest;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
@@ -21,7 +22,16 @@ class ReqeustForm extends Component
     public $target_amount;
     public function restForm()
     {
-        $this->reset();
+        $this->reset(
+            'case_name',
+            'case_photo',
+            'case_file',
+            'case_type',
+            'beneficiaries_count',
+            'description',
+            'currency',
+            'target_amount'
+        );
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -67,8 +77,7 @@ class ReqeustForm extends Component
             ]);
 
 
-            $this->SetOrganizationUserId();
-            $this->reset();
+            $this->restForm();
 
             $this->dispatch('pg:eventRefresh-case-requests-foovyd-table');
             $this->dispatch('CaseCreated');
@@ -76,6 +85,10 @@ class ReqeustForm extends Component
                 'icon' => 'success',
                 'title' => 'تمت إضافة الطلب بنجاح',
             ]);
+            event(new TestNotification([
+                'author' => $case->case_name,
+                'title' => $case->target_amount,
+            ]));
         } catch (\Exception $e) {
             $this->dispatch('swal:toast', [
                 'icon' => 'error',
@@ -85,17 +98,12 @@ class ReqeustForm extends Component
     }
 
 
-    public function mount()
+    public function mount($organizationUserId)
     {
-        $this->SetOrganizationUserId();
+        $this->organization_user_id = $organizationUserId;
     }
 
-    public function SetOrganizationUserId()
-    {
-        if (auth('organization')->check()) {
-            $this->organization_user_id = auth('organization')->user()->id;
-        }
-    }
+
     public function render()
     {
         return view('livewire.organization-dashboard.cases.request.reqeust-form')->layout('layouts.Organization_Dashboard.app');

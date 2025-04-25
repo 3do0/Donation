@@ -67,7 +67,7 @@
             </li>
 
             <li class="menu">
-                <a href="#submenu" data-toggle="collapse" class="dropdown-toggle">
+                <a href="#organization" data-toggle="collapse" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -86,7 +86,7 @@
                         </svg>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled" id="submenu" data-parent="#accordionExample">
+                <ul class="collapse submenu list-unstyled" id="organization" data-parent="#accordionExample">
                     <li>
                         <a href="{{route('org')}}" wire:navigate> المؤسسات الفعالة </a>
                     </li>

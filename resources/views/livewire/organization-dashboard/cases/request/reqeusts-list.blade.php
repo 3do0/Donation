@@ -32,6 +32,6 @@
         </div>
     </div>
     <livewire:components.modal-component />
-    <livewire:organization-dashboard.cases.request.request-edit />
-    <livewire:organization-dashboard.cases.request.reqeust-form />
+    <livewire:organization-dashboard.cases.request.request-edit :organizationUserId="auth('organization')->user()->id" />
+    <livewire:organization-dashboard.cases.request.reqeust-form :organizationUserId="auth('organization')->user()->id" />
 </div>

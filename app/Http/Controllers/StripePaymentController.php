@@ -86,7 +86,7 @@ class StripePaymentController extends Controller
                 'cancel_url' => env('FRONTEND_URL') . '/payment-failed',
             ]);
 
-            return response()->json(['sessionId' => $session->id]);
+            return response()->json(['url' => $session->url]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

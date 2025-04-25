@@ -25,8 +25,8 @@ final class OrganizationUsersTable extends PowerGridComponent
 
 
         return [
-            PowerGrid::exportable(fileName: 'my-export-file')
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+            PowerGrid::exportable(fileName: 'my-export-file') 
+            ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
 
             PowerGrid::header() 
                 ->showSearchInput()

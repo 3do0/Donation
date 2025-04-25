@@ -149,6 +149,7 @@
     @yield('PageJavaScribt')
     @include('layouts.components.modalInfo')
     @include('layouts.components.modalDeleteConfirm')
+    @include('layouts.components.pusherNotification1')
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 </body>

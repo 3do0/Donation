@@ -9,13 +9,16 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
+use PowerComponents\LivewirePowerGrid\Components\SetUp\Exportable;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
+use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
 final class OrganizationDonationTable extends PowerGridComponent
 {
+    use WithExport;
     public string $tableName = 'organization-donation-table-g3u37v-table';
 
     public function setUp(): array
@@ -23,6 +26,10 @@ final class OrganizationDonationTable extends PowerGridComponent
         $this->showCheckBox();
 
         return [
+            
+            PowerGrid::exportable(fileName: 'my-export-file') 
+            ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
+
             PowerGrid::header()
                 ->showSearchInput(),
             PowerGrid::footer()

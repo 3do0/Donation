@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationDashboard\Projects\Request;
 
+use App\Events\TestNotification;
 use App\Models\OrganizationProjectRequest;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
@@ -30,8 +31,17 @@ class RequestForm extends Component
         'contact_number'       => ['required', 'regex:/^7[0-9]{8}$/'],
         'whatsapp_number'      => ['required', 'regex:/^7[0-9]{8}$/'],
     ];
-    public function restForm(){
-        $this->reset();
+    public function resetForm(){
+        $this->reset(
+            'project_name',
+            'project_photo',
+            'project_file',
+            'beneficiaries_count',
+            'description',
+            'location',
+            'contact_number',
+            'whatsapp_number'
+        );
         $this->resetErrorBag(); 
         $this->resetValidation(); 
      }
@@ -39,7 +49,6 @@ class RequestForm extends Component
 
     public function AddRequest()
     {
-        // dd( $this->organization_id);
         $this->validate();
 
         $photoPath = null;
@@ -66,14 +75,17 @@ class RequestForm extends Component
                 'whatsapp_number' => $this->whatsapp_number,
             ]);
 
-            $this->reset();
-            $this->SetOrganizationUserId();
+            $this->resetForm();
             $this->dispatch('pg:eventRefresh-project-requests-table-p3fpi4-table');
+            $this->dispatch('ProjectCreated');
             $this->dispatch('swal:toast', [
                 'icon' => 'success',
                 'title' => 'تمت إضافة الطلب بنجاح',
             ]);
-            $this->dispatch('ProjectCreated');
+            event(new TestNotification([
+                'author' => $project->organization_user->organization->name,
+                'title' => "إضافة طلب جديد",
+            ]));
         } catch (\Exception $e) {
             $this->dispatch('swal:toast', [
             'icon' => 'error',
@@ -82,16 +94,9 @@ class RequestForm extends Component
         }
     }
 
-    public function mount()
+    public function mount($organizationUserId)
     {
-        $this->SetOrganizationUserId();
-    }
-
-    public function SetOrganizationUserId()
-    {
-        if (auth('organization')->check()) {
-            $this->organization_user_id = auth('organization')->user()->id;
-        }
+        $this->organization_user_id = $organizationUserId;
     }
     public function render()
     {
