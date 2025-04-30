@@ -40,4 +40,15 @@ return [
         ],
     ],
 
+    'firebase' => [
+        'project_id' => env('takaful-41ff0'),
+        'private_key' => env('82f64a8946bf9ec25d7a1f6179c8fab787ab043c'),
+        'client_email' => env('firebase-adminsdk-fbsvc@takaful-41ff0.iam.gserviceaccount.com'),
+    ],
+      
+    'fcm' => [
+        'project_id' => env('FCM_PROJECT_ID', 'takaful-41ff0'),
+        'credentials' => env('FCM_CREDENTIALS_PATH', 'takaful-41ff0-firebase-adminsdk-fbsvc-82f64a8946.json'), // المسار لملف JSON
+    ],
+
 ];

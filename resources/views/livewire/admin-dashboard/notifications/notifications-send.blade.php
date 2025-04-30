@@ -26,8 +26,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">إرسال</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
+                                <button type="submit" class="btn btn-warning">إرسال</button>
+                                <button type="button" class="btn btn-dark" data-dismiss="modal">إلغاء</button>
                             </div>
                         </form>
                     </div>

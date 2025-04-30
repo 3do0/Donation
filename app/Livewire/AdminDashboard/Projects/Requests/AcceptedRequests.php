@@ -15,6 +15,11 @@ class AcceptedRequests extends Component
         $project = OrganizationProject::find($projectId);
         $project->status = 'stopped';
         $project->save();
+        $this->dispatch('swal:toast', [
+            'icon' => 'success',
+            'title' => 'تم ايقاف المشروع بنجاح',
+        ]);
+        $this->refreshProjects();
     }
 
     public function continueProject($projectId)
@@ -22,10 +27,20 @@ class AcceptedRequests extends Component
         $project = OrganizationProject::find($projectId);
         $project->status = 'in_progress';
         $project->save();
+        $this->dispatch('swal:toast', [
+            'icon' => 'success',
+            'title' => 'تم استكمال المشروع بنجاح',
+        ]);
+        $this->refreshProjects();
+    }
+
+    public function refreshProjects()
+    {
+        $this->projects = OrganizationProject::with('organization_user.organization')->get();
     }
     public function mount()
     {
-        $this->projects = OrganizationProject::with('organization_user.organization')->get();
+        $this->refreshProjects();
     }
     
     public function render()

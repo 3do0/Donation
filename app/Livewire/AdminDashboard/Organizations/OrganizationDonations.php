@@ -8,6 +8,7 @@ use Livewire\Component;
 class OrganizationDonations extends Component
 {
     public $donations;
+    
     public function mount()
     {
         $this->refreshDonations();

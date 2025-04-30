@@ -1,6 +1,6 @@
 <div class="row row-cols-1 row-cols-md-3 g-4 mt-4 mx-2">
     @foreach ($requests as $request)
-    <div class="col">
+    <div class="col mt-4">
         <div class="card" style="min-height: 400px;">
             <img src="{{ asset('storage/' . $request->case_photo) }}" class="card-img-top" alt="صورة المشروع"
                 style="object-fit: cover; height: 200px;">

@@ -34,7 +34,6 @@ class PartnersForm extends Component
         'donation_amount' => 'nullable|numeric|min:0',
         'start_date' => 'nullable|date',
         'end_date' => 'nullable|date|after:start_date',
-        'status' => 'boolean',
     ];
 
     public function registerPartner()

@@ -12,6 +12,7 @@ use App\Mail\DonationSuccessful;
 use App\Models\CurrencyRate;
 use App\Models\DonationItem;
 use App\Models\Donor;
+use App\Models\Notification;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Stripe;
 use Stripe\Webhook;
@@ -20,77 +21,97 @@ class StripePaymentController extends Controller
 {
 
     public function CreateSession(Request $request)
-    {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+{
+    Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        try {
-            if (!$request->has('items') || !is_array($request->items)) {
-                return response()->json(['error' => 'الرجاء إرسال العناصر (items) بشكل صحيح'], 400);
-            }
-
-            $hasCase = false;
-            foreach ($request->items as $item) {
-                if (isset($item['case_number'])) {
-                    $hasCase = true;
-                    break;
-                }
-            }
-
-            if (!$hasCase) {
-                return response()->json(['error' => 'يجب أن يحتوي التبرع على حالة واحدة على الأقل'], 400);
-            }
-
-            $lineItems = [];
-
-            foreach ($request->items as $item) {
-                $metadata = [];
-
-                if (isset($item['case_number'])) {
-                    $case = OrganizationCase::find($item['case_number']);
-                    if (!$case) {
-                        return response()->json(['error' => 'معرف الحالة غير صحيح'], 404);
-                    }
-                    $metadata['case_number'] = $item['case_number'];
-                }
-
-                if (isset($item['donor_id'])) {
-                    $donor = Donor::find($item['donor_id']);
-                    if (!$donor) {
-                        return response()->json(['error' => 'معرف المتبرع غير صحيح'], 404);
-                    }
-                    $metadata['donor_id'] = $item['donor_id'];
-                }
-
-                if (isset($item['is_platform']) && $item['is_platform']) {
-                    $metadata['is_platform'] = 'true';
-                }
-
-                $lineItems[] = [
-                    'price_data' => [
-                        'currency' => strtolower($item['currency']),
-                        'product_data' => [
-                            'name' => $item['name'],
-                            'metadata' => $metadata,
-                        ],
-                        'unit_amount' => $item['amount'] * 100,
-                    ],
-                    'quantity' => 1,
-                ];
-            }
-
-            $session = \Stripe\Checkout\Session::create([
-                'payment_method_types' => ['card'],
-                'line_items' => $lineItems,
-                'mode' => 'payment',
-                'success_url' => env('FRONTEND_URL') . '/payment-success?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => env('FRONTEND_URL') . '/payment-failed',
-            ]);
-
-            return response()->json(['url' => $session->url]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+    try {
+        if (!$request->has('items') || !is_array($request->items)) {
+            return response()->json(['error' => 'الرجاء إرسال العناصر (items) بشكل صحيح'], 400);
         }
+
+        $hasCase = false;
+        foreach ($request->items as $item) {
+            if (isset($item['case_number'])) {
+                $hasCase = true;
+                break;
+            }
+        }
+
+        if (!$hasCase) {
+            return response()->json(['error' => 'يجب أن يحتوي التبرع على حالة واحدة على الأقل'], 400);
+        }
+
+        $lineItems = [];
+        $customerEmail = null;
+
+        foreach ($request->items as $item) {
+            $metadata = [];
+
+            if (isset($item['case_number'])) {
+                $case = OrganizationCase::find($item['case_number']);
+                if (!$case) {
+                    return response()->json(['error' => 'معرف الحالة غير صحيح'], 404);
+                }
+                $metadata['case_number'] = $item['case_number'];
+            }
+
+            if (isset($item['donor_id'])) {
+                $donor = Donor::where('is_active', true)->find($item['donor_id']);
+                if (!$donor) {
+                    return response()->json(['error' => 'معرف المتبرع غير صحيح'], 404);
+                }
+                $metadata['donor_id'] = $item['donor_id'];
+                if ($donor->email) {
+                    $customerEmail = $donor->email;
+                }
+            }
+
+            if (isset($item['is_platform']) && $item['is_platform']) {
+                $metadata['is_platform'] = 'true';
+            }
+
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => strtolower($item['currency']),
+                    'product_data' => [
+                        'name' => $item['name'],
+                        'metadata' => $metadata,
+                    ],
+                    'unit_amount' => $item['amount'] * 100,
+                ],
+                'quantity' => 1,
+            ];
+        }
+
+        $platform = $request->get('platform', 'react');
+        if ($platform === 'flutter') {
+            $successUrl = 'http://127.0.0.1:8000/';
+            $cancelUrl = 'http://127.0.0.1:8000/';
+        } else {
+            $successUrl = env('FRONTEND_URL') . '/payment-success?session_id={CHECKOUT_SESSION_ID}';
+            $cancelUrl = env('FRONTEND_URL') . '/payment-failed';
+        }
+
+        $sessionData = [
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => $successUrl,
+            'cancel_url' => $cancelUrl,
+        ];
+
+        if ($customerEmail) {
+            $sessionData['customer_email'] = $customerEmail;
+        }
+
+        $session = \Stripe\Checkout\Session::create($sessionData);
+
+        return response()->json(['url' => $session->url]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
 
     public function stripeWebhook(Request $request)
     {
@@ -100,21 +121,17 @@ class StripePaymentController extends Controller
         $sig_header = $request->header('Stripe-Signature');
 
         try {
-            // التحقق من صحة التوقيع باستخدام Stripe
             $event = Webhook::constructEvent(
                 $payload,
                 $sig_header,
                 $endpoint_secret
             );
         } catch (SignatureVerificationException $e) {
-            // إذا كانت التوقيع غير صالح
             return response('Webhook signature verification failed.', 400);
         } catch (\Exception $e) {
-            // التعامل مع الأخطاء الأخرى
             return response('Something went wrong.', 500);
         }
 
-        // إذا كانت عملية التحقق ناجحة، قم بمعالجة الحدث
         switch ($event->type) {
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object;
@@ -233,6 +250,13 @@ class StripePaymentController extends Controller
             $donor = Donor::find($donorId);
             if ($donor && !empty($donor->email)) {
                 try {
+                    Notification::create([
+                        'donor_id' => $donor->id, 
+                        'title' => 'تم التبرع بنجاح',
+                        'message' => 'شكراً لك! تم التبرع بمبلغ ' .$donation->total_amount ,
+                        'type' => 'تبرع',
+                    ]);
+
                     $details = [
                         'donor_name' => $donor->name ?? 'متبرع مجهول',
                         'amount' => $donation->total_amount,

@@ -10,6 +10,7 @@ use App\Livewire\AdminDashboard\Cases\Requests\AcceptedRequestsCards as CasesAcc
 use App\Livewire\AdminDashboard\Cases\Requests\AdditionalRequestsForm;
 use App\Livewire\AdminDashboard\Cases\Requests\RefinedRequests as CasesRefined;
 use App\Livewire\AdminDashboard\Cases\Requests\Requests as CasesRequests;
+use App\Livewire\AdminDashboard\CurrenciesList;
 // use App\Livewire\AdminDashboard\Cases\Requests\AdditionalRequestsIndex;
 // use App\Livewire\AdminDashboard\Cases\Responses\AdditionalResponses;
 use App\Livewire\AdminDashboard\Donations\DonationsList;
@@ -17,6 +18,7 @@ use App\Livewire\AdminDashboard\Donations\DonationsReport;
 use App\Livewire\AdminDashboard\Donors\DonorsList;
 use App\Livewire\AdminDashboard\Logs;
 use App\Livewire\AdminDashboard\Main;
+use App\Livewire\AdminDashboard\Notifications\NotificationsList;
 use App\Livewire\AdminDashboard\Organizations\JoinRequests\JoinRequsts;
 use App\Livewire\AdminDashboard\Organizations\OrganizationsForm;
 use App\Livewire\AdminDashboard\Organizations\OrganizationsIndex;
@@ -69,5 +71,10 @@ Route::middleware(['auth:admin', EnsureUserIsActive::class])->group(function () 
     Route::get('/projects/accpeted-request', AcceptedRequests::class)->name('accepted-project');
     Route::get('/projects/accpeted-request-card', AcceptedRequestsCards::class)->name('accepted-project-card');
 
+
+
+    Route::get('/notifications', NotificationsList::class)->name('notification');
     Route::get('/system-logs', Logs::class)->name('logs');
+
+    Route::get('/currencies-rate', CurrenciesList::class)->name('currncies-list');
 });

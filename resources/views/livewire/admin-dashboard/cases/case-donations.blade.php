@@ -234,6 +234,33 @@
     </div>
 </div>
 
+
 @push('scripts')
     <script src="{{ asset('assets/js/invoice.js') }}"></script>
+    <script>
+        function runInvoiceIfExists() {
+            if (typeof window.initInvoice === 'function') {
+                window.initInvoice();
+            }
+        }
+
+        document.addEventListener('livewire:navigated', () => {
+            requestAnimationFrame(() => {
+                runInvoiceIfExists();
+            });
+        });
+
+        document.addEventListener('livewire:init', () => {
+            window.Livewire.hook('commit', ({ succeed }) => {
+                succeed(() => {
+                    requestAnimationFrame(() => {
+                        runInvoiceIfExists();
+                    });
+                });
+            });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            runInvoiceIfExists();
+        });
+    </script>
 @endpush

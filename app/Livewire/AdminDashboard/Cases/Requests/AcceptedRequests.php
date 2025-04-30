@@ -14,6 +14,11 @@ class AcceptedRequests extends Component
         $case = OrganizationCase::find($caseId);
         $case->status = 'stopped';
         $case->save();
+        $this->dispatch('swal:toast', [
+            'icon' => 'success',
+            'title' => 'تم ايقاف الحالة بنجاح',
+        ]);
+        $this->refreshCases();
     }
 
     public function continueCase($caseId)
@@ -21,10 +26,20 @@ class AcceptedRequests extends Component
         $case = OrganizationCase::find($caseId);
         $case->status = 'in_progress';
         $case->save();
+        $this->dispatch('swal:toast', [
+            'icon' => 'success',
+            'title' => 'تم استكمال الحالة بنجاح',
+        ]);
+        $this->refreshCases();
+    }
+
+    public function refreshCases()
+    {
+        $this->cases = OrganizationCase::with('organization_user.organization')->get();
     }
     public function mount()
     {
-        $this->cases = OrganizationCase::with('organization_user.organization')->get();
+        $this->refreshCases();
     }
     
     public function render()

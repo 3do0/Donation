@@ -144,7 +144,12 @@
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
-    {{-- <script src="{{ asset('assets/plugins/table/datatable/custom-datatable1.js') }}"></script> --}}
+
+    <script src="{{ asset('assets/plugins/table/datatable/button-ext/dataTables.buttons.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/table/datatable/button-ext/jszip.min.js')}}"></script>    
+    <script src="{{ asset('assets/plugins/table/datatable/button-ext/buttons.html5.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/table/datatable/button-ext/buttons.print.min.js')}}"></script>
+    <script src="{{ asset('assets/js/invoice.js') }}"></script>
     @stack('scripts')
     @yield('PageJavaScribt')
     @include('layouts.components.modalInfo')

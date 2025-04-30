@@ -7,6 +7,7 @@ use App\Http\Controllers\API\DeviceTokenController;
 use App\Http\Controllers\API\DonorCommentsController;
 use App\Http\Controllers\API\DonorDonationsController;
 use App\Http\Controllers\API\DonorInformationController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\API\OrganizationRequestController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\TakafulPlatform;
@@ -29,12 +30,12 @@ Route::get('/takaful-partners', [TakafulPlatform::class, 'TakafulPartners']);
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/donor/donations', [DonorDonationsController::class, 'donorDonations']);
-});
-
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/donor/donations-summary', [DonorDonationsController::class, 'donorSummary']);
     Route::patch('donors/update-profile',[DonorInformationController::class,'updateProfile']);
+    
+    Route::get('/donor/donations', [DonorDonationsController::class, 'donorDonations']);
+    Route::get('/donor/donations-summary', [DonorDonationsController::class, 'donorSummary']);
+
+    Route::get('/donor/notifications', [NotificationController::class, 'getNotifications']);
 });
 
 Route::post('/donors/register', [AuthDonorController::class, 'store']);
@@ -62,8 +63,6 @@ Route::post('/projects/increase-visitors', [ProjectController::class, 'visitorsI
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
-
 
 
 Route::post('/stripe/webhook',[StripePaymentController::class , 'stripeWebhook'] );
