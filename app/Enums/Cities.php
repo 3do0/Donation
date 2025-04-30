@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum Cities: string
 {
-    case SANAA = 'صنعاء';
+    case SANAA = 'صنعاء'; 
     case ADEN = 'عدن';
     case TAIZ = 'تعز';
     case ALHUDAYDAH = 'الحديدة';
