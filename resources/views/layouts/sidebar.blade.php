@@ -35,9 +35,9 @@
 
             <li class="menu menu-heading">
                 <div class="heading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                        class="feather feather-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-circle">
                         <circle cx="12" cy="12" r="10"></circle>
                     </svg>
                     <span>مستخدمي النظام</span>
@@ -45,7 +45,7 @@
             </li>
 
             <li>
-                <a href="#"  aria-expanded="true" class="d-hidden"></a>
+                <a href="#" aria-expanded="true" class="d-hidden"></a>
             </li>
 
             <li class="menu {{ request()->routeIs('users') ? 'active' : '' }}">
@@ -77,7 +77,7 @@
                         </svg>
                         <span>المؤسسات الخيرية</span>
                     </div>
-                    
+
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -88,10 +88,10 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="organization" data-parent="#accordionExample">
                     <li>
-                        <a href="{{route('org')}}" wire:navigate> المؤسسات الفعالة </a>
+                        <a href="{{ route('org') }}" wire:navigate> المؤسسات الفعالة </a>
                     </li>
                     <li>
-                        <a href="{{route('join-requests')}}" wire:navigate>طلبات الانضمام</a>
+                        <a href="{{ route('join-requests') }}" wire:navigate>طلبات الانضمام</a>
                     </li>
                 </ul>
             </li>
@@ -117,9 +117,9 @@
 
             <li class="menu menu-heading">
                 <div class="heading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                        class="feather feather-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-circle">
                         <circle cx="12" cy="12" r="10"></circle>
                     </svg>
                     <span>عمليات المنظمة</span>
@@ -150,12 +150,12 @@
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-heart me-2">
                             <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1
-                                    a5.5 5.5 0 0 0-7.8 7.8l1 1 7.8 7.8 
+                                    a5.5 5.5 0 0 0-7.8 7.8l1 1 7.8 7.8
                                     7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"></path>
                         </svg>
                         <span>الحالات الخيرية</span>
                     </div>
-                    
+
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -165,20 +165,26 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="submenu" data-parent="#accordionExample">
+                    @php
+                        $cases_count = \App\Models\OrganizationCaseRequest::where('approval_status', 'pending')->count();
+                    @endphp
                     <li>
-                        <a href="{{route('cases-request')}}" wire:navigate> الطلبات المعلقة </a>
+                        <a href="{{ route('cases-request') }}" wire:navigate>
+                            الطلبات المعلقة<span class="m-auto text-warning">({{ $cases_count }})</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="{{ route('refined-case') }}" wire:navigate> الطلبات المرفوضة</a>
                     </li>
                     <li>
-                        <a href="{{route('refined-case')}}" wire:navigate> الطلبات المرفوضة</a>
+                        <a href="{{ route('accepted_case') }}" wire:navigate> الحالات المقبولة </a>
                     </li>
                     <li>
-                        <a href="{{route('accepted_case')}}" wire:navigate> الحالات المقبولة </a>
+                        <a href="{{ route('accepted-case-card') }}" wire:navigate> الحالات المفعلة </a>
                     </li>
                     <li>
-                        <a href="{{route('accepted-case-card')}}" wire:navigate> الحالات المفعلة </a>
-                    </li>
-                    <li>
-                        <a href="{{route('completed_case')}}" wire:navigate> الحالات المكتملة </a>
+                        <a href="{{ route('completed_case') }}" wire:navigate> الحالات المكتملة </a>
                     </li>
                 </ul>
             </li>
@@ -190,13 +196,15 @@
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-package">
                             <path d="M16.5 9.4L7.5 4.21"></path>
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73L13 2.27a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z"></path>
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73L13 2.27a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z">
+                            </path>
                             <path d="M3.27 6.96L12 12.01l8.73-5.05"></path>
                             <line x1="12" y1="22.08" x2="12" y2="12"></line>
                         </svg>
                         <span>مشاريع المنظمات</span>
                     </div>
-                    
+
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -206,29 +214,34 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="projects-submenu" data-parent="#accordionExample">
+                    @php
+                        $cases_count = \App\Models\OrganizationProjectRequest::where('approval_status', 'pending')->count();
+                    @endphp
                     <li>
-                        <a href="{{route('projects-request')}}" wire:navigate> الطلبات المعلقة </a>
+                        <a href="{{ route('projects-request') }}" wire:navigate>
+                            الطلبات المعلقة<span class="m-auto text-warning">({{ $cases_count }})</span>
+                        </a>
                     </li>
                     <li>
-                        <a href="{{route('refined-project')}}" wire:navigate> الطلبات المرفوضة</a>
+                        <a href="{{ route('refined-project') }}" wire:navigate> الطلبات المرفوضة</a>
                     </li>
                     <li>
-                        <a href="{{route('accepted-project')}}" wire:navigate> المشاريع المقبولة </a>
+                        <a href="{{ route('accepted-project') }}" wire:navigate> المشاريع المقبولة </a>
                     </li>
                     <li>
-                        <a href="{{route('accepted-project-card')}}" wire:navigate> المشاريع المفعلة </a>
+                        <a href="{{ route('accepted-project-card') }}" wire:navigate> المشاريع المفعلة </a>
                     </li>
                     <li>
-                        <a href="{{route('completed_project')}}" wire:navigate> المشاريع المنتهية </a>
+                        <a href="{{ route('completed_project') }}" wire:navigate> المشاريع المنتهية </a>
                     </li>
                 </ul>
             </li>
 
             <li class="menu menu-heading">
                 <div class="heading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                        class="feather feather-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-circle">
                         <circle cx="12" cy="12" r="10"></circle>
                     </svg>
                     <span>تقارير عامة</span>
@@ -240,16 +253,14 @@
                     {{ request()->routeIs('donations-report') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                            width="24" height="24" viewBox="0 0 24 24" 
-                            fill="none" stroke="currentColor" stroke-width="2" 
-                            stroke-linecap="round" stroke-linejoin="round" 
-                            class="feather feather-file-text me-2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
-                            <line x1="16" y1="13" x2="8" y2="13"/>
-                            <line x1="16" y1="17" x2="8" y2="17"/>
-                            <line x1="10" y1="9" x2="8" y2="9"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-file-text me-2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                            <line x1="10" y1="9" x2="8" y2="9" />
                         </svg>
                         <span>تقارير التبرعات</span>
                     </div>
@@ -260,9 +271,9 @@
                     {{ request()->routeIs('case-donations') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-layers me-2" width="20" height="20" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-layers me-2" width="20"
+                            height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                             <polyline points="2 17 12 22 22 17"></polyline>
                             <polyline points="2 12 12 17 22 12"></polyline>
@@ -289,17 +300,16 @@
 
             <li class="menu menu-heading">
                 <div class="heading">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
-                        class="feather feather-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-circle">
                         <circle cx="12" cy="12" r="10"></circle>
                     </svg>
                     <span>إضافي</span>
                 </div>
             </li>
             <li class="menu ">
-                <a href="{{route('notification')}}"  wire:navigate
-                    class="dropdown-toggle">
+                <a href="{{ route('notification') }}" wire:navigate class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -317,9 +327,9 @@
                     {{ request()->routeIs('partners') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-briefcase me-2" width="20" height="20" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-briefcase me-2" width="20"
+                            height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                             <path d="M16 3h-8v4h8V3z"></path>
                         </svg>
@@ -349,14 +359,12 @@
                     {{ request()->routeIs('logs') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" 
-                            width="24" height="24" viewBox="0 0 24 24" 
-                            fill="none" stroke="currentColor" stroke-width="2" 
-                            stroke-linecap="round" stroke-linejoin="round" 
-                            class="feather feather-monitor">
-                            <rect x="3" y="4" width="18" height="12" rx="2" ry="2"/>
-                            <line x1="8" y1="21" x2="16" y2="21"/>
-                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-monitor">
+                            <rect x="3" y="4" width="18" height="12" rx="2" ry="2" />
+                            <line x1="8" y1="21" x2="16" y2="21" />
+                            <line x1="12" y1="17" x2="12" y2="21" />
                         </svg>
                         <span>احداث النظام</span>
                     </div>

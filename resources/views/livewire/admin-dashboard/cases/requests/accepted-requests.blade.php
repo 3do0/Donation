@@ -64,12 +64,12 @@
                                         <td class="text-center text-white"> {{ $case->id }} </td>
                                         <td class="text-center text-white">{{ $case->case_name }}</td>
                                         <td class="text-center text-white">{{ $case->organization_user->name }}</td>
-                                        <td class="text-center text-white">{{ $case->organization_user->organization->name }}</td>
+                                        <td class="text-center text-white">
+                                            {{ $case->organization_user->organization->name }}</td>
                                         <td class="">
                                             @if ($case->case_photo)
                                                 <a class="profile-img"
-                                                    href="{{ asset('storage/' . $case->case_photo) }}"
-                                                    target="_blank">
+                                                    href="{{ asset('storage/' . $case->case_photo) }}" target="_blank">
                                                     <img src="{{ asset('storage/' . $case->case_photo) }}"
                                                         alt="شعار المؤسسة">
                                                 </a>
@@ -91,20 +91,25 @@
                                             @endif
                                         </td>
                                         @inject('currency', 'App\Services\CurrencyChanges')
-                                        <td class="text-center text-info">{{ $currency->convert($case->target_amount ) }}</td>
-                                        <td class="text-center text-success">{{ $currency->convert($case->raised_amount ) }}</td>
-                                        <td class="text-center text-warning">{{ $currency->convert( max($case->target_amount - $case->raised_amount, 0)) }}</td>
+                                        <td class="text-center text-info">
+                                            {{ $currency->convert($case->target_amount) }}</td>
+                                        <td class="text-center text-success">
+                                            {{ $currency->convert($case->raised_amount) }}</td>
+                                        <td class="text-center text-warning">
+                                            {{ $currency->convert(max($case->target_amount - $case->raised_amount, 0)) }}
+                                        </td>
                                         <td class="text-center text-white">{{ $case->currency }}</td>
-                                        <td class="text-center"> <span class="badge outline-badge-info">{{ $case->case_type }}</span></td>
+                                        <td class="text-center"> <span
+                                                class="badge outline-badge-info">{{ $case->case_type }}</span></td>
                                         <td class="text-center text-white">{{ $case->beneficiaries_count }}</td>
-                                        <td class="text-center text-info">{{ $case->visitors_count}}</td>
+                                        <td class="text-center text-info">{{ $case->visitors_count }}</td>
                                         <td class="text-center">
                                             @if ($case->status == 'completed')
-                                            <span class="badge outline-badge-success">مكتملة</span>
+                                                <span class="badge outline-badge-success">مكتملة</span>
                                             @elseif ($case->status == 'in_progress')
-                                            <span class="badge outline-badge-info">مستمرة</span>
+                                                <span class="badge outline-badge-info">مستمرة</span>
                                             @else
-                                            <span class="badge outline-badge-danger">موقفة</span>
+                                                <span class="badge outline-badge-danger">موقفة</span>
                                             @endif
                                         </td>
                                         <td class="text-center text-warning">
@@ -127,18 +132,20 @@
                                         </td>
                                         <td class="text-center">
                                             @if ($case->status == 'in_progress')
-                                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#stoping-{{ $case->id }}">
-                                               تعطيل
-                                            </button>
-                                             @elseif ($case->status == 'stopped')
-                                             <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#continue-{{ $case->id }}">
-                                                تشغيل
-                                             </button>   
+                                                <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#stoping-{{ $case->id }}">
+                                                    تعطيل
+                                                </button>
+                                            @elseif ($case->status == 'stopped')
+                                                <button class="btn btn-info btn-sm" data-toggle="modal"
+                                                    data-target="#continue-{{ $case->id }}">
+                                                    تشغيل
+                                                </button>
                                             @endif
                                         </td>
 
-                                        <div id="stoping-{{ $case->id }}" class="modal animated fadeInLeft custo-fadeInLeft"
-                                            role="dialog">
+                                        <div id="stoping-{{ $case->id }}"
+                                            class="modal animated fadeInLeft custo-fadeInLeft" role="dialog">
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
@@ -146,9 +153,10 @@
                                                         <h5 class="modal-title">رفض المشروع</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
-                                                            <svg aria-hidden="true" xmlns="http://www.w3.request/2000/svg"
-                                                                width="24" height="24" viewBox="0 0 24 24"
-                                                                fill="none" stroke="currentColor" stroke-width="2"
+                                                            <svg aria-hidden="true"
+                                                                xmlns="http://www.w3.request/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
                                                                 stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-x">
                                                                 <line x1="18" y1="6" x2="6"
@@ -173,8 +181,8 @@
                                         </div>
 
 
-                                        <div id="continue-{{ $case->id }}" class="modal animated fadeInLeft custo-fadeInLeft"
-                                            role="dialog">
+                                        <div id="continue-{{ $case->id }}"
+                                            class="modal animated fadeInLeft custo-fadeInLeft" role="dialog">
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
@@ -182,9 +190,10 @@
                                                         <h5 class="modal-title">رفض المشروع</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
-                                                            <svg aria-hidden="true" xmlns="http://www.w3.request/2000/svg"
-                                                                width="24" height="24" viewBox="0 0 24 24"
-                                                                fill="none" stroke="currentColor" stroke-width="2"
+                                                            <svg aria-hidden="true"
+                                                                xmlns="http://www.w3.request/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
                                                                 stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-x">
                                                                 <line x1="18" y1="6" x2="6"
@@ -207,7 +216,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -222,59 +231,61 @@
 </div>
 
 @push('scripts')
-<script>
-    function initDataTableIfExists() {
-        let tableElement = $('#style-1');
-        if (tableElement.length) {
-            if ($.fn.DataTable.isDataTable(tableElement)) {
-                tableElement.DataTable().destroy();
+    <script>
+        function initDataTableIfExists() {
+            let tableElement = $('#style-1');
+            if (tableElement.length) {
+                if ($.fn.DataTable.isDataTable(tableElement)) {
+                    tableElement.DataTable().destroy();
+                }
+                const dt = tableElement.DataTable({
+                    headerCallback: function(e, a, t, n, s) {
+                        e.getElementsByTagName("th")[0].innerHTML =
+                            '<label class="new-control new-checkbox checkbox-outline-info m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>';
+                    },
+                    columnDefs: [{
+                        targets: 0,
+                        width: "30px",
+                        orderable: false,
+                        render: function(e, a, t, n) {
+                            return '<label class="new-control new-checkbox checkbox-outline-info m-auto">\n<input type="checkbox" class="new-control-input child-chk select-customers-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>';
+                        }
+                    }],
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sPrevious": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>',
+                            "sNext": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>'
+                        },
+                        "sInfo": "Showing page _PAGE_ of _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "بحـث...",
+                        "sLengthMenu": "النتيجة :  _MENU_",
+                    },
+                    "lengthMenu": [5, 10, 20, 50],
+                    "pageLength": 5,
+                    "scrollX": true,
+                });
+
+                multiCheck(dt);
             }
-            const dt = tableElement.DataTable({
-                headerCallback: function(e, a, t, n, s) {
-                    e.getElementsByTagName("th")[0].innerHTML =
-                        '<label class="new-control new-checkbox checkbox-outline-info m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>';
-                },
-                columnDefs: [{
-                    targets: 0,
-                    width: "30px",
-                    orderable: false,
-                    render: function(e, a, t, n) {
-                        return '<label class="new-control new-checkbox checkbox-outline-info m-auto">\n<input type="checkbox" class="new-control-input child-chk select-customers-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>';
-                    }
-                }],
-                "oLanguage": {
-                "oPaginate": {
-                    "sPrevious": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>',
-                    "sNext": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>'
-                },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "بحـث...",
-                "sLengthMenu": "النتيجة :  _MENU_",
-                },
-                "lengthMenu": [5, 10, 20, 50],
-                "pageLength": 5,
-                "scrollX": true,
-            });
-
-            multiCheck(dt);
         }
-    }
 
-    document.addEventListener('livewire:navigated', () => {
-        requestAnimationFrame(() => {
-            initDataTableIfExists();
+        document.addEventListener('livewire:navigated', () => {
+            requestAnimationFrame(() => {
+                initDataTableIfExists();
+            });
         });
-    });
 
-    document.addEventListener('livewire:init', () => {
-        window.Livewire.hook('commit', ({ succeed }) => {
-            succeed(() => {
-                requestAnimationFrame(() => {
-                    initDataTableIfExists();
+        document.addEventListener('livewire:init', () => {
+            window.Livewire.hook('commit', ({
+                succeed
+            }) => {
+                succeed(() => {
+                    requestAnimationFrame(() => {
+                        initDataTableIfExists();
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 @endpush
