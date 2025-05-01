@@ -7,7 +7,7 @@ use App\Http\Controllers\API\DeviceTokenController;
 use App\Http\Controllers\API\DonorCommentsController;
 use App\Http\Controllers\API\DonorDonationsController;
 use App\Http\Controllers\API\DonorInformationController;
-use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OrganizationRequestController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\TakafulPlatform;
