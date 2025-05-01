@@ -40,14 +40,9 @@ return [
         ],
     ],
 
-    'firebase' => [
-        'project_id' => env('takaful-41ff0'),
-        'private_key' => env('82f64a8946bf9ec25d7a1f6179c8fab787ab043c'),
-        'client_email' => env('firebase-adminsdk-fbsvc@takaful-41ff0.iam.gserviceaccount.com'),
-    ],
       
     'fcm' => [
-    'project_id' => env('FCM_PROJECT_ID'),
+    'project_id' => env('FIREBASE_PROJECT_ID'),
     'credentials' =>   env('FIREBASE_CREDENTIALS'),
 ],
 
