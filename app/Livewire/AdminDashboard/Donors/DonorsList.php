@@ -17,7 +17,7 @@ class DonorsList extends Component
 
     public function refreshUsers()
     {
-        $this->donors = Donor::where('is_verified', true)->get();
+        $this->donors = Donor::get();
         $this->donorsCount = Donor::count();
     }
 

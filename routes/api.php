@@ -30,7 +30,7 @@ Route::get('/takaful-partners', [TakafulPlatform::class, 'TakafulPartners']);
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::patch('donors/update-profile',[DonorInformationController::class,'updateProfile']);
+    Route::post('donors/update-profile',[DonorInformationController::class,'updateProfile']);
     
     Route::get('/donor/donations', [DonorDonationsController::class, 'donorDonations']);
     Route::get('/donor/donations-summary', [DonorDonationsController::class, 'donorSummary']);

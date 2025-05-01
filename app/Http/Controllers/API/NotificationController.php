@@ -35,8 +35,14 @@ class NotificationController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'count' => $notifications->count(),
-                'notifications' => $notifications,
+                'notifications' => $notifications->map(function ($notification) {
+                    return [
+                        'title' => $notification->title,
+                        'message' => $notification->message,
+                        'is_read' => $notification->is_read,
+                        'created_at' => $notification->created_at ? $notification->created_at->format('Y-m-d H:i:s') :  'غير متوفر',
+                    ];
+                }),
             ], 200);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([

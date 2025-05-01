@@ -19,8 +19,7 @@ class DeviceTokenController extends Controller
     
        
         DeviceToken::updateOrCreate(
-            ['device_token' => $request->device_token],
-            ['donor_id' => auth()->id()] 
+            ['token' => $request->device_token],
         );
     
         return response()->json(['status' => 'تم تسجيل الجهاز بنجاح'], 200);
@@ -31,9 +30,3 @@ class DeviceTokenController extends Controller
 
 
 
-// composer require kreait/laravel-firebase
-// php artisan vendor:publish --provider="Kreait\Laravel\Firebase\ServiceProvider" --tag=config
-// composer require google/apiclient
-// composer require laravel/sanctum 
-// composer require ichtrojan/laravel-otp
-// composer require guzzlehttp/guzzle   

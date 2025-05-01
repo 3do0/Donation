@@ -339,9 +339,11 @@
 
 
 @section('js')
-    <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/swiper-bundle.min.js') }}" type="text/javascript"></script>
-    <script>
+<script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/swiper-bundle.min.js') }}" type="text/javascript"></script>
+<script>
+    // دالة لتفعيل الـ Swiper و Chart عند التنقل بين المكونات
+    function initSwiperAndChart() {
         if (document.getElementsByClassName("mySwiper")) {
             var swiper = new Swiper(".mySwiper", {
                 effect: "cards",
@@ -354,14 +356,9 @@
             });
         }
 
-
         window.addEventListener('updateChart', event => {
             const data = event.detail[0];
-            const {
-                cases,
-                targets,
-                caseNumbers
-            } = data;
+            const { cases, targets, caseNumbers } = data;
 
             var ctx = document.getElementById("chart-bars").getContext("2d");
 
@@ -369,7 +366,8 @@
                 type: "bar",
                 data: {
                     labels: caseNumbers,
-                    datasets: [{
+                    datasets: [
+                        {
                             label: "تم جمعه",
                             tension: 0.4,
                             borderWidth: 0,
@@ -454,21 +452,19 @@
             });
         });
 
-
-
         var ctx2 = document.getElementById("chart-line").getContext("2d");
 
         var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
 
         gradientStroke1.addColorStop(1, "rgba(45,168,255,0.2)");
         gradientStroke1.addColorStop(0.2, "rgba(45,168,255,0.0)");
-        gradientStroke1.addColorStop(0, "rgba(45,168,255,0)"); //blue colors
+        gradientStroke1.addColorStop(0, "rgba(45,168,255,0)");
 
         var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
 
         gradientStroke2.addColorStop(1, "rgba(119,77,211,0.4)");
         gradientStroke2.addColorStop(0.7, "rgba(119,77,211,0.1)");
-        gradientStroke2.addColorStop(0, "rgba(119,77,211,0)"); //purple colors
+        gradientStroke2.addColorStop(0, "rgba(119,77,211,0)");
 
         new Chart(ctx2, {
             plugins: [{
@@ -479,36 +475,16 @@
                         this.height += 40;
                     };
                 },
-            }, ],
+            }],
             type: "line",
             data: {
                 labels: [
-                    "Aug 18",
-                    "Aug 19",
-                    "Aug 20",
-                    "Aug 21",
-                    "Aug 22",
-                    "Aug 23",
-                    "Aug 24",
-                    "Aug 25",
-                    "Aug 26",
-                    "Aug 27",
-                    "Aug 28",
-                    "Aug 29",
-                    "Aug 30",
-                    "Aug 31",
-                    "Sept 01",
-                    "Sept 02",
-                    "Sept 03",
-                    "Aug 22",
-                    "Sept 04",
-                    "Sept 05",
-                    "Sept 06",
-                    "Sept 07",
-                    "Sept 08",
-                    "Sept 09",
+                    "Aug 18", "Aug 19", "Aug 20", "Aug 21", "Aug 22", "Aug 23", "Aug 24", "Aug 25", "Aug 26",
+                    "Aug 27", "Aug 28", "Aug 29", "Aug 30", "Aug 31", "Sept 01", "Sept 02", "Sept 03", "Aug 22",
+                    "Sept 04", "Sept 05", "Sept 06", "Sept 07", "Sept 08", "Sept 09",
                 ],
-                datasets: [{
+                datasets: [
+                    {
                         label: "مقدار",
                         tension: 0,
                         borderWidth: 2,
@@ -534,7 +510,6 @@
                         pointBorderColor: "#832bf9",
                         pointBackgroundColor: "#832bf9",
                         backgroundColor: gradientStroke2,
-                        fill: true,
                         fill: true,
                         data: [
                             2797, 2182, 1069, 2098, 3309, 3881, 2059, 3239, 6215, 2185,
@@ -627,5 +602,15 @@
                 },
             },
         });
-    </script>
+    }
+    
+    initSwiperAndChart();
+
+    document.addEventListener('livewire:navigated', () => {
+        requestAnimationFrame(() => {
+            initSwiperAndChart();
+        });
+    });
+</script>
 @endsection
+

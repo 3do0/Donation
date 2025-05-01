@@ -11,7 +11,7 @@ class CurrencyService
 {
     public function fetchAndStoreRates()
     {
-        $url = 'https://ibyemen.com/ar/currency-rate'; 
+        $url = 'https://ye-rial.com/'; 
 
         try {
             $client = HttpClient::create();
@@ -31,16 +31,36 @@ class CurrencyService
             });
 
             Log::info("البيانات المستخلصة: ", $currency);
-            $currencyData = [
-                ['currency_name' => 'دولار أمريكي', 'currency_code' => 'USD', 'rate' => $currency[3]],  
-                ['currency_name' => 'ريال سعودي','currency_code' => 'SAR', 'rate' => $currency[7]],  
-            ];
-            foreach ($currencyData as $data) {
-                CurrencyRate::updateOrCreate(
-                    ['currency_name' => $data['currency_name']], 
-                    ['currency_code' => $data['currency_code'], 'rate' => $data['rate']]
-                );
-            }
+            $usdBuy = null;
+    $sarBuy = null;
+
+    for ($i = 0; $i < count($currency); $i += 3) {
+        $name = $currency[$i];
+
+        if (str_contains($name, 'دولار أمريكي') && !$usdBuy) {
+            $usdBuy = str_replace(',', '', $currency[$i + 1]);
+        }
+
+        if (str_contains($name, 'ريال سعودي') && !$sarBuy) {
+            $sarBuy = str_replace(',', '', $currency[$i + 1]);
+        }
+
+        if ($usdBuy && $sarBuy) {
+            break;
+        }
+    }
+
+    $currencyData = [
+        ['currency_name' => 'دولار أمريكي', 'currency_code' => 'USD', 'rate' => $usdBuy],
+        ['currency_name' => 'ريال سعودي', 'currency_code' => 'SAR', 'rate' => $sarBuy],
+    ];
+
+    foreach ($currencyData as $data) {
+        CurrencyRate::updateOrCreate(
+            ['currency_name' => $data['currency_name']],
+            ['currency_code' => $data['currency_code'], 'rate' => $data['rate']]
+        );
+    }
 
             return true;
 

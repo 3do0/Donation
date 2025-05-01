@@ -161,6 +161,8 @@
                                 <tr class="">
                                     <th class="text-center checkbox-column"> Record no. </th>
                                     <th class="custom-btn-color">المستخدم</th>
+                                    <th class="text-center custom-btn-color">رقم الهاتف</th>
+                                    <th class="text-center custom-btn-color">المدينة</th>
                                     <th class="text-center custom-btn-color">الجنس</th>
                                     <th class="text-center custom-btn-color">تاريخ الانشاء</th>
                                     <th class="text-center custom-btn-color">التمكين</th>
@@ -178,13 +180,13 @@
                                                             href="{{ asset('storage/' . $donor->avatar) }}"
                                                             target="_blank">
                                                             <img src="{{ asset('storage/' . $donor->avatar) }}"
-                                                                alt="صورة المستخدم"
+                                                                alt=""
                                                                 class="rounded-circle profile-img">
                                                         </a>
                                                     @else
                                                         <a class="profile-img" href="../assets/img/id.jpg"
                                                             target="_blank">
-                                                            <img src="../assets/img/id.jpg" alt="صورة المستخدم"
+                                                            <img src="{{ asset('assets/img/tim.png')}}" alt="صورة المستخدم"
                                                                 class="rounded-circle profile-img">
                                                         </a>
                                                     @endif
@@ -197,12 +199,18 @@
                                             </div>
                                         </td>
                                         <td class="text-center">
+                                            <h6 class="text-sm font-weight-semibold">{{ $donor->phone }}</h6>
+                                        </td>
+                                        <td class="text-center">
+                                            <h6 class="text-sm font-weight-semibold">{{ $donor->country }}</h6>
+                                        </td>
+                                        <td class="text-center">
                                             <h6 class="text-sm font-weight-semibold">{{ $donor->gender }}</h6>
                                         </td>
 
                                         <td class="align-middle text-center">
                                             <span
-                                                class="text-warning text-sm font-weight-normal">{{ $donor->created_at->format('Y-m-d') ?? '-' }}</span>
+                                                class="text-warning text-sm font-weight-normal">{{ $donor->created_at ? $donor->updated_at->format('Y-m-d') :   '-------' }}</span>
                                         </td>
 
                                         <td class="align-middle text-center text-sm">

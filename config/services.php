@@ -47,8 +47,9 @@ return [
     ],
       
     'fcm' => [
-        'project_id' => env('FCM_PROJECT_ID', 'takaful-41ff0'),
-        'credentials' => env('FCM_CREDENTIALS_PATH', 'takaful-41ff0-firebase-adminsdk-fbsvc-82f64a8946.json'), // المسار لملف JSON
-    ],
+    'project_id' => env('FCM_PROJECT_ID'),
+    'credentials' =>   env('FIREBASE_CREDENTIALS'),
+],
+
 
 ];
