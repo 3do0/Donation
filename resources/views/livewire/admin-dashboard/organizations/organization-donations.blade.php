@@ -180,7 +180,6 @@
                                                                 <td class="text-center">
                                                                     {{ $item->donatable->case_name ?? 'بدون عنوان حالة' }}
                                                                 </td>
-                                                                <!-- بيانات المتبرع -->
                                                                 <td class="text-center">
                                                                     <div
                                                                         class="d-flex flex-column justify-content-center">
@@ -192,8 +191,6 @@
                                                                         </p>
                                                                     </div>
                                                                 </td>
-
-                                                                <!-- المبلغ والعملة -->
                                                                 <td class="text-center">
                                                                     {{ number_format($item->amount) }}
                                                                     @php $currency = $item->donation->currency ?? null; @endphp
@@ -206,18 +203,14 @@
                                                                     @endif
                                                                 </td>
 
-                                                                <!-- طريقة الدفع -->
                                                                 <td class="text-center">
                                                                     {{ $item->donation->payment_method ?? 'غير معروف' }}
                                                                 </td>
-
-                                                                <!-- تاريخ التبرع -->
                                                                 <td
                                                                     class="text-center text-warning text-sm text-nowrap">
                                                                     {{ $item->created_at->format('Y-m-d / H-i-s') }}
                                                                 </td>
 
-                                                                <!-- اسم الحالة المتبرع لها -->
                                                             </tr>
                                                         @empty
                                                             <tr>
