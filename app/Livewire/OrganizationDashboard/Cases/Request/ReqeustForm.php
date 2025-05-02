@@ -85,7 +85,7 @@ class ReqeustForm extends Component
                 'icon' => 'success',
                 'title' => 'تمت إضافة الطلب بنجاح',
             ]);
-            event(new TestNotification([
+            broadcast(new TestNotification([
                 'author' => $case->case_name,
                 'title' => $case->target_amount,
             ]));
