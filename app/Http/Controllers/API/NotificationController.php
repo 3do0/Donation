@@ -32,9 +32,11 @@ class NotificationController extends Controller
                     'notifications' => [],
                 ], 200);
             }
+            $notifications_not_read_count = Notification::where('donor_id', $donor->id)->where('is_read', 0)->count();
 
             return response()->json([
                 'status' => 'success',
+                'not_read_count' => $notifications_not_read_count,
                 'notifications' => $notifications->map(function ($notification) {
                     return [
                         'notification_id' => $notification->id,

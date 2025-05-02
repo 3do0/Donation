@@ -140,7 +140,7 @@
                     <div class="m-4">
                         <a type="button"
                             class="btn btn-sm bg-transparent custom-btn-color btn-icon d-flex align-items-center  border border-white"
-                             data-toggle="modal" data-target="#sendNotificationModal">
+                             data-toggle="modal" data-target="#sendNotificationModal1">
                             <span class="btn-inner--icon">
                                 <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 class="d-block me-2" viewBox="0 0 24 24">
@@ -193,6 +193,7 @@
                     </table>
                 </div>
                 <livewire:admin-dashboard.notifications.notifications-send>
+                <livewire:admin-dashboard.notifications.notifications-push>
             </div>
         </div>
     </div>

@@ -29,7 +29,6 @@ class OrganizationDonations extends Component
             'users.cases.donationItems.donatable',
         ])->where('approval_status', true)->latest()->get();
         
-        
     }
     public function render()
     {
