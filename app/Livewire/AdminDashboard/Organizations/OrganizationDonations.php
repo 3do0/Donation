@@ -27,7 +27,7 @@ class OrganizationDonations extends Component
         $this->organizations = Organization::with([
             'users.cases.donationItems.donation.donor',
             'users.cases.donationItems.donatable',
-        ])->latest()->get();
+        ])->where('approval_status', true)->latest()->get();
         
         
     }
