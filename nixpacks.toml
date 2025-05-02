@@ -1,9 +1,6 @@
 [variables]
-UPLOAD_MAX_FILESIZE = 100M
-POST_MAX_SIZE = 100M
-
-[providers.nginx]
-template = "nginx.template.conf"
+UPLOAD_MAX_FILESIZE = "100M"
+POST_MAX_SIZE = "100M"
 
 [phases.setup]
 cmds = [
