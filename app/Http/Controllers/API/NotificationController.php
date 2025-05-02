@@ -37,6 +37,7 @@ class NotificationController extends Controller
                 'status' => 'success',
                 'notifications' => $notifications->map(function ($notification) {
                     return [
+                        'notification_id' => $notification->id,
                         'title' => $notification->title,
                         'message' => $notification->message,
                         'is_read' => $notification->is_read,
