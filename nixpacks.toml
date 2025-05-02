@@ -1,0 +1,10 @@
+[variables]
+UPLOAD_MAX_FILESIZE = "100M"
+POST_MAX_SIZE       = "100M"
+
+[phases.setup]
+cmds = [
+  "INI_PATH=$(find /nix/store/*-php-*/lib -name php.ini | tail -n 1)",
+  "echo \"upload_max_filesize=${UPLOAD_MAX_FILESIZE}\" >> $INI_PATH",
+  "echo \"post_max_size=${POST_MAX_SIZE}\" >> $INI_PATH"
+]

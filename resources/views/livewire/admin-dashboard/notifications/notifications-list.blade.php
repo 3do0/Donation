@@ -131,15 +131,29 @@
 <div class="row layout-spacing mt-5">
     <div class="col-lg-12">
         <div class="statbox widget box box-shadow border rounded">
-            <div class="widget-header px-4">
+            <div class="widget-header ">
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
                         <h4 class="font-weight-semibold ">قائمة الاشعارات</h4>
                        
                     </div>
-                    <div class="m-4">
-                        <a type="button"
-                            class="btn btn-sm bg-transparent custom-btn-color btn-icon d-flex align-items-center  border border-white"
+                    <div class="m-4 d-flex align-items-center">
+                        <button type="button"
+                            class="btn btn-sm bg-transparent custom-btn-color btn btn-icon d-flex align-items-center  border border-white"
+                             data-toggle="modal" data-target="#sendNotificationModal">
+                            <span class="btn-inner--icon">
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                class="d-block me-2" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C10.3431 2 9 3.34315 9 5V5.0946C6.16788 5.55862 4 8.03442 4 11V16L2 18V19H22V18L20 16V11C20 8.03442 17.8321 5.55862 15 5.0946V5C15 3.34315 13.6569 2 12 2ZM12 22C13.1046 22 14 21.1046 14 20H10C10 21.1046 10.8954 22 12 22Z">
+                                </path>
+                            </svg>
+                            </span>
+                            <span class="btn-inner--text ">اشعار FCM</span>
+                        </button>
+
+                        <button type="button"
+                            class="btn btn-sm bg-transparent custom-btn-color btn-icon d-flex align-items-center  border border-warning m-2"
                              data-toggle="modal" data-target="#sendNotificationModal1">
                             <span class="btn-inner--icon">
                                 <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -150,7 +164,7 @@
                             </svg>
                             </span>
                             <span class="btn-inner--text ">ارسال اشعار</span>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>

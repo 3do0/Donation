@@ -20,7 +20,7 @@
                                 </div>
             
                                 <div class="mb-3">
-                                    <label for="body" class="form-label">محتوى الإشعار</label>
+                                    <label for="body" class="form-label">المحتوى</label>
                                     <textarea wire:model="body" id="body" class="form-control" rows="3"  ></textarea>
                                     @error('body') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
