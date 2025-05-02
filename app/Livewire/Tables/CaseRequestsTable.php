@@ -36,8 +36,8 @@ final class CaseRequestsTable extends PowerGridComponent
 
         return OrganizationCaseRequest::with('organization_user')
         ->whereHas('organization_user', function ($query) use ($organizationId) {
-            $query->where('organization_id', $organizationId);
-        });
+            $query->where('organization_id', $organizationId );
+        }) ->where('approval_status', 'pending');
     }
 
     public function relationSearch(): array

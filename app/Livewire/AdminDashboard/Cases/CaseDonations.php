@@ -12,7 +12,7 @@ class CaseDonations extends Component
     public $cases;
     public function mount()
     {
-        $this->cases = OrganizationCase::with('organization_user.organization' , 'donationItems')->get(); 
+        $this->cases = OrganizationCase::with('organization_user.organization' , 'donationItems')->latest()->get(); 
     }
 
     public function render()

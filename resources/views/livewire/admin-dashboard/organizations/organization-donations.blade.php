@@ -25,10 +25,10 @@
                             <input type="text" class="form-control" placeholder="Search...">
                         </div>
                         <ul class="nav nav-pills inv-list-container d-block" id="pills-tab" role="tablist">
-                            @foreach ($donations as $donation)
+                            @forelse ($organizations ?? [] as $org)
                                 <li class="nav-item">
-                                    <div class="nav-link list-actions" id="invoice-{{ $donation->id }}"
-                                        data-invoice-id="{{ $donation->id }}">
+                                    <div class="nav-link list-actions" id="invoice-{{ $org->id }}"
+                                        data-invoice-id="{{ $org->id }}">
                                         <div class="f-m-body">
                                             <div class="f-head">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -41,28 +41,49 @@
                                                 </svg>
                                             </div>
                                             <div class="f-body">
-                                                <p class="invoice-number">عملية #{{ $donation->id }}</p>
-                                                <p class="invoice-customer-name text-warning">
-                                                    <span>المبلغ:</span>
-                                                    {{ $donation->total_amount }}
-                                                    <span class="text-warning">
-                                                        @if ($donation->currency == 'usd')
-                                                            $
-                                                        @elseif ($donation->currency == 'sar')
-                                                            ر.س
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex align-items-center">
+                                                        @if ($org->logo)
+                                                            <img src="{{ asset('storage/' . $org->logo) }}"
+                                                                alt="شعار المنظمة" class="rounded mx-2"
+                                                                style="width: 35px; height: 35px;">
                                                         @else
-                                                            ر.ي
+                                                            <img src="{{ asset('assets/img/id.jpg') }}"
+                                                                alt="شعار المنظمة" class="rounded mx-2"
+                                                                style="width: 35px; height: 35px;">
                                                         @endif
-                                                    </span>
-                                                </p>
-                                                <p class="invoice-generated-date">
-                                                    <span>تاريخ:</span>{{ $donation->created_at->format('Y-m-d') }}
-                                                </p>
+                                                    </div>
+                                                    <div class="d-flex flex-column justify-content-center ms-2">
+                                                        <h6
+                                                            class="mb-0 text-sm font-weight-semibold text-warning text-nowrap">
+                                                            {{ $org->name }}</h6>
+                                                        @inject('currency', 'App\Services\CurrencyChanges')
+                                                        @php
+                                                            $totalDonation = $org->users->flatMap->cases->flatMap->donationItems->sum(
+                                                                function ($item) use ($currencyRates) {
+                                                                    $currency = strtoupper(
+                                                                        optional($item->donation)->currency,
+                                                                    );
+                                                                    $rate = $currencyRates[$currency] ?? 1;
+                                                                    return $item->amount * $rate;
+                                                                },
+                                                            );
+                                                        @endphp
+
+                                                        <p class="text-sm mb-0">
+                                                            <span>اجمالى التبرعات :</span>
+                                                            {{ $currency->convert($totalDonation) }}
+                                                        </p>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
-                            @endforeach
+                            @empty
+                                <li class="nav-item text-center text-danger">لا توجد حالات حالياً</li>
+                            @endforelse
                         </ul>
                     </div>
                 </div>
@@ -83,20 +104,19 @@
                                 stroke-linejoin="round" class="feather feather-printer action-print"
                                 data-toggle="tooltip" data-placement="top" data-original-title="Reply">
                                 <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2">
-                                </path>
+                                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2h-2"></path>
                                 <rect x="6" y="14" width="12" height="8"></rect>
                             </svg>
                         </div>
                     </div>
 
                     <div id="ct" class="">
-                        @foreach ($donations as $donation)
-                            <div class="invoice-{{ $donation->id }}">
-                                <div class="content-section  animated animatedFadeInUp fadeInUp">
+                        @forelse ($organizations ?? [] as $org)
+                            <div class="invoice-{{ $org->id }}">
+                                <div class="content-section animated animatedFadeInUp fadeInUp">
                                     <div class="row inv--head-section">
                                         <div class="col-sm-6 col-12">
-                                            <h3 class=" txet-warning in-heading">التبرعات الخيرية</h3>
+                                            <h3 class=" txet-warning in-heading">تبرعات االمنظمة</h3>
                                         </div>
                                         <div class="col-sm-6 col-12 align-self-center text-sm-right">
                                             <div class="company-info">
@@ -106,26 +126,27 @@
                                                 <h5 class="inv-brand-name">Takaful</h5>
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <div class="row inv--detail-section">
-
                                         <div class="col-sm-7 align-self-center">
-                                            <p class="inv-to">من :</p>
-                                        </div>
-
-                                        <div class="col-sm-7 align-self-center">
-                                            <p class="inv-customer-name">{{ $donation->donor->name ?? 'زائر' }}</p>
-                                            <p class="inv-email-address">{{ $donation->donor->email ?? 'لايوجد بريد' }}
+                                            <p class="inv-to">بيانات المنظمة :</p>
+                                            <p class="inv-customer-name">{{ $org->id }}</p>
+                                            <p class="inv-email-address">{{ $org->name ?? 'غير معروف' }}</p>
+                                            <p class="inv-email-address">{{ $org->email }}</p>
+                                            <p class="inv-email-address">{{ $org->city }} / {{ $org->address }}
                                             </p>
-                                            <p class="inv-email-address">{{ $donation->created_at }}</p>
                                         </div>
-                                        <div class="col-sm-5 align-self-center  text-sm-right order-2">
-                                            <p class="inv-list-number"><span class="inv-title">رقم الفاتورة :
-                                                </span> <span class="inv-number">[invoice number]</span></p>
-                                            <p class="inv-created-date"><span class="inv-title">تاريخ الاصدار :
-                                                </span>
+                                        <div class="col-sm-5 align-self-center text-sm-right order-2">
+                                            <p class="inv-list-number"><span class="inv-title">الحساب البنكي :</span>
+                                                <span class="">{{ $org->bank_name ?? 'غير متاحة' }}</span>
+                                            </p>
+                                            <p class="inv-list-number"><span class="inv-title">رقم الحساب البنكي
+                                                    :</span>
+                                                <span
+                                                    class="text-warning">{{ $org->bank_account_number ?? 'غير متاحة' }}</span>
+                                            </p>
+                                            <p class="inv-created-date"><span class="inv-title">تاريخ الإصدار :</span>
                                                 <span class="inv-date">{{ now() }}</span>
                                             </p>
                                         </div>
@@ -135,56 +156,75 @@
                                         <div class="col-12">
                                             <div class="table-responsive">
                                                 <table class="table">
-                                                    <thead class="">
+                                                    <thead>
                                                         <tr>
                                                             <th scope="col">I.No</th>
-                                                            <th scope="col">نوع التبرع</th>
-                                                            <th class="text-right" scope="col">رقم الحالة</th>
-                                                            <th class="text-right" scope="col">اسم الحالة</th>
-                                                            <th class="text-right" scope="col">المبلغ</th>
+                                                            <th scope="col" class="text-center">الحالة</th>
+                                                            <th scope="col" class="text-center">المتبرع</th>
+                                                            <th class="text-center" scope="col">المبلغ</th>
+                                                            <th class="text-center" scope="col">طريقة الدفع</th>
+                                                            <th class="text-center" scope="col">تاريخ التبرع</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($donation->items as $item)
+                                                        @php
+                                                            $donationItems = $org->users->flatMap->cases->flatMap->donationItems->sortByDesc(
+                                                                'created_at',
+                                                            );
+                                                        @endphp
+
+                                                        @forelse ($donationItems as $item)
                                                             <tr>
                                                                 <td>{{ $item->id }}</td>
-                                                                <td>
-                                                                    @if ($item->donatable_type === \App\Models\OrganizationCase::class)
-                                                                        تبرع للحالات
-                                                                    @elseif ($item->donatable_type === \App\Models\PlatformDonation::class)
-                                                                        <span class="text-warning">تبرع للمنصة</span>
-                                                                    @else
-                                                                        غير معروف
-                                                                    @endif
-                                                                </td>
-                                                                @if ($item->donatable_type === \App\Models\OrganizationCase::class)
-                                                                    <td class="text-right">
-                                                                        {{ $item->donatable?->id ?? '----' }}
-                                                                    </td>
-                                                                    <td class="text-right">
-                                                                        {{ $item->donatable?->case_name ?? '----' }}
-                                                                    </td>
-                                                                @elseif ($item->donatable_type === \App\Models\PlatformDonation::class)
-                                                                    <td class="text-right text-warning">--------</td>
-                                                                    <td class="text-right text-warning">--------</td>
-                                                                @else
-                                                                    <td colspan="2" class="text-right text-danger">
-                                                                        <em>نوع غير معروف</em>
-                                                                    </td>
-                                                                @endif
 
-                                                                <td class="text-right">
+                                                                <td class="text-center">
+                                                                    {{ $item->donatable->case_name ?? 'بدون عنوان حالة' }}
+                                                                </td>
+                                                                <!-- بيانات المتبرع -->
+                                                                <td class="text-center">
+                                                                    <div
+                                                                        class="d-flex flex-column justify-content-center">
+                                                                        <p class="mb-0 text-sm font-weight-semibold">
+                                                                            {{ $item->donation->donor->name ?? 'غير معروف' }}
+                                                                        </p>
+                                                                        <p class="text-sm">
+                                                                            {{ $item->donation->donor->email ?? 'غير معروف' }}
+                                                                        </p>
+                                                                    </div>
+                                                                </td>
+
+                                                                <!-- المبلغ والعملة -->
+                                                                <td class="text-center">
                                                                     {{ number_format($item->amount) }}
-                                                                    @if ($donation->currency == 'usd')
+                                                                    @php $currency = $item->donation->currency ?? null; @endphp
+                                                                    @if ($currency === 'usd')
                                                                         $
-                                                                    @elseif ($donation->currency == 'sar')
+                                                                    @elseif ($currency === 'sar')
                                                                         ر.س
                                                                     @else
                                                                         ر.ي
                                                                     @endif
                                                                 </td>
+
+                                                                <!-- طريقة الدفع -->
+                                                                <td class="text-center">
+                                                                    {{ $item->donation->payment_method ?? 'غير معروف' }}
+                                                                </td>
+
+                                                                <!-- تاريخ التبرع -->
+                                                                <td
+                                                                    class="text-center text-warning text-sm text-nowrap">
+                                                                    {{ $item->created_at->format('Y-m-d / H-i-s') }}
+                                                                </td>
+
+                                                                <!-- اسم الحالة المتبرع لها -->
                                                             </tr>
-                                                        @endforeach
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="6" class="text-center text-danger">لا
+                                                                    توجد تبرعات لهذه المنظمة</td>
+                                                            </tr>
+                                                        @endforelse
 
                                                     </tbody>
                                                 </table>
@@ -195,36 +235,33 @@
                                     <div class="row mt-4">
                                         <div class="col-sm-5 col-12 order-sm-0 order-1">
                                             <div class="inv--payment-info">
-                                                <div class="row">
-                                                    <div class="col-sm-12 col-12">
-                                                        <h6 class=" inv-title" style="color:  rgb(201, 152, 63);">
-                                                            بيانات الدفع :</h6>
-                                                    </div>
-                                                    <div class="col-sm-4 col-12">
-                                                        <p class=" inv-subtitle">طريقة الدفع : </p>
-                                                    </div>
-                                                    <div class="col-sm-8 col-12">
-                                                        <p class="">{{ $donation->payment_method }}</p>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-7 col-12 order-sm-1 order-0">
                                             <div class="inv--total-amounts text-sm-right">
                                                 <div class="row">
                                                     <div class="col-sm-8 col-7 grand-total-title">
-                                                        <h4 class="">اجمالي المبلغ : </h4>
+                                                        <h4 class="">إجمالي المبلغ :</h4>
                                                     </div>
                                                     <div class="col-sm-4 col-5 grand-total-amount">
-                                                        <h4 class="">
-                                                            {{ number_format($donation->total_amount) }}
-                                                            @if ($donation->currency == 'usd')
-                                                                $
-                                                            @elseif ($donation->currency == 'sar')
-                                                                ر.س
-                                                            @else
-                                                                ر.ي
-                                                            @endif
+                                                        @inject('currency', 'App\Services\CurrencyChanges')
+                                                        @php
+                                                            $donationItems =
+                                                                $org->users->flatMap->cases->flatMap->donationItems;
+
+                                                            $totalDonation = $donationItems->sum(function ($item) use (
+                                                                $currencyRates,
+                                                            ) {
+                                                                $currency = strtoupper(
+                                                                    optional($item->donation)->currency,
+                                                                );
+                                                                $rate = $currencyRates[$currency] ?? 1;
+                                                                return $item->amount * $rate;
+                                                            });
+                                                        @endphp
+
+                                                        <h4>
+                                                            {{ $currency->convert($totalDonation) }}
                                                         </h4>
                                                     </div>
                                                 </div>
@@ -234,24 +271,25 @@
 
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <div class="alert alert-warning mt-4">لا توجد حالات متاحة حالياً</div>
+                        @endforelse
                     </div>
                 </div>
 
                 <div class="inv--thankYou">
                     <div class="row">
                         <div class="col-sm-12 col-12">
-                            <p class="">Thank you for doing Business with us.</p>
+                            <p class="">شكراً لتعاملكم معنا.</p>
                         </div>
                     </div>
                 </div>
 
             </div>
-
         </div>
-
     </div>
 </div>
+
 
 @push('scripts')
     <script src="{{ asset('assets/js/invoice.js') }}"></script>
@@ -269,7 +307,9 @@
         });
 
         document.addEventListener('livewire:init', () => {
-            window.Livewire.hook('commit', ({ succeed }) => {
+            window.Livewire.hook('commit', ({
+                succeed
+            }) => {
                 succeed(() => {
                     requestAnimationFrame(() => {
                         runInvoiceIfExists();

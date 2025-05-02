@@ -20,6 +20,7 @@ use App\Livewire\AdminDashboard\Logs;
 use App\Livewire\AdminDashboard\Main;
 use App\Livewire\AdminDashboard\Notifications\NotificationsList;
 use App\Livewire\AdminDashboard\Organizations\JoinRequests\JoinRequsts;
+use App\Livewire\AdminDashboard\Organizations\OrganizationDonations;
 use App\Livewire\AdminDashboard\Organizations\OrganizationsForm;
 use App\Livewire\AdminDashboard\Organizations\OrganizationsIndex;
 use App\Livewire\AdminDashboard\Partners\PartnersForm;
@@ -77,4 +78,6 @@ Route::middleware(['auth:admin', EnsureUserIsActive::class])->group(function () 
     Route::get('/system-logs', Logs::class)->name('logs');
 
     Route::get('/currencies-rate', CurrenciesList::class)->name('currncies-list');
+
+    Route::get('/organizations/reports', OrganizationDonations::class)->name('org-donations-report');
 });

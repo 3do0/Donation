@@ -58,4 +58,20 @@ class NotificationController extends Controller
             ], 500);
         }
     }
+
+    public function updateReadStatus(Request $request)
+    {
+        $request->validate([
+            'notificationId' => 'required|exists:notifications,id',
+        ]);
+
+        $notification = Notification::find($request->notificationId);
+        $notification->update(['is_read' => 1]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم تحديث عدد المشاهدات بنجاح',
+            'is_read' => $notification->is_read ,
+        ]);
+    }
 }

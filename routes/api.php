@@ -57,6 +57,7 @@ Route::post('/case-comment', [DonorCommentsController::class, 'caseCommentsStore
 Route::post('/project-comment', [DonorCommentsController::class, 'projectCommentsStore'])->middleware('auth:sanctum');
 
 Route::post('/cases/increase-visitors', [CaseController::class, 'visitorsIncrease']);
+Route::post('/notifications/update', [NotificationController::class, 'updateReadStatus']);
 Route::post('/projects/increase-visitors', [ProjectController::class, 'visitorsIncrease']);
 
 

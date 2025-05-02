@@ -282,18 +282,20 @@
                     </div>
                 </a>
             </li>
-            <li class="menu {{ request()->routeIs('donors') ? 'active' : '' }}">
-                <a href="{{ route('donors') }}" wire:navigate
-                    {{ request()->routeIs('donors') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
+            <li class="menu {{ request()->routeIs('org-donations-report') ? 'active' : '' }}">
+                <a href="{{ route('org-donations-report') }}" wire:navigate
+                    {{ request()->routeIs('org-donations-report') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-bell">
-                            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
-                        <span>الإشعارات</span>
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-bar-chart-2">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    
+                        <span>تقارير المنظمات</span>
                     </div>
                 </a>
             </li>
