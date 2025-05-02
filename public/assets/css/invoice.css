@@ -399,5 +399,46 @@
       .action-print {
           display: none !important;
       }
+
+      table {
+        page-break-inside: auto;
+        border-collapse: collapse !important;
+      }
+    
+      tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+      }
+    
+      thead {
+        display: table-header-group; /* مهم لتكرار رأس الجدول */
+      }
+    
+      tfoot {
+        display: table-footer-group; /* لو كان فيه تذييل */
+      }
+    
+      /* .content-section {
+        page-break-after: always; 
+      } */
+      
+      .invoice:not(:last-child) {
+        page-break-after: always;
+      }
+      .table-responsive {
+        overflow: visible !important;
+      }
+
+      .doc-container, .content-section, .invoice-inbox {
+        height: auto !important;
+        overflow: visible !important;
+        page-break-inside: avoid;
+      }
   }
+
+
+  
+  
+
+  
   
