@@ -3,11 +3,13 @@
 namespace App\Livewire\AdminDashboard\Projects\Requests;
 
 use App\Events\OrganizationNotification;
+use App\Events\ProjectRejectionEvent;
 use App\Models\OrganizationProject;
 use App\Models\OrganizationProjectRequest;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Requests extends Component
@@ -18,8 +20,9 @@ class Requests extends Component
     public $rejectionReason;
     public $requests; 
     
+    #[On('ProjectCreated')]
     public function refreshRequests(){
-        $this->requests = OrganizationProjectRequest::with('organization_user.organization')->where('approval_status', 'pending')->get();
+        $this->requests = OrganizationProjectRequest::with('organization_user.organization')->where('approval_status', 'pending')->latest()->get();
     }
     public function mount()
     {
@@ -77,6 +80,7 @@ class Requests extends Component
                 'title' => 'تمت الموافقة على الطلب بنجاح',
             ]);
             $this->refreshRequests();
+            event(new ProjectRejectionEvent());
 
             $msg = '✨ تم الموافقة على طلب المشروع: ' . $request->project_name . ' 📑 رقم الطلب: ' . $request->id . ' 🎉';
 
@@ -121,6 +125,8 @@ class Requests extends Component
             'title' => 'تم رفض الطلب بنجاح',
         ]);
         $this->refreshRequests();
+
+        event(new ProjectRejectionEvent());
 
         $msg = '❌ تم رفض طلب المشروع: ' . $request->project_name . ' 📑 رقم الطلب: ' . $request->id . ' 😔';
 

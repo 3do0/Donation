@@ -7,6 +7,7 @@ use App\Models\DonationItem;
 use App\Models\Donor;
 use App\Models\OrganizationCase;
 use App\Models\PlatformDonation;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Main extends Component
@@ -19,7 +20,12 @@ class Main extends Component
    public $DonationsCount= 0;
    public $platform_balance;
 
-   public function mount() {
+
+
+    // #[On('CaseRequestResponding')]
+    // #[On('NewDonation')]
+    // #[On('ProjectRejection')]
+   public function refreshComponents() {
     $this->totalDonations = Donation::sum('total_amount');
     $this->DonationsCount = Donation::count();
     $this->DonorsCount = Donor::count();
@@ -31,6 +37,11 @@ class Main extends Component
     ->orderByDesc('raised_amount')
     ->take(3)
     ->get();
+       
+   }
+
+   public function mount() {
+       $this->refreshComponents();
    }    
     public function render()
     {

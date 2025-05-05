@@ -50,8 +50,12 @@
     <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/js/organization/corporate-ui-dashboard.min.js?v=1.0.0') }}"></script>
 
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.iife.js"></script>
+
 
     @yield('js')
+    @stack('scripts')
 
     @include('layouts.Organization_Dashboard.components.fullScreen')
     @include('layouts.Organization_Dashboard.components.modalDelete')

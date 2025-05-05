@@ -88,6 +88,9 @@
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
 
+    <script src="{{ asset('assets/plugins/apex/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/js/dashboard/dash_1.js') }}"></script>
+
     <script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap/bootstrap.min.js') }}"></script>
@@ -106,6 +109,9 @@
     <script src="{{ asset('assets/plugins/table/datatable/button-ext/buttons.print.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/invoice.js') }}"></script>
+
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.11.3/dist/echo.iife.js"></script>
 
     <script>
         $(document).ready(function() {

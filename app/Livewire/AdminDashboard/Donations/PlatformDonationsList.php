@@ -5,12 +5,15 @@ namespace App\Livewire\AdminDashboard\Donations;
 use App\Models\Donation;
 use App\Models\DonationItem;
 use App\Models\PlatformDonation;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class PlatformDonationsList extends Component
 {
     public $donations;
 
+
+    #[On('NewDonation')]
     public function refreshDonations()
     {
         $this->donations = DonationItem::with('donation')->where('donatable_type', PlatformDonation::class)->latest()->get();

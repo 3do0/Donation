@@ -60,7 +60,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <h6 class="font-weight-semibold text-lg mb-0">
-                                التحويلات الاخيرة
+                                التبرعات الاخيرة
                             </h6>
                             <p class="text-sm mb-0">هذه تفاصيل حول المعاملات الأخيرة</p>
                         </div>
@@ -89,7 +89,7 @@
                             <thead class="bg-gray-100">
                                 <tr>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7">
-                                        عملية
+                                        الحالة
                                     </th>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">
                                         مقدار
@@ -104,73 +104,79 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($latestCases as $case)
-                                    @foreach ($case->donationItems->take(5) as $item)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2">
-                                                    <div class="text-center">
-                                                        <a class="profile-img"
-                                                            href="{{ asset('storage/' . $case->case_photo) }}"
-                                                            target="_blank">
-                                                            <img src="{{ asset('storage/' . $case->case_photo) }}"
-                                                                alt="صورة الحالة"
-                                                                style="width: 40px; height: 40px; object-fit: cover; border-radius: .375rem;">
-                                                        </a>
-                                                    </div>
-                                                    <div class="my-auto m-2">
-                                                        <h6 class="mb-0 text-sm" title="{{ $case->case_name }}">
-                                                            {{ \Illuminate\Support\Str::limit($case->case_name, 16, '...') }}
-                                                        </h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0">{{ $item->amount }}
-                                                    <span class="text-warning font-weight-bold">
-                                                        @if ($item->donation->currency == 'usd')
-                                                            $
-                                                        @elseif ($item->donation->currency == 'sar')
-                                                            ر.س
-                                                        @else
-                                                            ر.ي
-                                                        @endif
-                                                    </span>
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <span
-                                                    class="text-sm font-weight-normal">{{ $item->created_at->diffForHumans() }}</span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <div class="d-flex">
-                                                    <div
-                                                        class="border px-1 py-1 text-center d-flex align-items-center border-radius-sm my-auto">
+                                @php
+                                    $items = collect();
+                                    foreach ($latestCases as $case) {
+                                        foreach ($case->donationItems as $item) {
+                                            $items->push([
+                                                'case' => $case,
+                                                'item' => $item
+                                            ]);
+                                        }
+                                    }
+                                    $items = $items->take(5);
+                                @endphp
 
-                                                        @if ($item->donation->payment_method == 'visa')
-                                                            <img src="{{ asset('assets/img/logos/visa.png') }}"
-                                                                class="w-90 mx-auto" alt="visa" />
-                                                        @elseif ($item->donation->payment_method == 'mastercard')
-                                                            <img src="{{ asset('assets/img/logos/mastercard.png') }}"
-                                                                class="w-90 mx-auto" alt="mastercard" />
-                                                        @else
-                                                            <img src="{{ asset('assets/img/logos/mastercard.png') }}"
-                                                                class="w-90 mx-auto" alt="mastercard" />
-                                                        @endif
-
-                                                    </div>
-                                                    <div class="me-2">
-                                                        <p class="text-dark text-sm mb-0">
-                                                            {{ $item->donation->donor->name }}</p>
-                                                        <p class="text-secondary text-sm mb-0">
-                                                            {{ $item->donation->donor->email }}
-                                                        </p>
-                                                    </div>
+                                @foreach ($items as $data)
+                                    @php
+                                        $case = $data['case'];
+                                        $item = $data['item'];
+                                    @endphp
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2">
+                                                <div class="text-center">
+                                                    <a class="profile-img"
+                                                    href="{{ asset('storage/' . $case->case_photo) }}"
+                                                    target="_blank">
+                                                        <img src="{{ asset('storage/' . $case->case_photo) }}"
+                                                            alt="صورة الحالة"
+                                                            style="width: 40px; height: 40px; object-fit: cover; border-radius: .375rem;">
+                                                    </a>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                <div class="my-auto m-2">
+                                                    <h6 class="mb-0 text-sm" title="{{ $case->case_name }}">
+                                                        {{ \Illuminate\Support\Str::limit($case->case_name, 10, '...') }}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm font-weight-bold mb-0">{{ $item->amount }}
+                                                <span class="text-warning font-weight-bold">
+                                                    @if ($item->donation->currency == 'usd')
+                                                        $
+                                                    @elseif ($item->donation->currency == 'sar')
+                                                        ر.س
+                                                    @else
+                                                        ر.ي
+                                                    @endif
+                                                </span>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <span class="text-sm font-weight-normal">{{ $item->created_at->diffForHumans() }}</span>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="d-flex">
+                                                <div class="border px-1 py-1 text-center d-flex align-items-center border-radius-sm my-auto">
+                                                    @if ($item->donation->payment_method == 'visa')
+                                                        <img src="{{ asset('assets/img/logos/visa.png') }}" class="w-90 mx-auto" alt="visa" />
+                                                    @elseif ($item->donation->payment_method == 'mastercard')
+                                                        <img src="{{ asset('assets/img/logos/mastercard.png') }}" class="w-90 mx-auto" alt="mastercard" />
+                                                    @else
+                                                        <img src="{{ asset('assets/img/logos/mastercard.png') }}" class="w-90 mx-auto" alt="mastercard" />
+                                                    @endif
+                                                </div>
+                                                <div class="me-2">
+                                                    <p class="text-dark text-sm mb-0">{{ $item->donation->donor->name }}</p>
+                                                    <p class="text-secondary text-sm mb-0">{{ $item->donation->donor->email }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -611,6 +617,34 @@
             initSwiperAndChart();
         });
     });
+</script>
+
+<script>
+    window.Pusher = Pusher;
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '{{ env('PUSHER_APP_KEY') }}',
+        cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
+        forceTLS: true,
+    });
+
+    window.Echo.channel('new-donation')
+        .listen('.NewDonation', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('NewDonation'); 
+        });
+    window.Echo.channel('case-request-updates')
+        .listen('.CaseRequestResponding', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('CaseRequestResponding'); 
+        });
+
+   window.Echo.channel('reject-project')
+        .listen('.ProjectRejection', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('ProjectRejection'); 
+        });
 </script>
 @endsection
 

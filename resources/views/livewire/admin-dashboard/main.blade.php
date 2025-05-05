@@ -413,7 +413,34 @@
     </div>
 </div>
 
-@section('PageJavaScribt')
-    <script src="{{ asset('assets/plugins/apex/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('assets/js/dashboard/dash_1.js') }}"></script>
-@endsection
+
+@push('scripts')
+<script>
+    window.Pusher = Pusher;
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '{{ env('PUSHER_APP_KEY') }}',
+        cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
+        forceTLS: true,
+    });
+
+    window.Echo.channel('new-donation')
+        .listen('.NewDonation', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('NewDonation'); 
+        });
+    window.Echo.channel('case-request-updates')
+        .listen('.CaseRequestResponding', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('CaseRequestResponding'); 
+        });
+
+        window.Echo.channel('reject-project')
+        .listen('.ProjectRejection', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('ProjectRejection'); 
+        });
+</script>
+
+@endpush

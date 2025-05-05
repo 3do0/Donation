@@ -263,4 +263,26 @@
             runInvoiceIfExists();
         });
     </script>
+
+<script>
+    window.Pusher = Pusher;
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '{{ env('PUSHER_APP_KEY') }}',
+        cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
+        forceTLS: true,
+    });
+
+    window.Echo.channel('new-donation')
+        .listen('.NewDonation', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('NewDonation'); 
+        });
+    window.Echo.channel('case-request-updates')
+        .listen('.CaseRequestResponding', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('CaseRequestResponding'); 
+        });
+</script>
 @endpush

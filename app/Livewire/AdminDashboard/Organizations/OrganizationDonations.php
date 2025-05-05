@@ -6,6 +6,7 @@ use App\Models\CurrencyRate;
 use App\Models\Donation;
 use App\Models\Organization;
 use App\Models\OrganizationCase;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class OrganizationDonations extends Component
@@ -22,6 +23,7 @@ class OrganizationDonations extends Component
         $this->refreshDonations();
     }
 
+    #[On('NewDonation')]
     public function refreshDonations()
     {
         $this->organizations = Organization::with([

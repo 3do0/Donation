@@ -288,5 +288,27 @@
             });
         });
     });
+
+
 </script>
+
+
+
+<script>
+    window.Pusher = Pusher;
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '{{ env('PUSHER_APP_KEY') }}',
+        cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
+        forceTLS: true,
+    });
+
+    window.Echo.channel('case-updates')
+        .listen('.CaseCreated', (e) => {
+            console.log('📢 استقبلنا الحدث العام CaseCreated:', e);
+            Livewire.dispatch('CaseCreated'); 
+        });
+</script>
+
 @endpush

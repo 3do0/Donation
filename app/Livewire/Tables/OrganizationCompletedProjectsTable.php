@@ -126,7 +126,7 @@ final class OrganizationCompletedProjectsTable extends PowerGridComponent
             Column::make('تاريخ الانتهاء', 'end_date')
                 ->sortable(),
 
-            Column::action('الخيارات')
+            // Column::action('الخيارات')
         ];
     }
 
@@ -136,31 +136,31 @@ final class OrganizationCompletedProjectsTable extends PowerGridComponent
         ];
     }
 
-    #[\Livewire\Attributes\On('edit')]
-    public function edit($rowId): void
-    {
-        $this->js('alert('.$rowId.')');
-    }
+    // #[\Livewire\Attributes\On('edit')]
+    // public function edit($rowId): void
+    // {
+    //     $this->js('alert('.$rowId.')');
+    // }
 
-    public function actions(OrganizationProject $row): array
-    {
-        return [
-            Button::add('edit')
-                ->slot('<a type="button" data-toggle="tooltip" data-placement="top"
-                            title="" data-original-title="Edit"><svg
-                            xmlns="http://www.w3.user/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-check-circle text-primary">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg></a>'
-                        )
-                ->id()
-                ->class('border-0 bg-transparent')
-                ->dispatch('edit', ['rowId' => $row->id]),
-            ];
-    }
+    // public function actions(OrganizationProject $row): array
+    // {
+    //     return [
+    //         Button::add('edit')
+    //             ->slot('<a type="button" data-toggle="tooltip" data-placement="top"
+    //                         title="" data-original-title="Edit"><svg
+    //                         xmlns="http://www.w3.user/2000/svg" width="24" height="24"
+    //                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    //                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+    //                         class="feather feather-check-circle text-primary">
+    //                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+    //                         <polyline points="22 4 12 14.01 9 11.01"></polyline>
+    //                     </svg></a>'
+    //                     )
+    //             ->id()
+    //             ->class('border-0 bg-transparent')
+    //             ->dispatch('edit', ['rowId' => $row->id]),
+    //         ];
+    // }
 
     /*
     public function actionRules($row): array

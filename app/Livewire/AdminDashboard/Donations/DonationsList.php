@@ -3,6 +3,7 @@
 namespace App\Livewire\AdminDashboard\Donations;
 
 use App\Models\Donation;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class DonationsList extends Component
@@ -16,6 +17,7 @@ class DonationsList extends Component
         $this->refreshDonations();
     }
 
+    #[On('NewDonation')]
     public function refreshDonations()
     {
         $this->donations = Donation::with('items', 'donor')->latest()->get();

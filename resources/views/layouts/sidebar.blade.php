@@ -1,12 +1,10 @@
 <div class="sidebar-wrapper sidebar-theme">
 
     <div id="dismiss" class="d-lg-none"><i class="flaticon-cancel-12"></i></div>
-
     <nav id="sidebar">
-
         <ul class="navbar-nav theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
-                <a href="{{ route('Main') }}" wire:navigate>
+                <a href="{{ route('Main') }}">
                     <img src="{{ asset('assets/img/logo1.png') }}" class="navbar-logo" alt="logo">
                 </a>
             </li>
@@ -20,7 +18,7 @@
             <li class="menu {{ request()->routeIs('Main') ? 'active' : '' }}">
                 <a href="{{ route('Main') }}"
                     {{ request()->routeIs('Main') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
-                    class="dropdown-toggle" wire:navigate>
+                    class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -48,7 +46,7 @@
                 <a href="#" aria-expanded="true" class="d-hidden"></a>
             </li>
 
-            <li class="menu {{ request()->routeIs('users') ? 'active' : '' }}">
+            {{-- <li class="menu {{ request()->routeIs('users') ? 'active' : '' }}">
                 <a href="{{ route('users') }}" wire:navigate
                     {{ request()->routeIs('users') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
@@ -64,7 +62,7 @@
                         <span>مشرفي النظام</span>
                     </div>
                 </a>
-            </li>
+            </li> --}}
 
             <li class="menu">
                 <a href="#organization" data-toggle="collapse" class="dropdown-toggle" >
@@ -132,7 +130,7 @@
 
 
             <li class="menu {{ request()->routeIs('donations') ? 'active' : '' }}">
-                <a href="{{ route('donations') }}" wire:navigate data-toggle="collapse"
+               <a href="{{ route('donations') }}"
                     {{ request()->routeIs('donations') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">
@@ -174,7 +172,7 @@
 @endphp
 <ul class="collapse submenu list-unstyled {{ $isCaseRoute ? 'show' : '' }}" id="submenu" data-parent="#accordionExample">
     <li class="{{ request()->routeIs('cases-request') ? 'active' : '' }}">
-        <a href="{{ route('cases-request') }}" wire:navigate>
+        <a href="{{ route('cases-request') }}" >
             الطلبات المعلقة <span class="m-auto text-warning">({{ $cases_count }})</span>
         </a>
     </li>
@@ -223,7 +221,7 @@
                         $cases_count = \App\Models\OrganizationProjectRequest::where('approval_status', 'pending')->count();
                     @endphp
                     <li>
-                        <a href="{{ route('projects-request') }}" wire:navigate>
+                        <a href="{{ route('projects-request') }}">
                             الطلبات المعلقة<span class="m-auto text-warning">({{ $cases_count }})</span>
                         </a>
                     </li>
@@ -316,9 +314,9 @@
                 </div>
             </li>
             <li class="menu {{ request()->routeIs('platform-donations') ? 'active' : '' }}">
-                <a href="{{ route('platform-donations') }}" wire:navigate data-toggle="collapse"
-                    {{ request()->routeIs('platform-donations') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
-                    class="dropdown-toggle">
+                <a href="{{ route('platform-donations') }}"
+                {{ request()->routeIs('platform-donations') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
+                class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -331,7 +329,7 @@
                 </a>
             </li>
             <li class="menu">
-                <a href="{{ route('notification') }}" wire:navigate class="dropdown-toggle">
+                <a href="{{ route('notification') }}" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -377,7 +375,7 @@
             </li>
 
             <li class="menu {{ request()->routeIs('logs') ? 'active' : '' }}">
-                <a href="{{ route('logs') }}" wire:navigate
+                <a href="{{ route('logs') }}" 
                     {{ request()->routeIs('logs') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">

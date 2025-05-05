@@ -60,3 +60,5 @@ Route::prefix('organization')->name('organization.')->middleware('auth:organizat
     Route::post('logout', [LoginController::class, 'destroy'])
         ->name('logout');
 });
+
+Route::put('/password', [PasswordController::class, 'update'])->name('password.update');

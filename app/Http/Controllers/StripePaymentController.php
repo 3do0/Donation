@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewDonationEvent;
 use App\Events\TestNotification;
 use App\Models\Donation;
 use App\Models\OrganizationCase;
@@ -89,7 +90,7 @@ class StripePaymentController extends Controller
             $successUrl = 'http://127.0.0.1:8000/';
             $cancelUrl = 'http://127.0.0.1:8000/';
         } else {
-            $successUrl = env('FRONTEND_URL') . '/payment-success?session_id={CHECKOUT_SESSION_ID}';
+            $successUrl = env('FRONTEND_URL') . 'http://localhost:5173/success';
             $cancelUrl = env('FRONTEND_URL') . '/payment-failed';
         }
 
@@ -245,13 +246,16 @@ class StripePaymentController extends Controller
                     if ($case->raised_amount >= $case->target_amount) {
                         $case->update(['status' => 'completed']);
                     }
-
+                    
+                    event(new NewDonationEvent());
+                    
                     $msg = '💰 تبرع جديد من المتبرع رقم: ' . $donorId;
 
                     broadcast(new TestNotification([
                         'title' => '🎉 تم تسجيل تبرع جديد',
                         'content' => $msg,
                     ]));
+
 
                 }
             }

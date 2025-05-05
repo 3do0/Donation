@@ -273,4 +273,22 @@
         });
     });
 </script>
+
+
+<script>
+    window.Pusher = Pusher;
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '{{ env('PUSHER_APP_KEY') }}',
+        cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
+        forceTLS: true,
+    });
+
+    window.Echo.channel('project-updates')
+        .listen('.ProjectCreated', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('ProjectCreated'); 
+        });
+</script>
 @endpush

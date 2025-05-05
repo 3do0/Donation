@@ -13,7 +13,7 @@
                             <div class="upload mt-4 pr-md-4">
                                 <input type="file" id="input-file-max-fs" class="dropify"
                                 data-default-file="{{ asset('storage/' . $user->photo) }}" 
-                                data-max-file-size="10M" name="photo" />
+                                data-max-file-size="10M" name="photo" accept="image/*"/>
                                 <p class="m-3"><i class="flaticon-cloud-upload mr-1"></i> رفع الصورة</p>
                             </div>
                             @error('photo')

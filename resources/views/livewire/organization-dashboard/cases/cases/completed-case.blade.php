@@ -109,7 +109,8 @@
                                                             <i class="bi bi-file-earmark-arrow-up"></i>
                                                         </span>
                                                         <input type="file" class="form-control" id="inputCaseFile"
-                                                            wire:model="case_report">
+                                                                wire:model="case_report" accept=".pdf">
+
                                                     </div>
                                                     @error('case_report')
                                                         <div class="text-danger text-start small mt-1">{{ $message }}

@@ -2,8 +2,10 @@
 
 namespace App\Livewire\OrganizationDashboard\Projects\Request;
 
+use App\Events\ProjectCreatedEvent;
 use App\Events\TestNotification;
 use App\Models\OrganizationProjectRequest;
+use Google\Service\CloudResourceManager\Project;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
@@ -76,6 +78,9 @@ class RequestForm extends Component
             ]);
 
             $this->resetForm();
+
+            event(new ProjectCreatedEvent($project));
+            
             $this->dispatch('pg:eventRefresh-project-requests-table-p3fpi4-table');
             $this->dispatch('ProjectCreated');
             $this->dispatch('swal:toast', [

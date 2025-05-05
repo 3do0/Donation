@@ -29,7 +29,30 @@
             </div>
         </div>
     </div>
-    <livewire:components.modal-component />
-    <livewire:organization-dashboard.cases.request.request-edit :organizationUserId="auth('organization')->user()->id" />
-    <livewire:organization-dashboard.cases.request.reqeust-form :organizationUserId="auth('organization')->user()->id" />
 </div>
+
+@push('scripts')
+<script>
+    window.Pusher = Pusher;
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '{{ env('PUSHER_APP_KEY') }}',
+        cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
+        forceTLS: true,
+    });
+
+    window.Echo.channel('case-request-updates')
+        .listen('.CaseRequestResponding', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('CaseRequestResponding'); 
+        });
+
+    window.Echo.channel('new-donation')
+        .listen('.NewDonation', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('NewDonation'); 
+        });
+</script>
+
+@endpush

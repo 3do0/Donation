@@ -195,7 +195,7 @@
     }
 
     document.addEventListener('livewire:navigated', () => {
-        // تأكد من إعادة تهيئة الجدول عند التنقل بين المكونات
+        
         requestAnimationFrame(() => {
             initDataTableIfExists();
         });

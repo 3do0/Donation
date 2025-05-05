@@ -2,7 +2,9 @@
 
 namespace App\Livewire\AdminDashboard\Cases\Requests;
 
+use App\Events\CaseRequestRespondingEvent;
 use App\Models\OrganizationCase;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class AcceptedRequests extends Component
@@ -19,6 +21,7 @@ class AcceptedRequests extends Component
             'title' => 'تم ايقاف الحالة بنجاح',
         ]);
         $this->refreshCases();
+        event(new CaseRequestRespondingEvent());
     }
 
     public function continueCase($caseId)
@@ -31,8 +34,12 @@ class AcceptedRequests extends Component
             'title' => 'تم استكمال الحالة بنجاح',
         ]);
         $this->refreshCases();
+        event(new CaseRequestRespondingEvent());
     }
 
+
+    #[On('CaseRequestResponding')]
+    #[On('NewDonation')]
     public function refreshCases()
     {
         $this->cases = OrganizationCase::with('organization_user.organization')->where('status', '!=', 'completed')->latest()->get();

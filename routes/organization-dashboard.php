@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Organization\OrganizationProfileController;
+
+use App\Http\Controllers\OrgProfileController;
 use App\Http\Middleware\EnsureUserIsActive;
 use App\Livewire\OrganizationDashboard\Cases\Cases\CompletedCase;
 use App\Livewire\OrganizationDashboard\Cases\Cases\CompletedCaseTable;
@@ -16,7 +17,8 @@ use App\Livewire\OrganizationDashboard\Projects\Request\RequestForm;
 use App\Livewire\OrganizationDashboard\Projects\Request\RequestIndex;
 
 use App\Livewire\OrganizationDashboard\Cases\Request\ReqeustForm as ReqeustFormCases;
-use App\Livewire\OrganizationDashboard\Cases\Request\ReqeustsList as RequestListCases;
+
+use App\Livewire\OrganizationDashboard\Cases\Request\RequestIndex as RequestRequestIndex;
 use App\Livewire\OrganizationDashboard\Donations\DonationsList;
 use App\Livewire\OrganizationDashboard\Projects\Projects\CompletedProject;
 use App\Livewire\OrganizationDashboard\Projects\Projects\CompletedProjectTable;
@@ -35,7 +37,7 @@ Route::prefix('organization')->name('organization.')->middleware(['auth:organiza
 
 
     Route::get('/case/add-request', ReqeustFormCases::class)->name('cases-requests-form');
-    Route::get('/case/request-list', RequestListCases::class)->name('cases-requests');
+    Route::get('/case/request-list', RequestRequestIndex::class)->name('cases-requests');
     Route::get('/case/accepted-requests', AcceptedReqeusts::class)->name('case-accpected');
     Route::get('/case/refined-requests', RefinedRequests::class)->name('case-refined');
 
@@ -51,11 +53,18 @@ Route::prefix('organization')->name('organization.')->middleware(['auth:organiza
 });
 
 
-Route::middleware('auth:organization')->prefix('organization')->name('organization.')->group(function () {
-    Route::get('profile', [OrganizationProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('profile', [OrganizationProfileController::class, 'update'])->name('profile.update');
-    Route::delete('profile', [OrganizationProfileController::class, 'destroy'])->name('profile.destroy');
+// Route::middleware('auth:organization')->prefix('organization')->name('organization.')->group(function () {
+//     Route::get('profile', [OrganizationProfileController::class, 'edit'])->name('profile.edit');
+//     Route::put('profile', [OrganizationProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('profile', [OrganizationProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
+Route::middleware(['auth:organization', EnsureUserIsActive::class])->group(function () {
+    Route::get('/Organization/profile', [OrgProfileController::class, 'edit'])->name('Orgprofile.edit');
+    Route::patch('/Organization/profile', [OrgProfileController::class, 'update'])->name('Orgprofile.update');
+    Route::delete('/Organization/profile', [OrgProfileController::class, 'destroy'])->name('Orgprofile.destroy');
 });
+
 
 Broadcast::channel('organization.group.{organization_id}', function ($user, $organization_id) {
     return $user->organization_id == (int) $organization_id;

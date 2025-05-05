@@ -2,6 +2,7 @@
 
 namespace App\Livewire\AdminDashboard;
 
+use App\Models\OrganizationUser;
 use App\Models\User;
 use Livewire\Component;
 use Spatie\Activitylog\Models\Activity;
@@ -14,14 +15,19 @@ class Logs extends Component
     public $selectedTable = '';
     public $selectedAction = '';
     public $selectedUser = '';
+
     public $activities = [];
 
 
     public $selectedActivity = null;
     public $showModal = false;
-
+  
+    
+    
+    
     public function mount()
-    {
+    { 
+        
         $this->loadActivities();
     }
 
@@ -55,12 +61,20 @@ class Logs extends Component
 public function viewDetails($id)
 {
     $this->selectedActivity = Activity::with('causer')->find($id);
-    $this->showModal = true;  // تفعيل فتح النافذة المنبثقة
+    $this->showModal = true; 
 }
 
-    public function render()
+public function render()
+{
+    $adminUsers = User::all();
+
    
-    {
-        return view('livewire.admin-dashboard.logs',['users'=>User::all()])->layout('layouts.app');
-    }
+    $orgUsers = OrganizationUser::all();
+
+    return view('livewire.admin-dashboard.logs', [
+        'adminUsers' => $adminUsers,
+        'orgUsers' => $orgUsers,
+    ])->layout('layouts.app');
+}
+
 }

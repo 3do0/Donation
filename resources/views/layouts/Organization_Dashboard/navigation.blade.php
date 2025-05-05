@@ -11,7 +11,7 @@
     <div class="collapse navbar-collapse mt-2" style="overflow-y: scroll; overflow-x: hidden; height: 100%;">
         <ul class="navbar-nav" >
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('organization.Main') ? 'active' : '' }}" href="{{ route('organization.Main') }}" wire:navigate>
+                <a class="nav-link {{ request()->routeIs('organization.Main') ? 'active' : '' }}" href="{{ route('organization.Main') }}" >
                     <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
                         <i class="bi bi-house-door-fill icon-custom"></i>
                     </div>
@@ -19,7 +19,7 @@
                 </a>
             </li>
             
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('organization.users') || request()->routeIs('organization.users-form') ? 'active' : '' }}"
                     href="{{ route('organization.users') }}" wire:navigate>
                     <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
@@ -27,7 +27,7 @@
                     </div>
                     <span class="nav-link-text me-1">المستخدمين</span>
                 </a>
-            </li>
+            </li> --}}
             
             
             <li class="nav-item">
@@ -54,7 +54,7 @@
                     <ul class="nav flex-column ">
                         <li class="nav-item">
                             <a class="nav-link fw-bold d-flex align-items-center mb-2 {{ request()->routeIs('organization.cases-requests') ? 'active text-warning' : 'text-light' }}"
-                               href="{{ route('organization.cases-requests') }}" wire:navigate>
+                               href="{{ route('organization.cases-requests') }}" >
                                 <span>الطلبات المعلقة</span>
                             </a>
                         </li>
@@ -141,7 +141,7 @@
                     <ul class="nav flex-column ">
                         <li class="nav-item">
                             <a class="nav-link fw-bold d-flex align-items-center mb-2 {{ request()->routeIs('organization.projects-requests') ? 'active text-warning' : 'text-light' }}"
-                               href="{{ route('organization.projects-requests') }}" wire:navigate>
+                               href="{{ route('organization.projects-requests') }}">
                                 <span>الطلبات المعلقة</span>
                             </a>
                         </li>
@@ -205,15 +205,6 @@
                         <i class="bi bi-currency-dollar icon-custom"></i>
                     </div>
                     <span class="nav-link-text me-1">التبرعات</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"
-                    href="{{ route('organization.donations') }}" wire:navigate>
-                    <div class="icon icon-shape icon-sm px-0 text-center d-flex align-items-center justify-content-center">
-                        <i class="bi bi-file-bar-graph icon-custom"></i>
-                    </div>
-                    <span class="nav-link-text me-1">تقارير التبرعات</span>
                 </a>
             </li>
         </ul>

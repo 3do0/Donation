@@ -1,4 +1,3 @@
-
 @section('title')
     التبرعات
 @endsection
@@ -207,8 +206,8 @@
                         sSearchPlaceholder: "بحـث...",
                         sLengthMenu: "عدد النتائج : _MENU_"
                     },
-                    lengthMenu: [5, 10, 20, 50],
-                    pageLength: 5,
+                    "lengthMenu": [5, 10, 20, 50,100,200],
+                    "pageLength": 50,
                     scrollX: true
                 });
 
@@ -234,5 +233,22 @@
             });
         });
     </script>
+
+<script>
+    window.Pusher = Pusher;
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '{{ env('PUSHER_APP_KEY') }}',
+        cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
+        forceTLS: true,
+    });
+
+    window.Echo.channel('new-donation')
+        .listen('.NewDonation', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('NewDonation'); 
+        });
+</script>
 @endpush
 

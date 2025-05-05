@@ -2,6 +2,7 @@
 
 namespace App\Livewire\OrganizationDashboard\Cases\Request;
 
+use App\Events\CaseCreatedEvent;
 use App\Events\TestNotification;
 use App\Models\OrganizationCaseRequest;
 use Livewire\Component;
@@ -79,6 +80,7 @@ class ReqeustForm extends Component
 
             $this->restForm();
 
+            event(new CaseCreatedEvent($case));
             $this->dispatch('pg:eventRefresh-case-requests-foovyd-table');
             $this->dispatch('CaseCreated');
             $this->dispatch('swal:toast', [

@@ -2,12 +2,14 @@
 
 namespace App\Livewire\AdminDashboard\Cases\Requests;
 
+use App\Events\CaseRequestRespondingEvent;
 use App\Events\OrganizationNotification;
 use App\Models\OrganizationCase;
 use App\Models\OrganizationCaseRequest;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Requests extends Component
@@ -17,9 +19,11 @@ class Requests extends Component
     public $rejectionReason;
     public $requests; 
     
+    #[On('CaseCreated')]
     public function refreshRequests(){
-        $this->requests = OrganizationCaseRequest::with('organization_user.organization')->where('approval_status', 'pending')->get();
+        $this->requests = OrganizationCaseRequest::with('organization_user.organization')->where('approval_status', 'pending')->latest()->get();
     }
+
     public function mount()
     {
         $this->refreshRequests();
@@ -77,6 +81,7 @@ class Requests extends Component
                 'title' => 'تمت الموافقة على الطلب بنجاح',
             ]);
             $this->refreshRequests();
+            event(new CaseRequestRespondingEvent());
 
             $msg = '✨ تم الموافقة على طلب الحالة: ' . $request->case_name . ' 📑 رقم الطلب: ' . $request->id . ' 🎉';
 
@@ -122,6 +127,7 @@ class Requests extends Component
             'title' => 'تم رفض الطلب بنجاح',
         ]);
         $this->refreshRequests();
+        event(new CaseRequestRespondingEvent());
 
         $msg = '❌ تم رفض طلب الحالة: ' . $request->case_name . ' 📑 رقم الطلب: ' . $request->id . ' 😔';
 

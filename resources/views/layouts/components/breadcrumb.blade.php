@@ -92,7 +92,7 @@ $translations = [
 <nav aria-label="breadcrumb" style=" padding: 10px; border-radius: 5px; direction: rtl;">
     <ol class="breadcrumb mb-0 breadcrumb-flex">
         <li class="breadcrumb-item">
-            <a href="/main" wire:navigate style="color: white;">الرئيسية</a>
+            <a href="/main" style="color: white;">الرئيسية</a>
         </li>
 
         @if (isset($customRoutes[$fullPath]))
