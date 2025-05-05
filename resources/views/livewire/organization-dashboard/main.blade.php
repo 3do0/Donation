@@ -169,8 +169,8 @@
                                                     @endif
                                                 </div>
                                                 <div class="me-2">
-                                                    <p class="text-dark text-sm mb-0">{{ $item->donation->donor->name }}</p>
-                                                    <p class="text-secondary text-sm mb-0">{{ $item->donation->donor->email }}</p>
+                                                    <p class="text-dark text-sm mb-0">{{ $item->donation->donor ? $item->donation->donor->name : 'زائر'}}</p>
+                                                    <p class="text-secondary text-sm mb-0">{{ $item->donation->donor? $item->donation->donor->email : '-----------' }}</p>
                                                 </div>
                                             </div>
                                         </td>
