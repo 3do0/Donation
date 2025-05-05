@@ -90,7 +90,7 @@ class StripePaymentController extends Controller
             $successUrl = 'http://127.0.0.1:8000/';
             $cancelUrl = 'http://127.0.0.1:8000/';
         } else {
-            $successUrl = env('FRONTEND_URL') . 'http://localhost:5173/success';
+            $successUrl = 'http://localhost:5173/success';
             $cancelUrl = env('FRONTEND_URL') . '/payment-failed';
         }
 
