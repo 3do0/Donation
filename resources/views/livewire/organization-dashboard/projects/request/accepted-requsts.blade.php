@@ -59,3 +59,36 @@
         </div>
     </div>
 </div>
+
+
+@push('scripts')
+<script>
+    window.Pusher = Pusher;
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '{{ env('PUSHER_APP_KEY') }}',
+        cluster: '{{ env('PUSHER_APP_CLUSTER') }}',
+        forceTLS: true,
+    });
+
+    window.Echo.channel('case-updates')
+        .listen('.CaseCreated', (e) => {
+            console.log('📢 استقبلنا الحدث العام CaseCreated:', e);
+            Livewire.dispatch('CaseCreated'); 
+        });
+
+        window.Echo.channel('reject-project')
+        .listen('.ProjectRejection', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('ProjectRejection'); 
+        });
+
+        window.Echo.channel('new-donation')
+        .listen('.NewDonation', (e) => {
+            console.log('📢 استقبلنا الحدث العام PCreated:', e);
+            Livewire.dispatch('NewDonation'); 
+        });
+</script>
+
+@endpush

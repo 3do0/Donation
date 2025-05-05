@@ -61,4 +61,4 @@ Route::prefix('organization')->name('organization.')->middleware('auth:organizat
         ->name('logout');
 });
 
-Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
+// Route::put('/password', [PasswordController::class, 'update'])->name('password.update');

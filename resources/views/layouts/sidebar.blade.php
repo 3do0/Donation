@@ -65,7 +65,7 @@
             </li> --}}
 
             <li class="menu">
-                <a href="#organization" data-toggle="collapse" class="dropdown-toggle" >
+                <a href="#organization" data-toggle="collapse" class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -88,11 +88,9 @@
                     <li>
                         <a href="{{ route('org') }}" wire:navigate> المؤسسات الفعالة </a>
                     </li>
-                    @php
-                    $orgs_count = \App\Models\Organization::where('approval_status', false)->count();
-                    @endphp
-                    <li >
-                        <a href="{{ route('join-requests') }}" wire:navigate>طلبات الانضمام <span class="m-auto text-warning">({{ $orgs_count }})</span>
+
+                    <li>
+                        <a href="{{ route('join-requests') }}" wire:navigate>طلبات الانضمام
                         </a>
                     </li>
                 </ul>
@@ -130,7 +128,7 @@
 
 
             <li class="menu {{ request()->routeIs('donations') ? 'active' : '' }}">
-               <a href="{{ route('donations') }}"
+                <a href="{{ route('donations') }}"
                     {{ request()->routeIs('donations') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">
@@ -166,29 +164,27 @@
                         </svg>
                     </div>
                 </a>
-                @php
-    $isCaseRoute = request()->routeIs('cases-request') || request()->routeIs('refined-case') || request()->routeIs('accepted_case') || request()->routeIs('accepted-case-card') || request()->routeIs('completed_case');
-    $cases_count = \App\Models\OrganizationCaseRequest::where('approval_status', 'pending')->count();
-@endphp
-<ul class="collapse submenu list-unstyled {{ $isCaseRoute ? 'show' : '' }}" id="submenu" data-parent="#accordionExample">
-    <li class="{{ request()->routeIs('cases-request') ? 'active' : '' }}">
-        <a href="{{ route('cases-request') }}" >
-            الطلبات المعلقة <span class="m-auto text-warning">({{ $cases_count }})</span>
-        </a>
-    </li>
-    <li class="{{ request()->routeIs('refined-case') ? 'active' : '' }}">
-        <a href="{{ route('refined-case') }}" wire:navigate> الطلبات المرفوضة</a>
-    </li>
-    <li class="{{ request()->routeIs('accepted_case') ? 'active' : '' }}">
-        <a href="{{ route('accepted_case') }}" wire:navigate> الحالات المقبولة </a>
-    </li>
-    <li class="{{ request()->routeIs('accepted-case-card') ? 'active' : '' }}">
-        <a href="{{ route('accepted-case-card') }}" wire:navigate> الحالات المفعلة </a>
-    </li>
-    <li class="{{ request()->routeIs('completed_case') ? 'active' : '' }}">
-        <a href="{{ route('completed_case') }}" wire:navigate> الحالات المكتملة </a>
-    </li>
-</ul>
+
+                <ul class="collapse submenu list-unstyled" id="submenu"
+                    data-parent="#accordionExample">
+                    <li class="{{ request()->routeIs('cases-request') ? 'active' : '' }}">
+                        <a href="{{ route('cases-request') }}">
+                            الطلبات المعلقة 
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('refined-case') ? 'active' : '' }}">
+                        <a href="{{ route('refined-case') }}" wire:navigate> الطلبات المرفوضة</a>
+                    </li>
+                    <li class="{{ request()->routeIs('accepted_case') ? 'active' : '' }}">
+                        <a href="{{ route('accepted_case') }}" wire:navigate> الحالات المقبولة </a>
+                    </li>
+                    <li class="{{ request()->routeIs('accepted-case-card') ? 'active' : '' }}">
+                        <a href="{{ route('accepted-case-card') }}" wire:navigate> الحالات المفعلة </a>
+                    </li>
+                    <li class="{{ request()->routeIs('completed_case') ? 'active' : '' }}">
+                        <a href="{{ route('completed_case') }}" wire:navigate> الحالات المكتملة </a>
+                    </li>
+                </ul>
 
             </li>
 
@@ -217,12 +213,10 @@
                     </div>
                 </a>
                 <ul class="collapse submenu list-unstyled" id="projects-submenu" data-parent="#accordionExample">
-                    @php
-                        $cases_count = \App\Models\OrganizationProjectRequest::where('approval_status', 'pending')->count();
-                    @endphp
+                   
                     <li>
                         <a href="{{ route('projects-request') }}">
-                            الطلبات المعلقة<span class="m-auto text-warning">({{ $cases_count }})</span>
+                            الطلبات المعلقة
                         </a>
                     </li>
                     <li>
@@ -291,13 +285,13 @@
                     class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class="feather feather-bar-chart-2">
-                        <line x1="18" y1="20" x2="18" y2="10"></line>
-                        <line x1="12" y1="20" x2="12" y2="4"></line>
-                        <line x1="6" y1="20" x2="6" y2="14"></line>
-                    </svg>
-                    
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-bar-chart-2">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+
                         <span>تقارير المنظمات</span>
                     </div>
                 </a>
@@ -315,8 +309,8 @@
             </li>
             <li class="menu {{ request()->routeIs('platform-donations') ? 'active' : '' }}">
                 <a href="{{ route('platform-donations') }}"
-                {{ request()->routeIs('platform-donations') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
-                class="dropdown-toggle">
+                    {{ request()->routeIs('platform-donations') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
+                    class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -375,7 +369,7 @@
             </li>
 
             <li class="menu {{ request()->routeIs('logs') ? 'active' : '' }}">
-                <a href="{{ route('logs') }}" 
+                <a href="{{ route('logs') }}"
                     {{ request()->routeIs('logs') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">
