@@ -31,12 +31,12 @@ class DonorsList extends Component
         }
 
         $this->refreshUsers();
+        $this->dispatch('swal:toast', [
+            'icon' => 'success',
+            'title' => 'تمت عملية التغيير بنجاح !',
+        ]);
     }
-
-    public function edit($id)
-    {
-        $this->dispatch('editUser', $id);
-    }
+    
     public function render()
     {
         return view('livewire.admin-dashboard.donors.donors-list')->layout('layouts.app');

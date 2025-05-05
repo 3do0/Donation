@@ -14,6 +14,11 @@ class CurrenciesList extends Component
         $this->currencies = CurrencyRate::get();
     }
 
+    function placeholder()
+    {
+        return view('layouts.components.placeholdeScreens.tablesSkeleton');
+    }
+
     public function mount()
     {
         $this->refreshCurrencies();

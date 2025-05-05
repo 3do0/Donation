@@ -2,6 +2,7 @@
 
 namespace App\Livewire\AdminDashboard\Cases\Requests;
 
+use App\Events\OrganizationNotification;
 use App\Models\OrganizationCase;
 use App\Models\OrganizationCaseRequest;
 use Carbon\Carbon;
@@ -76,6 +77,16 @@ class Requests extends Component
                 'title' => 'تمت الموافقة على الطلب بنجاح',
             ]);
             $this->refreshRequests();
+
+            $msg = '✨ تم الموافقة على طلب الحالة: ' . $request->case_name . ' 📑 رقم الطلب: ' . $request->id . ' 🎉';
+
+            broadcast(new OrganizationNotification([
+                'organization_id' => auth('organization')->user()->organization_id,
+                'title' => '💥 تم قبول الطلب بنجاح!',
+                'content' => $msg,
+            ]));
+
+
         } catch (Exception $e) {
             DB::rollBack();
     
@@ -111,6 +122,15 @@ class Requests extends Component
             'title' => 'تم رفض الطلب بنجاح',
         ]);
         $this->refreshRequests();
+
+        $msg = '❌ تم رفض طلب الحالة: ' . $request->case_name . ' 📑 رقم الطلب: ' . $request->id . ' 😔';
+
+        broadcast(new OrganizationNotification([
+            'organization_id' => auth('organization')->user()->organization_id,
+            'title' => '🚫 تم رفض الطلب',
+            'content' => $msg,
+        ]));
+
     }
 
 

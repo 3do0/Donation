@@ -6,8 +6,8 @@
 
         <ul class="navbar-nav theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
-                <a href="{{ route('Main') }}">
-                    <img src="{{ asset('assets/img/tim.png') }}" class="navbar-logo" alt="logo">
+                <a href="{{ route('Main') }}" wire:navigate>
+                    <img src="{{ asset('assets/img/logo1.png') }}" class="navbar-logo" alt="logo">
                 </a>
             </li>
             <li class="nav-item theme-text">
@@ -67,7 +67,7 @@
             </li>
 
             <li class="menu">
-                <a href="#organization" data-toggle="collapse" class="dropdown-toggle">
+                <a href="#organization" data-toggle="collapse" class="dropdown-toggle" >
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -86,12 +86,16 @@
                         </svg>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled" id="organization" data-parent="#accordionExample">
+                <ul class="collapse submenu list-unstyled " id="organization" data-parent="#accordionExample">
                     <li>
                         <a href="{{ route('org') }}" wire:navigate> المؤسسات الفعالة </a>
                     </li>
-                    <li>
-                        <a href="{{ route('join-requests') }}" wire:navigate>طلبات الانضمام</a>
+                    @php
+                    $orgs_count = \App\Models\Organization::where('approval_status', false)->count();
+                    @endphp
+                    <li >
+                        <a href="{{ route('join-requests') }}" wire:navigate>طلبات الانضمام <span class="m-auto text-warning">({{ $orgs_count }})</span>
+                        </a>
                     </li>
                 </ul>
             </li>
@@ -164,29 +168,30 @@
                         </svg>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled" id="submenu" data-parent="#accordionExample">
-                    @php
-                        $cases_count = \App\Models\OrganizationCaseRequest::where('approval_status', 'pending')->count();
-                    @endphp
-                    <li>
-                        <a href="{{ route('cases-request') }}" wire:navigate>
-                            الطلبات المعلقة<span class="m-auto text-warning">({{ $cases_count }})</span>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="{{ route('refined-case') }}" wire:navigate> الطلبات المرفوضة</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('accepted_case') }}" wire:navigate> الحالات المقبولة </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('accepted-case-card') }}" wire:navigate> الحالات المفعلة </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('completed_case') }}" wire:navigate> الحالات المكتملة </a>
-                    </li>
-                </ul>
+                @php
+    $isCaseRoute = request()->routeIs('cases-request') || request()->routeIs('refined-case') || request()->routeIs('accepted_case') || request()->routeIs('accepted-case-card') || request()->routeIs('completed_case');
+    $cases_count = \App\Models\OrganizationCaseRequest::where('approval_status', 'pending')->count();
+@endphp
+<ul class="collapse submenu list-unstyled {{ $isCaseRoute ? 'show' : '' }}" id="submenu" data-parent="#accordionExample">
+    <li class="{{ request()->routeIs('cases-request') ? 'active' : '' }}">
+        <a href="{{ route('cases-request') }}" wire:navigate>
+            الطلبات المعلقة <span class="m-auto text-warning">({{ $cases_count }})</span>
+        </a>
+    </li>
+    <li class="{{ request()->routeIs('refined-case') ? 'active' : '' }}">
+        <a href="{{ route('refined-case') }}" wire:navigate> الطلبات المرفوضة</a>
+    </li>
+    <li class="{{ request()->routeIs('accepted_case') ? 'active' : '' }}">
+        <a href="{{ route('accepted_case') }}" wire:navigate> الحالات المقبولة </a>
+    </li>
+    <li class="{{ request()->routeIs('accepted-case-card') ? 'active' : '' }}">
+        <a href="{{ route('accepted-case-card') }}" wire:navigate> الحالات المفعلة </a>
+    </li>
+    <li class="{{ request()->routeIs('completed_case') ? 'active' : '' }}">
+        <a href="{{ route('completed_case') }}" wire:navigate> الحالات المكتملة </a>
+    </li>
+</ul>
+
             </li>
 
             <li class="menu">
@@ -310,7 +315,22 @@
                     <span>إضافي</span>
                 </div>
             </li>
-            <li class="menu ">
+            <li class="menu {{ request()->routeIs('platform-donations') ? 'active' : '' }}">
+                <a href="{{ route('platform-donations') }}" wire:navigate data-toggle="collapse"
+                    {{ request()->routeIs('platform-donations') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
+                    class="dropdown-toggle">
+                    <div class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-dollar-sign">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        <span>دعم المنصة</span>
+                    </div>
+                </a>
+            </li>
+            <li class="menu">
                 <a href="{{ route('notification') }}" wire:navigate class="dropdown-toggle">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TestNotification;
 use App\Models\Donation;
 use App\Models\OrganizationCase;
 use Illuminate\Http\Request;
@@ -244,6 +245,14 @@ class StripePaymentController extends Controller
                     if ($case->raised_amount >= $case->target_amount) {
                         $case->update(['status' => 'completed']);
                     }
+
+                    $msg = '💰 تبرع جديد من المتبرع رقم: ' . $donorId;
+
+                    broadcast(new TestNotification([
+                        'title' => '🎉 تم تسجيل تبرع جديد',
+                        'content' => $msg,
+                    ]));
+
                 }
             }
 

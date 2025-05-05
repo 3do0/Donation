@@ -85,10 +85,14 @@ class ReqeustForm extends Component
                 'icon' => 'success',
                 'title' => 'تمت إضافة الطلب بنجاح',
             ]);
+
+            $msg = '💡 أضافت المنظمة: ' . auth('organization')->user()->name . ' حالة جديدة للنشر.';
             broadcast(new TestNotification([
-                'author' => $case->case_name,
-                'title' => $case->target_amount,
+                'title' => '📢 حالة جديدة',
+                'content' => $msg,
             ]));
+
+
         } catch (\Exception $e) {
             $this->dispatch('swal:toast', [
                 'icon' => 'error',

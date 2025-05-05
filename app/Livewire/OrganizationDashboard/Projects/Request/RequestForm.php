@@ -82,10 +82,13 @@ class RequestForm extends Component
                 'icon' => 'success',
                 'title' => 'تمت إضافة الطلب بنجاح',
             ]);
-            event(new TestNotification([
-                'author' => $project->organization_user->organization->name,
-                'title' => "إضافة طلب جديد",
+            
+            $msg = '🚀 أضافت المنظمة: ' . auth('organization')->user()->name . ' مشروعًا جديدًا للنشر.';
+            broadcast(new TestNotification([
+                'title' => '📢 مشروع جديد',
+                'content' => $msg,
             ]));
+
         } catch (\Exception $e) {
             $this->dispatch('swal:toast', [
             'icon' => 'error',

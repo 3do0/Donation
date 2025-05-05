@@ -169,7 +169,7 @@
                 </div>
             </div>
             <div class="widget-content widget-content-area">
-                <div class="table-responsive overflow-hidden" wire:ignore>
+                <div class="table-responsive overflow-hidden">
                     <table id="style-1" class="table style-1">
                         <thead>
                             <tr>

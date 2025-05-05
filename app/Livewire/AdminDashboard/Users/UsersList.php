@@ -49,6 +49,10 @@ class UsersList extends Component
         }
 
         $this->refreshUsers();
+        $this->dispatch('swal:toast', [
+            'icon' => 'success',
+            'title' => 'تمت عملية التغيير بنجاح !',
+        ]);
     }
 
     public function deleteUser($modaldata)

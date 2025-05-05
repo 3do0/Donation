@@ -30,6 +30,11 @@ class NotificationsSend extends Component
 
         $this->reset(['title', 'body']);
 
+        $this->dispatch('swal:toast', [
+            'icon' => 'success',
+            'title' => 'تم ارسال الاشعار بنجاح !',
+        ]);
+
         $this->dispatch('send-out');
     }
     public function render()

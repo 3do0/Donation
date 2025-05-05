@@ -17,46 +17,6 @@
 @endsection
 
 <div class="mt-4">
-    <div class="row">
-        <!-- Card for New Posts -->
-        <div class="col-xl-3 col-sm-6 col-12">
-            <div class="card shadow-sm rounded-3">
-                <div class="card-content">
-                    <div class="card-body">
-                        <div class="media d-flex align-items-center">
-                            <div class="icon-wrapper bg-primary rounded-circle p-3">
-                                <i class="icon-pencil font-large-2"></i>
-                            </div>
-                            <div class="media-body text-end">
-                                <h3>278</h3>
-                                <span class="text-muted">New Posts</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card for New Comments -->
-        <div class="col-xl-3 col-sm-6 col-12">
-            <div class="card shadow-sm rounded-3">
-                <div class="card-content">
-                    <div class="card-body">
-                        <div class="media d-flex align-items-center">
-                            <div class="icon-wrapper bg-warning rounded-circle p-3">
-                                <i class="icon-speech font-large-2"></i>
-                            </div>
-                            <div class="media-body text-end">
-                                <h3>156</h3>
-                                <span class="text-muted">New Comments</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Partners Table Section -->
     <div class="row layout-spacing mt-5">
         <div class="col-lg-12">
@@ -136,11 +96,12 @@
                                                 class="badge outline-badge-info">{{ $partner->type }}</span></td>
                                         <td class="text-center text-nowrap">
                                             @if ($partner->donation_amount)
-                                            <h6 class="text-sm font-weight-semibold">{{ $partner->donation_amount }} ريال يمني
-                                            </h6>
+                                                <h6 class="text-sm font-weight-semibold">
+                                                    {{ $partner->donation_amount }} ريال يمني
+                                                </h6>
                                             @else
-                                            <h6 class="text-sm font-weight-semibold">لا يوجــد
-                                            </h6>
+                                                <h6 class="text-sm font-weight-semibold">لا يوجــد
+                                                </h6>
                                             @endif
                                         </td>
                                         <td class="text-center">
@@ -166,7 +127,9 @@
                                         </td>
 
                                         <td class="text-center">
-                                            <a href="javascript:void(0);" data-toggle="tooltip" data-placement="top"
+                                            <a href="javascript:void(0);" data-bs-toggle="modal"
+                                                data-bs-target="#editPartModal"
+                                                wire:click="editPart({{ $partner->id }})" data-placement="top"
                                                 title="" data-original-title="Edit"><svg
                                                     xmlns="http://www.w3.partner/2000/svg" width="24"
                                                     height="24" viewBox="0 0 24 24" fill="none"
@@ -175,20 +138,6 @@
                                                     class="feather feather-check-circle text-primary">
                                                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                                                     <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                                </svg></a></li>
-                                            <a type="button" wire:click="confirmDelete({{ $partner->id }})"
-                                                data-toggle="tooltip" data-placement="top" title=""
-                                                data-original-title="Delete"><svg
-                                                    xmlns="http://www.w3.partner/2000/svg" width="24"
-                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-x-circle text-danger">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                    <line x1="15" y1="9" x2="9"
-                                                        y2="15"></line>
-                                                    <line x1="9" y1="9" x2="15"
-                                                        y2="15"></line>
                                                 </svg></a></li>
                                         </td>
                                     </tr>
@@ -202,60 +151,62 @@
     </div>
 </div>
 @push('scripts')
-<script>
-    function initDataTableIfExists() {
-        let tableElement = $('#style-1');
-        if (tableElement.length) {
-            if ($.fn.DataTable.isDataTable(tableElement)) {
-                tableElement.DataTable().destroy();
+    <script>
+        function initDataTableIfExists() {
+            let tableElement = $('#style-1');
+            if (tableElement.length) {
+                if ($.fn.DataTable.isDataTable(tableElement)) {
+                    tableElement.DataTable().destroy();
+                }
+                const dt = tableElement.DataTable({
+                    headerCallback: function(e, a, t, n, s) {
+                        e.getElementsByTagName("th")[0].innerHTML =
+                            '<label class="new-control new-checkbox checkbox-outline-info m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>';
+                    },
+                    columnDefs: [{
+                        targets: 0,
+                        width: "30px",
+                        orderable: false,
+                        render: function(e, a, t, n) {
+                            return '<label class="new-control new-checkbox checkbox-outline-info m-auto">\n<input type="checkbox" class="new-control-input child-chk select-customers-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>';
+                        }
+                    }],
+                    "oLanguage": {
+                        "oPaginate": {
+                            "sPrevious": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>',
+                            "sNext": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>'
+                        },
+                        "sInfo": "Showing page _PAGE_ of _PAGES_",
+                        "sSearch": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                        "sSearchPlaceholder": "بحـث...",
+                        "sLengthMenu": "النتيجة :  _MENU_",
+                    },
+                    "lengthMenu": [5, 10, 20, 50],
+                    "pageLength": 5,
+                    "scrollX": true,
+                });
+
+                multiCheck(dt);
             }
-            const dt = tableElement.DataTable({
-                headerCallback: function(e, a, t, n, s) {
-                    e.getElementsByTagName("th")[0].innerHTML =
-                        '<label class="new-control new-checkbox checkbox-outline-info m-auto">\n<input type="checkbox" class="new-control-input chk-parent select-customers-info" id="customer-all-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>';
-                },
-                columnDefs: [{
-                    targets: 0,
-                    width: "30px",
-                    orderable: false,
-                    render: function(e, a, t, n) {
-                        return '<label class="new-control new-checkbox checkbox-outline-info m-auto">\n<input type="checkbox" class="new-control-input child-chk select-customers-info">\n<span class="new-control-indicator"></span><span style="visibility:hidden">c</span>\n</label>';
-                    }
-                }],
-                "oLanguage": {
-                "oPaginate": {
-                    "sPrevious": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>',
-                    "sNext": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>'
-                },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.request/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "بحـث...",
-                "sLengthMenu": "النتيجة :  _MENU_",
-                },
-                "lengthMenu": [5, 10, 20, 50],
-                "pageLength": 5,
-                "scrollX": true,
-            });
-
-            multiCheck(dt);
         }
-    }
 
-    document.addEventListener('livewire:navigated', () => {
-        // تأكد من إعادة تهيئة الجدول عند التنقل بين المكونات
-        requestAnimationFrame(() => {
-            initDataTableIfExists();
+        document.addEventListener('livewire:navigated', () => {
+            // تأكد من إعادة تهيئة الجدول عند التنقل بين المكونات
+            requestAnimationFrame(() => {
+                initDataTableIfExists();
+            });
         });
-    });
 
-    document.addEventListener('livewire:init', () => {
-        window.Livewire.hook('commit', ({ succeed }) => {
-            succeed(() => {
-                requestAnimationFrame(() => {
-                    initDataTableIfExists();
+        document.addEventListener('livewire:init', () => {
+            window.Livewire.hook('commit', ({
+                succeed
+            }) => {
+                succeed(() => {
+                    requestAnimationFrame(() => {
+                        initDataTableIfExists();
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 @endpush

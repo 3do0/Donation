@@ -50,7 +50,7 @@ class TakafulPlatform extends Controller
 
     public function TakafulPartners()
     {
-        $partners = Partner::select('name', 'logo')
+        $partners = Partner::where('status', true)->select('name', 'logo')
             ->get()
             ->map(function ($partner) {
                 return [
@@ -60,7 +60,7 @@ class TakafulPlatform extends Controller
                 ];
             });
 
-        $organizations = Organization::where('status', 'approved')->select('name', 'logo', 'web_url')->get()
+        $organizations = Organization::where('approval_status', true)->select('name', 'logo', 'web_url')->get()
             ->map(function ($organization) {
                 return [
                     'name' => $organization->name,

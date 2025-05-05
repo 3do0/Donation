@@ -20,6 +20,7 @@ use App\Livewire\OrganizationDashboard\Cases\Request\ReqeustsList as RequestList
 use App\Livewire\OrganizationDashboard\Donations\DonationsList;
 use App\Livewire\OrganizationDashboard\Projects\Projects\CompletedProject;
 use App\Livewire\OrganizationDashboard\Projects\Projects\CompletedProjectTable;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('organization')->name('organization.')->middleware(['auth:organization', EnsureUserIsActive::class])->group(function () {
@@ -55,3 +56,8 @@ Route::middleware('auth:organization')->prefix('organization')->name('organizati
     Route::put('profile', [OrganizationProfileController::class, 'update'])->name('profile.update');
     Route::delete('profile', [OrganizationProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Broadcast::channel('organization.group.{organization_id}', function ($user, $organization_id) {
+    return $user->organization_id == (int) $organization_id;
+}, ['guards' => ['organization']]);
+

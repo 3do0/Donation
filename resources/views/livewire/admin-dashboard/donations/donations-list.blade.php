@@ -22,58 +22,20 @@
 @endsection
 
 <div class="mt-4">
-    <div class="row">
-        <div class="col-xl-3 col-sm-6 col-12">
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-body">
-                        <div class="media d-flex">
-                            <div class="align-self-center">
-                                <i class="icon-pencil primary font-large-2 float-left"></i>
-                            </div>
-                            <div class="media-body text-right">
-                                <h3>278</h3>
-                                <span>New Posts</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 col-12">
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-body">
-                        <div class="media d-flex">
-                            <div class="align-self-center">
-                                <i class="icon-speech warning font-large-2 float-left"></i>
-                            </div>
-                            <div class="media-body text-right">
-                                <h3>156</h3>
-                                <span>New Comments</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div class="row layout-spacing mt-5">
         <div class="col-lg-12">
             <div class="statbox widget box box-shadow border rounded">
                 <div class="widget-header px-4">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
-                            <h4 class="font-weight-semibold ">قائمة الجمعيات الخيريـة</h4>
-                            <p class="text-sm">معرفة حميع المعلومات عن الجمعيات الخيرية المسجله لدى المنصة</p>
+                            <h4 class="font-weight-semibold ">قائمة التبرعات</h4>
+                            <p class="text-sm">معرفة حميع المعلومات عن التبرعات</p>
                         </div>
                     </div>
                 </div>
                 <div class="widget-content widget-content-area">
                     <div class="table-responsive overflow-hidden">
-                        <table id="style-1" class="table style-1" wire:poll.10s>
+                        <table id="style-1" class="table style-1">
                             <thead>
                                 <tr class="text-nowrap">
                                     <th class="text-center">#</th>
@@ -111,7 +73,7 @@
                                                 <span class="badge outline-badge-danger">فشل</span>
                                             @endif
                                         </td>
-                                        <td class="text-center text-warning">{{ $donation->created_at->format('Y-m-d') }}</td>
+                                        <td class="text-center text-warning">{{ $donation->created_at->format('h-i-s/ Y-m-d')}}</td>
                                         <td class="text-center">
                                             <button class="btn btn-primary btn-sm mx-2" data-toggle="modal" data-target="#detailsModal{{ $donation->id}}">تفاصيل التبرع</button>
                                         </td>

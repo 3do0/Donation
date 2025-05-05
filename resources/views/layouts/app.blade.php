@@ -6,8 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <meta charset="utf-8">
+    <link rel="icon" href="{{ asset('assets/img/logo1.png') }}" type="image/jpg">
 
-    <title>@yield('title','Takaful')</title>
+
+    <title>@yield('title', 'Takaful')</title>
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -16,12 +18,15 @@
     <link href="{{ asset('assets/css/components/card.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/dropify/dropify.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/users/account-setting.css') }}" rel="stylesheet" />
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/loading.io@1.0.0/dist/loading.min.css" rel="stylesheet">
+
     @php
         $theme = session('theme', 'dark');
     @endphp
     <link id="theme-css" rel="stylesheet" href="{{ asset('assets/css/' . $theme . '.css') }}">
-    
+
     <style>
         @font-face {
             font-family: 'Tajawal';
@@ -64,11 +69,7 @@
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
 
-                <div class="page-header">
-                    <div class="page-title">
-                        <h3>الرئيسية</h3>
-                    </div>
-                </div>
+                @include('layouts.components.breadcrumb')
                 <hr>
 
                 <!-- CONTENT AREA -->
@@ -86,6 +87,7 @@
     <!-- END MAIN CONTAINER -->
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+
     <script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap/bootstrap.min.js') }}"></script>
@@ -94,8 +96,16 @@
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="{{ asset('assets/js/users/account-settings.js') }}"></script>
     <script src="{{ asset('assets/plugins/dropify/dropify.min.js') }}"></script>
+    <script src="{{ asset('assets/js/users/account-settings.js') }}"></script>
+
+    <script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
+    <script src="{{ asset('assets/plugins/table/datatable/button-ext/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/table/datatable/button-ext/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/table/datatable/button-ext/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/table/datatable/button-ext/buttons.print.min.js') }}"></script>
+
+    <script src="{{ asset('assets/js/invoice.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -103,11 +113,17 @@
         });
     </script>
 
-    
+    @stack('scripts')
+    @yield('PageJavaScribt')
+
+    @include('layouts.components.modalInfo')
+    @include('layouts.components.modalDeleteConfirm')
+    @include('layouts.components.adminPusherNotification')
+
 
     <script>
         function toggleFullscreen() {
-            if (!document.fullscreenElement && 
+            if (!document.fullscreenElement &&
                 !document.mozFullScreenElement && // Firefox
                 !document.webkitFullscreenElement && // Safari و Chrome
                 !document.msFullscreenElement) { // IE/Edge
@@ -129,7 +145,7 @@
                     document.mozCancelFullScreen();
                 } else if (document.webkitExitFullscreen) { // Safari و Chrome
                     document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) { 
+                } else if (document.msExitFullscreen) {
                     document.msExitFullscreen();
                 }
                 document.getElementById("fullscreen-icon").classList.remove("bi-x-square");
@@ -142,19 +158,6 @@
 
     {{-- ############################################ --}}
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="{{ asset('assets/plugins/table/datatable/datatables.js') }}"></script>
-
-    <script src="{{ asset('assets/plugins/table/datatable/button-ext/dataTables.buttons.min.js')}}"></script>
-    <script src="{{ asset('assets/plugins/table/datatable/button-ext/jszip.min.js')}}"></script>    
-    <script src="{{ asset('assets/plugins/table/datatable/button-ext/buttons.html5.min.js')}}"></script>
-    <script src="{{ asset('assets/plugins/table/datatable/button-ext/buttons.print.min.js')}}"></script>
-    <script src="{{ asset('assets/js/invoice.js') }}"></script>
-    @stack('scripts')
-    @yield('PageJavaScribt')
-    @include('layouts.components.modalInfo')
-    @include('layouts.components.modalDeleteConfirm')
-    @include('layouts.components.pusherNotification1')
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 </body>

@@ -45,22 +45,5 @@
         document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
 
     });
-    
-
-    window.addEventListener("send-out", function () {
-        Swal.fire({
-            title: "تمت الارسال بنجاح!",
-            text: "تم ارسال الاشعار الى جميع الاجهزه",
-            icon: "success",
-            confirmButtonText: "حسنًا"
-        });
-        
-    }
-    
-
-    
-);
-
-
 </script>
 

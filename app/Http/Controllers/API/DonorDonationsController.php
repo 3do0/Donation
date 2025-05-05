@@ -37,6 +37,7 @@ class DonorDonationsController extends Controller
             'donorDonationsCount' => $donorDonationsCount,
         ]);
     }
+    
     public function donorDonations()
     {
         $donor = Auth::guard('donor')->user();
@@ -45,7 +46,7 @@ class DonorDonationsController extends Controller
         }
 
         $donations = Donation::where('donor_id', $donor->id)
-            ->with('items', 'donor')
+            ->with('items', 'donor')->latest()
             ->get();
 
         $data = $donations->map(function ($donation) {

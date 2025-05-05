@@ -3,16 +3,23 @@
 namespace App\Livewire\AdminDashboard\Partners;
 
 use App\Models\Partner;
+use Livewire\Attributes\On;
 use Livewire\Component;
-
+use Livewire\WithPagination;
+    
 class PartnersList extends Component
 {
-
     public $partners;
 
+    #[On('partnerUpdated')]
     public function refreshPartners()
     {
         $this->partners = Partner::get();
+    }
+
+    public function editPart($id)
+    {
+        $this->dispatch('editpart', $id);
     }
 
     public function mount()
@@ -29,6 +36,11 @@ class PartnersList extends Component
             $partner->save();
         }
 
+        $this->dispatch('swal:toast', [
+            'icon' => 'success',
+            'title' => 'تمت عملية التغيير بنجاح !',
+        ]);
+
         $this->refreshPartners();
     }
 
@@ -37,3 +49,4 @@ class PartnersList extends Component
         return view('livewire.admin-dashboard.partners.partners-list');
     }
 }
+

@@ -4,13 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="icon" href="{{ asset('assets/img/logo1.png') }}" type="image/jpg">
 
         <title>{{ $PageTitle ?? 'الرئيسية' }}</title>
 
-        {{-- <link rel="icon" type="image/png" href="../assets/img/favicon.png" /> --}}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-        
-        <!-- CSS Files -->
+
         <link id="pagestyle" href="{{ asset('assets/css/organization/main.css?v=1.0.0') }}" rel="stylesheet" />
         <link id="pagestyle" href="{{ asset('assets/css/organization/components/profile-card.css') }}" rel="stylesheet" />
 
@@ -59,6 +58,8 @@
 
     @include('layouts.components.modalInfo')
     @include('layouts.components.modalDeleteConfirm')
+
+    @include('layouts.components.organizationPusherNotification')
     @livewireScripts
 <script>
   window.addEventListener('change-page-title', event => {

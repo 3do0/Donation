@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\TestNotification;
 use App\Http\Controllers\Controller;
 use App\Mail\OrganizationRequestReceived;
 use App\Models\Organization;
@@ -58,6 +59,13 @@ class OrganizationRequestController extends Controller
             ]);
 
             Mail::to($organization->email)->send(new OrganizationRequestReceived($organization));
+
+            $msg = '🏢 تم تقديم طلب تسجيل جديد من منظمة: ' . $organization->name;
+
+            broadcast(new TestNotification([
+                'title' => '📝 طلب تسجيل منظمة',
+                'content' => $msg,
+            ]));
 
             DB::commit();
 

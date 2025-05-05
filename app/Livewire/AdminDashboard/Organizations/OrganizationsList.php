@@ -6,6 +6,8 @@ use App\Models\Organization;
 use App\Models\OrganizationUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class OrganizationsList extends Component
@@ -32,6 +34,14 @@ class OrganizationsList extends Component
         $this->refreshOrganizations();
     }
 
+
+    public function editOrg($id)
+    {   
+        $this->dispatch('editorg',$id);
+    }
+
+    #[On('organizationUpdated')]
+    #[Computed()]
     public function refreshOrganizations()
     {
         $this->organizations = Organization::get();

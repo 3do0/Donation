@@ -123,7 +123,7 @@
                     </div>
 
                     {{-- زر الإرسال --}}
-                    <button type="submit" class="btn btn-dark btn-color" wire:loading.attr="disabled"
+                    <button type="submit" class="btn btn-warning btn-color" wire:loading.attr="disabled"
                         wire:target="project_file,project_photo">
                         <div class="spinner-grow text-white mr-2 align-self-center loader-sm" wire:loading
                             wire:target="project_file,project_photo"></div>

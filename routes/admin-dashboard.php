@@ -15,6 +15,7 @@ use App\Livewire\AdminDashboard\CurrenciesList;
 // use App\Livewire\AdminDashboard\Cases\Responses\AdditionalResponses;
 use App\Livewire\AdminDashboard\Donations\DonationsList;
 use App\Livewire\AdminDashboard\Donations\DonationsReport;
+use App\Livewire\AdminDashboard\Donations\PlatformDonationsList;
 use App\Livewire\AdminDashboard\Donors\DonorsList;
 use App\Livewire\AdminDashboard\Logs;
 use App\Livewire\AdminDashboard\Main;
@@ -49,6 +50,7 @@ Route::middleware(['auth:admin', EnsureUserIsActive::class])->group(function () 
     // Route::get('/org-case', OrganizationCasesIndex::class)->name('org-case');
 
     Route::get('/donations', DonationsList::class)->name('donations');
+    Route::get('/platform-donations', PlatformDonationsList::class)->name('platform-donations');
     Route::get('/donations/reports', DonationsReport::class)->name('donations-report');
 
     // Route::get('/all-case', AllCasesIndex::class)->name('all-case');

@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/css/iziToast.min.css">
+<script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
+<script>
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('{{ config("broadcasting.connections.pusher.key") }}', {
+        cluster: '{{ config("broadcasting.connections.pusher.options.cluster") }}',
+        forceTLS: true,
+        authEndpoint: '/broadcasting/auth',
+        auth: {
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        }
+    });
+
+    let organizationId = {{ auth('organization')->user()->organization_id ?? 'null' }};
+
+    if (organizationId) {
+        let channel = pusher.subscribe('private-organization.group.' + organizationId);
+
+        channel.bind('organization.notification', function(data) {
+            iziToast.info({
+                title: data.title,
+                message: data.content,
+                position: 'topCenter',
+                timeout: 30000,
+                progressBar: true,
+                close: true,
+                rtl: true,
+                transitionIn: 'fadeInUp',
+                transitionOut: 'fadeOutDown',
+            });
+        });
+    }
+</script>

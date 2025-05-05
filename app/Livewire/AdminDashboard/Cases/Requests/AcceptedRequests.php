@@ -35,7 +35,7 @@ class AcceptedRequests extends Component
 
     public function refreshCases()
     {
-        $this->cases = OrganizationCase::with('organization_user.organization')->get();
+        $this->cases = OrganizationCase::with('organization_user.organization')->where('status', '!=', 'completed')->latest()->get();
     }
     public function mount()
     {
