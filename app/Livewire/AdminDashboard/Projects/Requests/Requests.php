@@ -85,7 +85,7 @@ class Requests extends Component
             $msg = '✨ تم الموافقة على طلب المشروع: ' . $request->project_name . ' 📑 رقم الطلب: ' . $request->id . ' 🎉';
 
             broadcast(new OrganizationNotification([
-                'organization_id' => auth('organization')->user()->organization_id,
+                'organization_id' => $request->organization_user->organization_id,
                 'title' => '💥 تم قبول الطلب بنجاح!',
                 'content' => $msg,
             ]));
@@ -131,7 +131,7 @@ class Requests extends Component
         $msg = '❌ تم رفض طلب المشروع: ' . $request->project_name . ' 📑 رقم الطلب: ' . $request->id . ' 😔';
 
         broadcast(new OrganizationNotification([
-            'organization_id' => auth('organization')->user()->organization_id,
+            'organization_id' => $request->organization_user->organization_id,
             'title' => '🚫 تم رفض الطلب',
             'content' => $msg,
         ]));

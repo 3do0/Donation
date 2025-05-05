@@ -58,7 +58,7 @@ class Requests extends Component
             $request->reviewed_at = Carbon::now();
             $request->save();
     
-            OrganizationCase::create([
+            $case = OrganizationCase::create([
                 'organization_user_id' => $request->organization_user_id,
                 'case_name' => $request->case_name,
                 'case_photo' => $request->case_photo,
@@ -85,8 +85,9 @@ class Requests extends Component
 
             $msg = '✨ تم الموافقة على طلب الحالة: ' . $request->case_name . ' 📑 رقم الطلب: ' . $request->id . ' 🎉';
 
+            
             broadcast(new OrganizationNotification([
-                'organization_id' => auth('organization')->user()->organization_id,
+                'organization_id' => $case->organization_user->organization_id,
                 'title' => '💥 تم قبول الطلب بنجاح!',
                 'content' => $msg,
             ]));
@@ -132,7 +133,7 @@ class Requests extends Component
         $msg = '❌ تم رفض طلب الحالة: ' . $request->case_name . ' 📑 رقم الطلب: ' . $request->id . ' 😔';
 
         broadcast(new OrganizationNotification([
-            'organization_id' => auth('organization')->user()->organization_id,
+            'organization_id' => $request->organization_user->organization_id,
             'title' => '🚫 تم رفض الطلب',
             'content' => $msg,
         ]));

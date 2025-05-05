@@ -1,5 +1,5 @@
 @section('title')
-    Case Response
+    طلبات الحالات المعلقة
 @endsection
 
 @section('PageCss')
