@@ -508,7 +508,7 @@
                         maxBarThickness: 6,
                     },
                     {
-                        label: "تجارة",
+                        label: "تبرع",
                         tension: 0,
                         borderWidth: 2,
                         pointRadius: 3,
@@ -570,7 +570,7 @@
                         },
                         ticks: {
                             callback: function(value, index, ticks) {
-                                return parseInt(value).toLocaleString() + " EUR";
+                                return parseInt(value).toLocaleString() + " ریال";
                             },
                             display: true,
                             padding: 10,

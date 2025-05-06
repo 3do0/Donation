@@ -56,6 +56,7 @@
                                     <th class="text-center custom-btn-color"> حساب الايام المتبقية</th>
                                     <th class="text-center custom-btn-color">وصف الحالة</th>
                                     <th class="text-center custom-btn-color">الإجراءات</th>
+                                    <th class="text-center custom-btn-color">التعليقات</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -143,6 +144,77 @@
                                                 </button>
                                             @endif
                                         </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                            data-target="#zoomupModal-{{ $case->id }}">التعليقات</button>
+                                        </td>
+
+                                        <div id="zoomupModal-{{ $case->id }}" class="modal animated zoomInUp custo-zoomInUp" role="dialog">
+                                            <div class="modal-dialog">
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">ملحقات الحالة</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-x">
+                                                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5 class="text-warning">التعليقات</h5>
+                                                        <ul class="list-unstyled">
+                                                            @foreach ($case->comments as $comment)
+                                                                <li class="media d-flex align-items-start justify-content-between">
+                                                                    <img class="rounded me-3"
+                                                                        src="{{ asset('storage/' . $comment->donor->avatar) }}"
+                                                                        alt="pic1" width="50" height="50">
+                    
+                                                                    <div class="media-body w-100">
+                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                            <h5 class="media-heading mb-1">
+                                                                                <span
+                                                                                    class="media-title">{{ $comment->donor->name }}</span>
+                                                                            </h5>
+                    
+                                                                            <span
+                                                                                class="text-muted small">{{ $comment->created_at->diffForHumans() }}</span>
+                                                                        </div>
+                    
+                                                                        <p class="media-text mb-2">{{ $comment->comment }}</p>
+                    
+                                                                        <div class="d-flex justify-content-end">
+                                                                            <a wire:click="confirmDelete({{ $comment->id}})"
+                                                                                class="text-danger" title="حذف التعليق"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                                    height="16" viewBox="0 0 24 24" fill="none"
+                                                                                    stroke="currentColor" stroke-width="2"
+                                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                                    class="feather feather-trash-2">
+                                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                                    <path
+                                                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                                                                    </path>
+                                                                                    <line x1="10" y1="11" x2="10"
+                                                                                        y2="17"></line>
+                                                                                    <line x1="14" y1="11" x2="14"
+                                                                                        y2="17"></line>
+                                                                                </svg>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div id="stoping-{{ $case->id }}"
                                             class="modal animated fadeInLeft custo-fadeInLeft" role="dialog">

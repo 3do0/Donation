@@ -12,7 +12,7 @@ class CompletedProject extends Component
 
     public function mount()
     {
-        $this->projects = OrganizationProject::with('organization_user.organization' ,'comments','reports')->where('status', 'in_progress')->get();
+        $this->projects = OrganizationProject::with('organization_user.organization' ,'comments','reports')->where('status','!=', 'in_progress')->get();
     }
     protected $listeners = [
         'deleteComment' => 'deleteComment'

@@ -3,6 +3,7 @@
 namespace App\Livewire\AdminDashboard\Cases\Requests;
 
 use App\Events\CaseRequestRespondingEvent;
+use App\Models\DonorFeedback;
 use App\Models\OrganizationCase;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -48,6 +49,29 @@ class AcceptedRequests extends Component
     {
         $this->refreshCases();
     }
+
+    protected $listeners = [
+        'deleteComment' => 'deleteComment'
+    ];
+
+
+    public function confirmDelete($modaldata)
+    {
+        $this->dispatch('confirmDeletion', [
+            'id' => $modaldata,
+            'eventName' => 'deleteComment',
+            'title' => 'هل أنت متأكد؟',
+            'text' => 'لن تتمكن من التراجع عن هذا!'
+        ]);
+    }
+
+    public function deleteComment($modaldata)
+{
+    $comment = DonorFeedback::findOrFail($modaldata);
+    $comment->delete();
+
+    $this->refreshCases();
+}
     
     public function render()
     {

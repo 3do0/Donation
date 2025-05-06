@@ -245,8 +245,8 @@
                 "sSearchPlaceholder": "بحـث...",
                 "sLengthMenu": "النتيجة :  _MENU_",
                 },
-                "lengthMenu": [5, 10, 20, 50],
-                "pageLength": 5,
+                "lengthMenu": [5, 10, 20, 50 , 100],
+                "pageLength": 50,
                 "scrollX": true,
             });
 

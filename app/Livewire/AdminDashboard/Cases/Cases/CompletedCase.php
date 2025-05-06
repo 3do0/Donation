@@ -13,7 +13,7 @@ class CompletedCase extends Component
 
     public function mount()
     {
-        $this->cases = OrganizationCase::with('organization_user.organization' ,'comments','reports')->where('status', 'in_progress')->get();
+        $this->cases = OrganizationCase::with('organization_user.organization' ,'comments','reports')->where('status' ,'completed')->get();
     }
     protected $listeners = [
         'deleteComment' => 'deleteComment'

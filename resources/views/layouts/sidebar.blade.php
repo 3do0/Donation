@@ -86,18 +86,18 @@
                 </a>
                 <ul class="collapse submenu list-unstyled " id="organization" data-parent="#accordionExample">
                     <li>
-                        <a href="{{ route('org') }}" wire:navigate> المؤسسات الفعالة </a>
+                        <a href="{{ route('org') }}" > المؤسسات الفعالة </a>
                     </li>
 
                     <li>
-                        <a href="{{ route('join-requests') }}" wire:navigate>طلبات الانضمام
+                        <a href="{{ route('join-requests') }}" >طلبات الانضمام
                         </a>
                     </li>
                 </ul>
             </li>
 
             <li class="menu {{ request()->routeIs('donors') ? 'active' : '' }}">
-                <a href="{{ route('donors') }}" wire:navigate
+                <a href="{{ route('donors') }}" 
                     {{ request()->routeIs('donors') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">
@@ -176,13 +176,13 @@
                         <a href="{{ route('refined-case') }}" wire:navigate> الطلبات المرفوضة</a>
                     </li>
                     <li class="{{ request()->routeIs('accepted_case') ? 'active' : '' }}">
-                        <a href="{{ route('accepted_case') }}" wire:navigate> الحالات المقبولة </a>
+                        <a href="{{ route('accepted_case') }}" > الحالات المقبولة </a>
                     </li>
                     <li class="{{ request()->routeIs('accepted-case-card') ? 'active' : '' }}">
-                        <a href="{{ route('accepted-case-card') }}" wire:navigate> الحالات المفعلة </a>
+                        <a href="{{ route('accepted-case-card') }}" > الحالات المفعلة </a>
                     </li>
                     <li class="{{ request()->routeIs('completed_case') ? 'active' : '' }}">
-                        <a href="{{ route('completed_case') }}" wire:navigate> الحالات المكتملة </a>
+                        <a href="{{ route('completed_case') }}" > الحالات المكتملة </a>
                     </li>
                 </ul>
 
@@ -223,13 +223,13 @@
                         <a href="{{ route('refined-project') }}" wire:navigate> الطلبات المرفوضة</a>
                     </li>
                     <li>
-                        <a href="{{ route('accepted-project') }}" wire:navigate> المشاريع المقبولة </a>
+                        <a href="{{ route('accepted-project') }}" > المشاريع المقبولة </a>
                     </li>
                     <li>
-                        <a href="{{ route('accepted-project-card') }}" wire:navigate> المشاريع المفعلة </a>
+                        <a href="{{ route('accepted-project-card') }}" > المشاريع المفعلة </a>
                     </li>
                     <li>
-                        <a href="{{ route('completed_project') }}" wire:navigate> المشاريع المنتهية </a>
+                        <a href="{{ route('completed_project') }}" > المشاريع المنتهية </a>
                     </li>
                 </ul>
             </li>
@@ -337,7 +337,7 @@
             </li>
 
             <li class="menu {{ request()->routeIs('partners') ? 'active' : '' }}">
-                <a href="{{ route('partners') }}" wire:navigate
+                <a href="{{ route('partners') }}" 
                     {{ request()->routeIs('partners') ? 'aria-expanded="true"' : 'aria-expanded="false"' }}
                     class="dropdown-toggle">
                     <div class="">

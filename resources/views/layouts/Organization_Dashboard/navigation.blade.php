@@ -31,11 +31,11 @@
             
             
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('organization.cases-requests') || request()->routeIs('organization.case-refined') || request()->routeIs('organization.case-accpected') ? '' : 'collapsed' }}"
+                <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('organization.cases-requests') || request()->routeIs('organization.case-refined')  ? '' : 'collapsed' }}"
                    data-bs-toggle="collapse"
                    href="#sidebarRequestsCases"
                    role="button"
-                   aria-expanded="{{ request()->routeIs('organization.cases-requests') || request()->routeIs('organization.case-refined') || request()->routeIs('organization.case-accpected') ? 'true' : 'false' }}"
+                   aria-expanded="{{ request()->routeIs('organization.cases-requests') || request()->routeIs('organization.case-refined')  ? 'true' : 'false' }}"
                    aria-controls="sidebarRequestsCases">
             
                     <div class="d-flex align-items-center">
@@ -49,19 +49,13 @@
                     <i class="bi bi-chevron-down small mx-4"></i>
                 </a>
             
-                <div class="collapse {{ request()->routeIs('organization.cases-requests') || request()->routeIs('organization.case-refined') || request()->routeIs('organization.case-accpected') ? 'show' : '' }}"
+                <div class="collapse {{ request()->routeIs('organization.cases-requests') || request()->routeIs('organization.case-refined')  ? 'show' : '' }}"
                      id="sidebarRequestsCases">
                     <ul class="nav flex-column ">
                         <li class="nav-item">
                             <a class="nav-link fw-bold d-flex align-items-center mb-2 {{ request()->routeIs('organization.cases-requests') ? 'active text-warning' : 'text-light' }}"
                                href="{{ route('organization.cases-requests') }}" >
                                 <span>الطلبات المعلقة</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold d-flex align-items-center mb-2 {{ request()->routeIs('organization.case-accpected') ? 'active text-warning' : 'text-light' }}"
-                               href="{{ route('organization.case-accpected') }}" wire:navigate>
-                                <span>الحالات المعتمدة</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -75,11 +69,11 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center {{  request()->routeIs('organization.completed-case-table') || request()->routeIs('organization.completed-case-card') ? '' : 'collapsed' }}"
+                <a class="nav-link d-flex justify-content-between align-items-center {{  request()->routeIs('organization.completed-case-table') || request()->routeIs('organization.completed-case-card') ||  request()->routeIs('organization.case-accpected') ? '' : 'collapsed' }}"
                    data-bs-toggle="collapse"
                    href="#sidebarCases"
                    role="button"
-                   aria-expanded="{{request()->routeIs('organization.completed-case-table') || request()->routeIs('organization.completed-case-card') ? 'true' : 'false' }}"
+                   aria-expanded="{{request()->routeIs('organization.completed-case-table') || request()->routeIs('organization.completed-case-card') ||  request()->routeIs('organization.case-accpected') ? 'true' : 'false' }}"
                    aria-controls="sidebarCases">
             
                     <div class="d-flex align-items-center">
@@ -92,15 +86,15 @@
                     <i class="bi bi-chevron-down small mx-4"></i>
                 </a>
             
-                <div class="collapse {{  request()->routeIs('organization.completed-case-table') || request()->routeIs('organization.completed-case-card') ? 'show' : '' }}"
+                <div class="collapse {{  request()->routeIs('organization.completed-case-table') || request()->routeIs('organization.completed-case-card')  ||  request()->routeIs('organization.case-accpected') ? 'show' : '' }}"
                      id="sidebarCases">
                     <ul class="nav flex-column">
-                        {{-- <li class="nav-item">
-                            <a class="nav-link fw-bold d-flex align-items-center mb-2 menu-dot-right {{ request()->routeIs('organization.case-accpected') ? 'active text-warning' : 'text-light' }}"
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold d-flex align-items-center mb-2 {{ request()->routeIs('organization.case-accpected') ? 'active text-warning' : 'text-light' }}"
                                href="{{ route('organization.case-accpected') }}" wire:navigate>
-                                <span>الحالات المقبولة</span>
+                                <span>الحالات المعتمدة</span>
                             </a>
-                        </li> --}}
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link fw-bold d-flex align-items-center mb-2 menu-dot-right {{ request()->routeIs('organization.completed-case-table') ? 'active text-warning' : 'text-light' }}"
                                href="{{ route('organization.completed-case-table') }}" wire:navigate>
@@ -118,11 +112,11 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('organization.projects-requests') || request()->routeIs('organization.project-refined') || request()->routeIs('organization.project-accpected') ? '' : 'collapsed' }}"
+                <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('organization.projects-requests') || request()->routeIs('organization.project-refined')  ? '' : 'collapsed' }}"
                    data-bs-toggle="collapse"
                    href="#sidebarRequestsProjects"
                    role="button"
-                   aria-expanded="{{ request()->routeIs('organization.projects-requests') || request()->routeIs('organization.project-refined') || request()->routeIs('organization.project-accpected') ? 'true' : 'false' }}"
+                   aria-expanded="{{ request()->routeIs('organization.projects-requests') || request()->routeIs('organization.project-refined') ? 'true' : 'false' }}"
                    aria-controls="sidebarRequestsProjects">
             
                     <div class="d-flex align-items-center">
@@ -136,7 +130,7 @@
                     <i class="bi bi-chevron-down small mx-4"></i>
                 </a>
             
-                <div class="collapse {{ request()->routeIs('organization.projects-requests') || request()->routeIs('organization.project-refined') || request()->routeIs('organization.project-accpected') ? 'show' : '' }}"
+                <div class="collapse {{ request()->routeIs('organization.projects-requests') || request()->routeIs('organization.project-refined')  ? 'show' : '' }}"
                      id="sidebarRequestsProjects">
                     <ul class="nav flex-column ">
                         <li class="nav-item">
@@ -146,14 +140,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fw-bold d-flex align-items-center mb-2 {{ request()->routeIs('organization.project-accpected') ? 'active text-warning' : 'text-light' }}"
-                               href="{{ route('organization.project-accpected') }}" wire:navigate>
-                                <span>المشاريع المعتمدة</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link fw-bold d-flex align-items-center mb-2 {{ request()->routeIs('organization.project-refined') ? 'active text-warning' : 'text-light' }}"
-                               href="{{ route('organization.project-refined') }}" wire:navigate>
+                               href="{{ route('organization.project-refined') }}" >
                                 <span>الطلبات المرفوضة</span>
                             </a>
                         </li>
@@ -162,11 +150,11 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center {{  request()->routeIs('organization.completed-project-table') || request()->routeIs('organization.completed-project-card') ? '' : 'collapsed' }}"
+                <a class="nav-link d-flex justify-content-between align-items-center {{  request()->routeIs('organization.completed-project-table') || request()->routeIs('organization.completed-project-card') || request()->routeIs('organization.project-accpected')  ? '' : 'collapsed' }}"
                    data-bs-toggle="collapse"
                    href="#sidebarProjects"
                    role="button"
-                   aria-expanded="{{ request()->routeIs('organization.completed-project-table') || request()->routeIs('organization.completed-project-card') ? 'true' : 'false' }}"
+                   aria-expanded="{{ request()->routeIs('organization.completed-project-table') || request()->routeIs('organization.completed-project-card') || request()->routeIs('organization.project-accpected')  ? 'true' : 'false' }}"
                    aria-controls="sidebarProjects">
             
                     <div class="d-flex align-items-center">
@@ -179,9 +167,17 @@
                     <i class="bi bi-chevron-down small mx-4"></i>
                 </a>
             
-                <div class="collapse {{ request()->routeIs('organization.completed-project-table') || request()->routeIs('organization.completed-project-card') ? 'show' : '' }}"
+                <div class="collapse {{ request()->routeIs('organization.completed-project-table') || request()->routeIs('organization.completed-project-card') || request()->routeIs('organization.project-accpected') ? 'show' : '' }}"
                      id="sidebarProjects">
                     <ul class="nav flex-column">
+
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold d-flex align-items-center mb-2 {{ request()->routeIs('organization.project-accpected') ? 'active text-warning' : 'text-light' }}"
+                               href="{{ route('organization.project-accpected') }}" wire:navigate>
+                                <span>المشاريع المعتمدة</span>
+                            </a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link fw-bold d-flex align-items-center mb-2 menu-dot-right {{ request()->routeIs('organization.completed-project-table') ? 'active text-warning' : 'text-light' }}"
                                href="{{ route('organization.completed-project-table') }}" wire:navigate>
@@ -190,7 +186,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fw-bold d-flex align-items-center mb-2 menu-dot-right {{ request()->routeIs('organization.completed-project-card') ? 'active text-warning' : 'text-light' }}"
-                               href="{{ route('organization.completed-project-card') }}" wire:navigate>
+                               href="{{ route('organization.completed-project-card') }}" >
                                 <span>تفاصيل المشاريع</span>
                             </a>
                         </li>

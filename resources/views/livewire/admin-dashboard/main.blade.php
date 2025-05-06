@@ -18,7 +18,7 @@
                 <div class="w-chart-section">
                     <div class="w-detail">
                         <p class="w-title">إجمالي الزيارات</p>
-                        <p class="w-stats">350</p>
+                        <p class="w-stats">{{$visiors}}</p>
                     </div>
                     <div class="w-chart-render-one">
                         <div id="total-users"></div>
@@ -442,5 +442,12 @@
             Livewire.dispatch('ProjectRejection'); 
         });
 </script>
+
+
+<script>
+    window.dailyDonors = @json($dailyDonors);
+</script>
+
+
 
 @endpush

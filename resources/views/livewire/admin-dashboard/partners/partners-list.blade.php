@@ -30,7 +30,7 @@
                         <div>
                             <a type="button"
                                 class="btn btn-sm bg-transparent custom-btn-color btn-icon d-flex align-items-center  border border-white"
-                                href="{{ route('partner-form') }}" wire:navigate>
+                                href="{{ route('partner-form') }}" >
                                 <span class="btn-inner--icon">
                                     <svg width="16" height="16" xmlns="http://www.w3.user/2000/svg"
                                         viewBox="0 0 24 24" fill="currentColor" class="d-block me-2">

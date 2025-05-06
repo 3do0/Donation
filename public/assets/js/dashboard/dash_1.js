@@ -20,7 +20,9 @@ try {
 
     
     // Total Visits
-
+    document.addEventListener('visitorsData', function (event) {
+      const visitors = event.detail[0].visitors;  
+      console.log(visitors);
     var spark1 = {
         chart: {
             id: 'unique-visits',
@@ -40,7 +42,7 @@ try {
             }
         },
         series: [{
-            data: [21, 9, 36, 12, 44, 25, 59, 41, 66, 25].reverse()
+            data: visitors
         }],
         stroke: {
           curve: 'smooth',
@@ -117,9 +119,14 @@ try {
 
         ]
     }
+    d_1C_1 = new ApexCharts(document.querySelector("#total-users"), spark1);
+    d_1C_1.render();
+    });
 
     // Paid Visits
-
+    document.addEventListener('donorsData', function (event) {
+      const donors = event.detail[0].donors;  
+      console.log(donors);
     var spark2 = {
         chart: {
           id: 'total-users',
@@ -139,7 +146,7 @@ try {
           }
         },
         series: [{
-          data: [20, 19, 30, 1, 5, 44, 3, 55, 1, 69].reverse()
+          data: donors
         }],
         stroke: {
           curve: 'smooth',
@@ -215,6 +222,10 @@ try {
         }
         ]
     }
+
+    d_1C_2 = new ApexCharts(document.querySelector("#paid-visits"), spark2);
+    d_1C_2.render();
+     });
     
 
     /*
@@ -223,85 +234,95 @@ try {
         ===================================
     */
 
-    var d_1options1 = {
-      chart: {
-          height: 350,
-          type: 'bar',
-          toolbar: {
-            show: false,
-          },
-          dropShadow: {
-              enabled: true,
-              top: 1,
-              left: 1,
-              blur: 1,
-              color: '#515365',
-              opacity: 0.3,
-          }
-      },
-      colors: ['#5c1ac3', '#ffbb44'],
-      plotOptions: {
-          bar: {
-              horizontal: false,
-              columnWidth: '55%',
-              endingShape: 'rounded'  
-          },
-      },
-      dataLabels: {
-          enabled: false
-      },
-      legend: {
-            position: 'bottom',
-            horizontalAlign: 'center',
-            fontSize: '14px',
-            markers: {
-              width: 10,
-              height: 10,
-            },
-            itemMargin: {
-              horizontal: 0,
-              vertical: 8
-            }
-      },
-      grid: {
-        borderColor: '#191e3a',
-      },
-      stroke: {
-          show: true,
-          width: 2,
-          colors: ['transparent']
-      },
-      series: [{
-          name: 'المستخدمين',
-          data: [58, 44, 55, 57, 56, 61, 58, 63, 60, 66, 56, 63].reverse()
-      }, {
-          name: 'الزوار',
-          data: [91, 76, 85, 101, 98, 87, 105, 91, 114, 94, 66, 70].reverse()
-      }],
-      xaxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].reverse(),
-      },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shade: 'dark',
-          type: 'vertical',
-          shadeIntensity: 0.3,
-          inverseColors: false,
-          opacityFrom: 1,
-          opacityTo: 0.8,
-          stops: [0, 100]
-        }
-      },
-      tooltip: {
-        theme: 'dark',
-          y: {
-              formatter: function (val) {
-                  return val
+    document.addEventListener('visitsAndDonationsData', function (event) {
+      const donations = event.detail[0].donations;  
+      const visitors = event.detail[0].visitors;  
+        console.log(visitors);
+              var d_1options1 = {
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                    toolbar: {
+                      show: false,
+                    },
+                    dropShadow: {
+                        enabled: true,
+                        top: 1,
+                        left: 1,
+                        blur: 1,
+                        color: '#515365',
+                        opacity: 0.3,
+                    }
+                },
+                colors: ['#5c1ac3', '#ffbb44'],
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded'  
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                legend: {
+                      position: 'bottom',
+                      horizontalAlign: 'center',
+                      fontSize: '14px',
+                      markers: {
+                        width: 10,
+                        height: 10,
+                      },
+                      itemMargin: {
+                        horizontal: 0,
+                        vertical: 8
+                      }
+                },
+                grid: {
+                  borderColor: '#191e3a',
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent']
+                },
+                series: [{
+                    name: 'الزيارات',
+                    data: visitors
+                }, {
+                    name: 'التبرعات',
+                    data: donations
+                }],
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                },
+                fill: {
+                  type: 'gradient',
+                  gradient: {
+                    shade: 'dark',
+                    type: 'vertical',
+                    shadeIntensity: 0.3,
+                    inverseColors: false,
+                    opacityFrom: 1,
+                    opacityTo: 0.8,
+                    stops: [0, 100]
+                  }
+                },
+                tooltip: {
+                  theme: 'dark',
+                    y: {
+                        formatter: function (val) {
+                            return val
+                        }
+                    }
+                }
               }
-          }
-      }
-    }
+              var d_1C_3 = new ApexCharts(
+                document.querySelector("#uniqueVisits"),
+                d_1options1
+            );
+            d_1C_3.render();
+     });
 
     /*
         ==============================
@@ -311,6 +332,9 @@ try {
 
     // Followers
 
+    document.addEventListener('donorsData', function (event) {
+      const donors = event.detail[0].donors;  
+      console.log(donors);
     var d_1options3 = {
       chart: {
         id: 'sparkline1',
@@ -325,8 +349,8 @@ try {
           width: 2,
       },
       series: [{
-        name: 'Sales',
-        data: [38, 60, 38, 52, 36, 40, 28 ].reverse()
+        name: 'متبرع',
+        data: donors
       }],
       labels: ['1', '2', '3', '4', '5', '6', '7'].reverse(),
       yaxis: {
@@ -350,9 +374,15 @@ try {
           }
       },
     }
+    var d_1C_5 = new ApexCharts(document.querySelector("#hybrid_followers"), d_1options3);
+    d_1C_5.render()
+    });
 
     // Referral
 
+    document.addEventListener('DonationsData', function (event) {
+      const donations= event.detail[0].donations;  
+      console.log(donations);
     var d_1options4 = {
       chart: {
         id: 'sparkline1',
@@ -367,8 +397,8 @@ try {
           width: 2,
       },
       series: [{
-        name: 'Sales',
-        data: [ 60, 28, 52, 38, 40, 36, 38].reverse()
+        name: 'تبرع',
+        data: donations
       }],
       labels: ['1', '2', '3', '4', '5', '6', '7'].reverse(),
       yaxis: {
@@ -392,9 +422,14 @@ try {
           }
       },
     }
+    var d_1C_6 = new ApexCharts(document.querySelector("#hybrid_followers1"), d_1options4);
+    d_1C_6.render()
+    });
 
     // Engagement Rate
-
+    document.addEventListener('CasesData', function (event) {
+      const cases = event.detail[0].cases;  
+      console.log(cases);
     var d_1options5 = {
       chart: {
         id: 'sparkline1',
@@ -412,8 +447,8 @@ try {
         opacity: 1,
       },
       series: [{
-        name: 'Sales',
-        data: [28, 50, 36, 60, 38, 52, 38 ].reverse()
+        name: 'حالة',
+        data: cases
       }],
       labels: ['1', '2', '3', '4', '5', '6', '7'].reverse(),
       yaxis: {
@@ -437,6 +472,9 @@ try {
           }
       },
     }
+    var d_1C_7 = new ApexCharts(document.querySelector("#hybrid_followers3"), d_1options5);
+    d_1C_7.render()
+    });
 
     
 
@@ -455,12 +493,10 @@ try {
     */
 
     // Total Visits
-    d_1C_1 = new ApexCharts(document.querySelector("#total-users"), spark1);
-    d_1C_1.render();
+  
 
     // Paid Visits
-    d_1C_2 = new ApexCharts(document.querySelector("#paid-visits"), spark2);
-    d_1C_2.render();
+    
 
     /*
         ===================================
@@ -468,11 +504,7 @@ try {
         ===================================
     */
 
-    var d_1C_3 = new ApexCharts(
-        document.querySelector("#uniqueVisits"),
-        d_1options1
-    );
-    d_1C_3.render();
+    
 
     /*
         ==============================
@@ -483,18 +515,15 @@ try {
 
     // Followers
 
-    var d_1C_5 = new ApexCharts(document.querySelector("#hybrid_followers"), d_1options3);
-    d_1C_5.render()
+    
 
     // Referral
 
-    var d_1C_6 = new ApexCharts(document.querySelector("#hybrid_followers1"), d_1options4);
-    d_1C_6.render()
+    
 
     // Engagement Rate
 
-    var d_1C_7 = new ApexCharts(document.querySelector("#hybrid_followers3"), d_1options5);
-    d_1C_7.render()
+  
 
 
 
