@@ -44,7 +44,7 @@ class OrganizationsList extends Component
     #[Computed()]
     public function refreshOrganizations()
     {
-        $this->organizations = Organization::get();
+        $this->organizations = Organization::where('approval_status', true)->get();
     }
 
     public function toggleStatus($orgId)
