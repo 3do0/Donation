@@ -12,3 +12,16 @@
 - **مركز إشعارات** للمتبرع مع تحديث حالة القراءة
 - إعادة إرسال رمز OTP
 - إعداد نشر جاهز لـ Railway عبر `nixpacks.toml` مع رفع حد الملفات المرفوعة إلى 100MB
+
+## التقنيات
+
+| المجال        | الأداة                                              |
+| ------------- | --------------------------------------------------- |
+| الإطار        | Laravel 11 / PHP 8.2                                |
+| المصادقة      | Laravel Breeze (لوحات التحكم)، Sanctum (API)         |
+| الواجهات      | Livewire 3، Livewire PowerGrid، Tailwind CSS، Vite  |
+| المدفوعات     | stripe/stripe-php، paytabscom/laravel_paytabs        |
+| الإشعارات     | google/apiclient (FCM v1)، kreait/laravel-firebase   |
+| البث اللحظي   | Laravel Reverb / pusher/pusher-php-server            |
+| OTP           | ichtrojan/laravel-otp                               |
+| السجلات       | spatie/laravel-activitylog                          |
