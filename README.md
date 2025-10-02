@@ -25,3 +25,21 @@
 | البث اللحظي   | Laravel Reverb / pusher/pusher-php-server            |
 | OTP           | ichtrojan/laravel-otp                               |
 | السجلات       | spatie/laravel-activitylog                          |
+
+## التشغيل محلياً
+
+```bash
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+npm run dev
+php artisan serve
+```
+
+لتشغيل المهام المجدولة (إغلاق الحالات والمشاريع المنتهية):
+
+```bash
+php artisan schedule:work
+```
