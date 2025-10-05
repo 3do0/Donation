@@ -43,3 +43,17 @@ php artisan serve
 ```bash
 php artisan schedule:work
 ```
+
+## متغيرات البيئة
+
+| المتغير                                        | الاستخدام                                                     |
+| ---------------------------------------------- | ------------------------------------------------------------- |
+| `FRONTEND_URL`                                 | عنوان واجهة React لروابط العودة بعد الدفع                     |
+| `STRIPE_KEY` / `STRIPE_SECRET` / `STRIPE_WEBHOOK_SECRET` | Stripe Checkout والتحقق من الـ Webhook              |
+| `PAYTABS_PROFILE_ID` / `PAYTABS_SERVER_KEY`    | PayTabs                                                       |
+| `FIREBASE_PROJECT_ID`                          | معرّف مشروع Firebase                                          |
+| `FIREBASE_CREDENTIALS`                         | مسار ملف حساب الخدمة (JSON) نسبةً إلى `storage/`              |
+| `BROADCAST_CONNECTION` + `REVERB_*` أو `PUSHER_*` | البث اللحظي                                                |
+| `MAIL_*`                                       | رسائل OTP والتأكيدات                                          |
+
+ملف حساب خدمة Firebase لا يُرفع إلى المستودع؛ ضعه داخل `storage/` واضبط `FIREBASE_CREDENTIALS` على اسمه.
