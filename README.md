@@ -69,3 +69,24 @@ php artisan config:cache
 ```
 
 وأضف عنوان الـ Webhook `https://<domain>/api/stripe/webhook` في لوحة Stripe مع نسخ سر التوقيع إلى `STRIPE_WEBHOOK_SECRET`.
+
+## بنية المشروع
+
+```
+app/
+├── Console/Commands/     # أوامر Artisan (أسعار العملات، إغلاق المنتهي)
+├── Enums/
+├── Events/               # أحداث البث (تبرع جديد، حالة/مشروع جديد، الرد على الطلبات)
+├── Http/Controllers/API/ # نقاط نهاية المتبرعين
+├── Livewire/             # لوحتا المشرفين والجمعيات
+├── Mail/                 # OTP، شكر التبرع، قبول/رفض الجمعيات
+├── Models/
+├── Notifications/
+└── Services/             # CurrencyService, FCMService
+routes/
+├── api.php               # REST API + Stripe webhook
+├── channels.php          # قنوات البث
+└── ...                   # لوحات التحكم والمصادقة
+```
+
+توثيق نقاط النهاية في [`docs/api.md`](docs/api.md).
