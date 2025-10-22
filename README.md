@@ -57,3 +57,15 @@ php artisan schedule:work
 | `MAIL_*`                                       | رسائل OTP والتأكيدات                                          |
 
 ملف حساب خدمة Firebase لا يُرفع إلى المستودع؛ ضعه داخل `storage/` واضبط `FIREBASE_CREDENTIALS` على اسمه.
+
+## النشر على Railway
+
+المشروع مُهيّأ للنشر عبر Nixpacks (`nixpacks.toml`)، وهو يرفع `upload_max_filesize` و `post_max_size` إلى 100MB لصور الحالات والتقارير. بعد أول نشر:
+
+```bash
+php artisan migrate --force
+php artisan storage:link
+php artisan config:cache
+```
+
+وأضف عنوان الـ Webhook `https://<domain>/api/stripe/webhook` في لوحة Stripe مع نسخ سر التوقيع إلى `STRIPE_WEBHOOK_SECRET`.
