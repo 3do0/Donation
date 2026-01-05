@@ -24,7 +24,7 @@ class StripePaymentController extends Controller
 
     public function CreateSession(Request $request)
 {
-    Stripe::setApiKey(env('STRIPE_SECRET'));
+    Stripe::setApiKey(config('services.stripe.secret'));
 
     try {
         if (!$request->has('items') || !is_array($request->items)) {
@@ -91,7 +91,7 @@ class StripePaymentController extends Controller
             $cancelUrl = 'http://127.0.0.1:8000/';
         } else {
             $successUrl = 'http://localhost:5173/success';
-            $cancelUrl = env('FRONTEND_URL') . '/payment-failed';
+            $cancelUrl = config('app.frontend_url') . '/payment-failed';
         }
 
         $sessionData = [
@@ -117,7 +117,7 @@ class StripePaymentController extends Controller
 
     public function stripeWebhook(Request $request)
     {
-        $endpoint_secret = env('STRIPE_WEBHOOK_SECRET'); 
+        $endpoint_secret = config('services.stripe.webhook_secret');
 
         $payload = $request->getContent();
         $sig_header = $request->header('Stripe-Signature');
@@ -171,7 +171,7 @@ class StripePaymentController extends Controller
 
     private function SuccessfulDonation($session)
     {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe::setApiKey(config('services.stripe.secret'));
         $sessionId = $session->id;
 
         try {
