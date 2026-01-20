@@ -33,7 +33,7 @@ class OrganizationRequestReceived extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'))  
+        return $this->from(config('mail.from.address'))
                     ->subject('تم استلام طلب الانضمام إلى تكافل')  
                     ->view('emails.organization-request-received')  
                     ->with('organization', $this->organization);  

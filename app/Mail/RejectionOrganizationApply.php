@@ -24,7 +24,7 @@ class RejectionOrganizationApply extends Mailable implements ShouldQueue
 
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'))
+        return $this->from(config('mail.from.address'))
                     ->subject('نعتذر منكم!')
                     ->view('emails.rejection-organization-apply')  
                     ->with('rejection_reason', $this->rejection_reason);

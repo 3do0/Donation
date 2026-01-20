@@ -22,7 +22,7 @@ class DonationSuccessful extends Mailable implements ShouldQueue
 
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'))
+        return $this->from(config('mail.from.address'))
                     ->subject('شكراً لتبرعك!')
                     ->view('emails.donation-success')  
                     ->with('donationDetails', $this->donationDetails);
