@@ -1,9 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "takaful/backend",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Takaful donation platform backend: donor API with push notifications, organization and admin dashboards, Stripe and PayTabs payments.",
+    "keywords": ["laravel", "donations", "charity", "stripe", "fcm", "livewire"],
     "license": "MIT",
     "require": {
         "php": "^8.2",
