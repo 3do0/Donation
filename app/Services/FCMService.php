@@ -6,6 +6,14 @@ use Google\Client; // مكتبة Google API client
 use Illuminate\Support\Facades\Http; // لإرسال طلبات HTTP
 use Illuminate\Support\Facades\Storage; // للتعامل مع الملفات المخزنة
 
+/**
+ * Sends push notifications through the Firebase Cloud Messaging v1 API.
+ *
+ * Authenticates with the service-account file referenced by
+ * services.fcm.credentials (relative to storage/) and targets the project in
+ * services.fcm.project_id. Instantiate it per request; the constructor fetches
+ * a fresh OAuth access token.
+ */
 class FCMService 
 {
     protected $projectId; // معرف مشروع Firebase
@@ -29,7 +37,14 @@ class FCMService
         $this->client->fetchAccessTokenWithAssertion();
     }
 
-    // دالة إرسال الإشعار
+    /**
+     * Send a notification to a single device.
+     *
+     * @param  string  $deviceToken  FCM registration token of the target device
+     * @param  string  $title
+     * @param  string  $body
+     * @return array|null  decoded FCM response
+     */
     public function sendNotification($deviceToken, $title, $body)
     {
         // بناء محتوى الإشعار بالشكل المطلوب لـ FCM V1
